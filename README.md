@@ -5,7 +5,7 @@ Brew & Bite is a Café system designed to handle daily café tasks.
 - Backend: Laravel (PHP)
 - Database: MySQL
 - Styling: Tailwind CSS, Bootstrap, AdminLTE
-- Payment Gateway: Midtrans API, News API, Weather API
+- API: Midtrans API, News API, Weather API
   
 # How to Run
 - Duplicate .env.example and change it to .env
