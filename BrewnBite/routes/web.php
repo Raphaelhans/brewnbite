@@ -15,6 +15,6 @@ Route::post('/login',[AuthController::class, 'login']);
 Route::post('/register',[AuthController::class, 'register']);
 Route::get('/logout',[AuthController::class, 'logout']);
 
-Route::prefix('home')->name('home.')->group(function () {
+Route::prefix('user')->name('user.')->group(function () {
     Route::get('/', [UserController::class, 'index'])->name('index');
 });
