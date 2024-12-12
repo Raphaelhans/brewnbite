@@ -26,22 +26,22 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Dashboard</a>
+                        <a class="nav-link active" aria-current="page" href="{{ route('admin.dashboard') }}">Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Sales</a>
+                        <a class="nav-link" href="{{ route('admin.sales') }}">Sales</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Inventory</a>
+                        <a class="nav-link" href="{{ route('admin.inventory') }}">Inventory</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Best Sellers</a>
+                        <a class="nav-link" href="{{ route('admin.bestsellers') }}">Best Sellers</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Top Spenders</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Ratings</a>
+                        <a class="nav-link" href="{{ route('admin.ratings') }}">Ratings</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav">
