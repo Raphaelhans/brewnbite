@@ -8,8 +8,21 @@ use App\Http\Controllers\EmployeeController;
 
 Route::redirect('/', '/login');
 
-Route::get('/login', [AdminController::class, 'login'])->name('login');
+// Route Auth
+Route::get('/login', function () {
+    return view('login');
+});
+Route::get('/register', function () {
+    return view('register');
+});
+Route::post('/login',[AuthController::class, 'login']);
+Route::post('/register',[AuthController::class, 'register']);
+Route::get('/logout',[AuthController::class, 'logout']);
+
 // Route User
+Route::prefix('home')->name('home.')->group(function () {
+    Route::get('/', [UserController::class, 'index'])->name('index');
+});
 
 // Route Karyawan
 Route::prefix('employee')->name('employee.')->group(function () {
@@ -24,21 +37,4 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/ratings', [AdminController::class, 'ratings'])->name('ratings');
     Route::get('/sales', [AdminController::class, 'sales'])->name('sales');
     Route::get('/bestsellers', [AdminController::class, 'bestsellers'])->name('bestsellers');
-
-Route::redirect('/', '/login');
-
-Route::get('/register', function () {
-    return view('register');
-});
-
-Route::get('/login', function () {
-    return view('login');
-});
-
-Route::post('/login',[AuthController::class, 'login']);
-Route::post('/register',[AuthController::class, 'register']);
-Route::get('/logout',[AuthController::class, 'logout']);
-
-Route::prefix('home')->name('home.')->group(function () {
-    Route::get('/', [UserController::class, 'index'])->name('index');
 });
