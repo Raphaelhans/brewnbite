@@ -9,4 +9,8 @@ class UserController extends Controller
 	public function index() {
 		return view('user.home');
 	}
+
+	public function menu() {
+		return view('user.menu');
+	}
 }

@@ -43,6 +43,8 @@
 		<link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
 		<script src="https://kit.fontawesome.com/fcd689d6ac.js" crossorigin="anonymous"></script>
 		<script src="https://unpkg.com/@themesberg/flowbite@latest/dist/flowbite.bundle.js"></script>
+		<link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
+
 		<!-- Styles -->
 		<style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
@@ -55,12 +57,12 @@
 		</style>
 </head>
 <body class=" text-gray-900 min-h-screen w-100">
-  <nav class="relative px-4 py-4 flex justify-between items-center bg-white">
+  <nav class="relative px-10 py-4 flex justify-between items-center bg-white">
     <div class="flex flex-row items-center">
       <h1 class="font-semibold text-lg text-emerald-500 ml-2">Brew & Bite</h1>
     </div>
     <ul class="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2  mx-auto flex items-center w-auto space-x-6">
-			<li><a class="text-sm font-semibold  text-emerald-500 hover:text-emerald-700" href="">Home</a></li>
+			<li><a class="text-sm font-semibold  text-emerald-500 hover:text-emerald-700" href="{{ route('user.index') }}">Home</a></li>
 			<li class="text-gray-300">
 				<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill" viewBox="0 0 24 24">
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
@@ -72,7 +74,7 @@
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
 				</svg>
 			</li>
-			<li><a class="text-sm font-semibold text-emerald-500 hover:text-emerald-700" href="/movies">Menu</a></li>
+			<li><a class="text-sm font-semibold text-emerald-500 hover:text-emerald-700" href="{{ route('user.menu') }}">Menu</a></li>
 			<li class="text-gray-300">
 				<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill" viewBox="0 0 24 24">
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />

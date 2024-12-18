@@ -1,22 +1,5 @@
 @extends('template')
 @section('content')
-
-{{-- <div class="px-40 py-10 bg-gray-100 container"> --}}
-  {{-- <h2 class="text-xl font-bold text-indigo-500 text-left mb-2">Top Up Balance</h2>
-  <div class="container w-full flex flex-col bg-white rounded-xl  border border-gray-200 p-8">
-    <h2 class="text-md font-semibold text-gray-800 text-left mb-8">Current Balance Rp</h2>
-    <form action="" method="post">
-      @csrf
-      <div class="">
-        <h2 class="text-sm font-normal text-gray-800 text-left mb-2">Top-up amount</h2>
-        <input type="number" name="amount" class="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-400 text-sm focus:outline-none focus:border-gray-400 focus:bg-white" placeholder="Enter top-up value" required>
-      </div>
-      <div class="flex justify-center m-5">
-        <button type="submit" name="" class="mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-auto py-2 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none px-5">Proceed to Payment</button>
-      </div>
-    </form>
-  </div> --}}
-  {{-- </div> --}}
   
   <div class="min-h-[100%] p-10 flex items-center justify-center bg-[#fcdad0] rounded-br-[150px]">
     <div class="w-1/2 flex flex-col items-center">
@@ -33,7 +16,6 @@
       </div> --}}
 
     </div>
-  
     <div class="w-1/2 flex justify-center">
       <img src="{{ asset('assets/banner.png') }}" alt="Coffee Image" class="w-full">
     </div>
@@ -66,12 +48,89 @@
       </div>
     </div>
   </div>
+  <div class="bg-cover bg-center py-10 my-10 w-full" style="background-image: url('{{ asset('assets/linen.jpg') }}');">
+    <div class="text-center">
+        <p class="text-gray-500 text-sm font-medium" id="date">Tuesday, December 18, 2024</p>
+    </div>
+    <div class="flex items-center justify-center mt-4">
+        <i class="ri-sun-fill text-6xl text-yellow-400"></i>
+        <div class="ml-4 text-center">
+            <p id="weather-description" class="text-2xl font-semibold text-gray-800">Sunny</p>
+            <p id="temperature" class="text-xl text-gray-500">25°C</p>
+        </div>
+    </div>
+    {{-- <div class="mt-6">
+        <div class="flex justify-between text-gray-600 text-sm">
+            <p>Wind</p>
+            <p id="wind">12 km/h</p>
+        </div>
+        <div class="flex justify-between text-gray-600 text-sm mt-2">
+            <p>Humidity</p>
+            <p id="humidity">68%</p>
+        </div>
+    </div> --}}
+    <h1 class="text-emerald-600 text-center font-semibold text-2xl my-10">Recommendations based on the weather and time of day</h1>
+    <div class="flex items-center justify-center p-4 my-10">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-white rounded-3xl shadow-xl overflow-hidden w-72 md:w-80 transform hover:scale-105 transition-transform duration-300">
+          <img src="https://assets.promediateknologi.id/crop/0x0:0x0/750x500/webp/photo/2023/05/22/Red-Velvet-cake-2453917777.png" alt="Red Velvet Cake" class="w-full h-48 object-cover">
+          <div class="p-5">
+            <div class="flex justify-between items-center">
+              <h3 class="font-bold text-emerald-600 text-base">Red Velvet Cake</h3>
+              <p class="text-gray-500 text-sm font-medium">Rp 50.000</p>
+            </div>
+            <div class="flex items-center mt-3 space-x-2">
+              <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+              <span class="text-gray-600 font-medium text-sm">4.96</span>
+              <span class="text-gray-400 text-sm">(76 reviews)</span>
+            </div>
+            <button class="mt-6 w-full bg-gradient-to-r from-emerald-500 to-emerald-700 text-white py-3 px-6 text-sm font-semibold rounded-xl hover:from-emerald-600 hover:to-emerald-800 shadow-md transition-all duration-300">
+              Buy Now
+            </button>
+          </div>
+        </div>
+        <div class="bg-white rounded-3xl shadow-xl overflow-hidden w-72 md:w-80 transform hover:scale-105 transition-transform duration-300">
+          <img src="https://assets.promediateknologi.id/crop/0x0:0x0/750x500/webp/photo/2023/05/22/Red-Velvet-cake-2453917777.png" alt="Red Velvet Cake" class="w-full h-48 object-cover">
+          <div class="p-5">
+            <div class="flex justify-between items-center">
+              <h3 class="font-bold text-emerald-600 text-base">Red Velvet Cake</h3>
+              <p class="text-gray-500 text-sm font-medium">Rp 50.000</p>
+            </div>
+            <div class="flex items-center mt-3 space-x-2">
+              <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+              <span class="text-gray-600 font-medium text-sm">4.96</span>
+              <span class="text-gray-400 text-sm">(76 reviews)</span>
+            </div>
+            <button class="mt-6 w-full bg-gradient-to-r from-emerald-500 to-emerald-700 text-white py-3 px-6 text-sm font-semibold rounded-xl hover:from-emerald-600 hover:to-emerald-800 shadow-md transition-all duration-300">
+              Buy Now
+            </button>
+          </div>
+        </div>
+        <div class="bg-white rounded-3xl shadow-xl overflow-hidden w-72 md:w-80 transform hover:scale-105 transition-transform duration-300">
+          <img src="https://assets.promediateknologi.id/crop/0x0:0x0/750x500/webp/photo/2023/05/22/Red-Velvet-cake-2453917777.png" alt="Red Velvet Cake" class="w-full h-48 object-cover">
+          <div class="p-5">
+            <div class="flex justify-between items-center">
+              <h3 class="font-bold text-emerald-600 text-base">Red Velvet Cake</h3>
+              <p class="text-gray-500 text-sm font-medium">Rp 50.000</p>
+            </div>
+            <div class="flex items-center mt-3 space-x-2">
+              <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+              <span class="text-gray-600 font-medium text-sm">4.96</span>
+              <span class="text-gray-400 text-sm">(76 reviews)</span>
+            </div>
+            <button class="mt-6 w-full bg-gradient-to-r from-emerald-500 to-emerald-700 text-white py-3 px-6 text-sm font-semibold rounded-xl hover:from-emerald-600 hover:to-emerald-800 shadow-md transition-all duration-300">
+              Buy Now
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   
   <div class="flex justify-center my-10">
     <div 
       class="flex items-center justify-center h-96 bg-fixed bg-cover bg-center rounded-3xl w-[70rem] flex-col shadow-2xl"
-      style="background-image: url('https://images.pexels.com/photos/3551722/pexels-photo-3551722.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');"
-    >
+      style="background-image: url('https://images.pexels.com/photos/3551722/pexels-photo-3551722.jpeg?cs=tinysrgb&w=1260&h=750&dpr=1');">
       <h3 class="font-semibold tracking-wider text-2xl text-[#37FFAD]">Location</h3>
       <div class="flex flex-row mt-5">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-10 h-10 text-white" viewBox="0 0 24 24">
