@@ -21,4 +21,5 @@ Route::prefix('user')->name('user.')->group(function () {
     Route::get('/news', [NewsController::class, 'news'])->name('news');
     Route::get('/detailNews', [NewsController::class, 'detailNews'])->name('detail.news');
     Route::get('/profile', [UserController::class, 'displayProfile'])->name('profile');
+    Route::get('/topup', [UserController::class, 'displayTopUp'])->name('topup');
 });

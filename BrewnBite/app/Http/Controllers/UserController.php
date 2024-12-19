@@ -13,4 +13,8 @@ class UserController extends Controller
 	public function displayProfile(){
 		return view('user.profile');
 	}
+
+	public function displayTopUp(){
+		return view('user.topup');
+	}
 }

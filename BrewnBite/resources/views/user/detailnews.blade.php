@@ -2,13 +2,10 @@
 @section('content')
 
 <div class="min-h-screen flex justify-center items-center bg-gray-100">
-    <!-- Card Container -->
     <div class="w-3/4 bg-white rounded-lg shadow-lg overflow-hidden">
-        <!-- Image Section -->
         <div>
             <img src="/assets/news1.jpg" alt="Image" class="w-full h-96 object-cover">
         </div>
-        <!-- Text Section -->
         <div class="p-8">
             <h1 class="text-3xl font-bold mb-6">Noteworthy technology acquisitions 2021</h1>
             <p class="text-gray-600 leading-relaxed mb-4">
