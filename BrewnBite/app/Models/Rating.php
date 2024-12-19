@@ -9,7 +9,7 @@ class Rating extends Model
 {
     protected $table = 'ratings';
     protected $primaryKey = 'id';
-    public $timestamps = true;
+    public $timestamps = false;
     public $incrementing = true;
     protected $fillable = ['id_user', 'id_product', 'id_dtrans', 'rating', 'comment'];
 

@@ -9,7 +9,7 @@ class Topup extends Model
 {
     protected $table = 'topups';
     protected $primaryKey = 'id';
-    public $timestamps = true;
+    public $timestamps = false;
     public $incrementing = true;
     protected $fillable = ['id_user', 'method', 'amount', 'transdate', 'status', 'snap_token'];
 

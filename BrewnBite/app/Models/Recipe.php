@@ -4,9 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Recipe extends Model
 {
+    use SoftDeletes;
     protected $table = 'recipes';
     protected $primaryKey = 'id';
     public $timestamps = true;

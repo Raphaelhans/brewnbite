@@ -5,9 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Htrans extends Model
 {
+    use SoftDeletes;
     protected $table = 'htrans';
     protected $primaryKey = 'id';
     public $timestamps = true;

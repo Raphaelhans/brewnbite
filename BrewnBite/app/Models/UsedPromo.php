@@ -4,9 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class UsedPromo extends Model
 {
+    use SoftDeletes;
     protected $table = 'used_promos';
     protected $primaryKey = 'id';
     public $timestamps = true;
