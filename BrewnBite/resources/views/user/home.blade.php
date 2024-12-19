@@ -1,5 +1,13 @@
 @extends('template')
 @section('content')
+@php
+    $weatherIcon = match($weatherData['weather'][0]['icon']) {
+        '01d' => 'ri-sun-fill',       
+        '01n' => 'ri-moon-fill',      
+        '02d', '02n' => 'ri-cloud-fill', 
+        default => 'ri-cloudy-fill', 
+    };
+@endphp
   
   <div class="min-h-[100%] p-10 flex items-center justify-center bg-[#fcdad0] rounded-br-[150px]">
     <div class="w-1/2 flex flex-col items-center">
@@ -50,25 +58,15 @@
   </div>
   <div class="bg-cover bg-center py-10 my-10 w-full" style="background-image: url('{{ asset('assets/linen.jpg') }}');">
     <div class="text-center">
-        <p class="text-gray-500 text-sm font-medium" id="date">Tuesday, December 18, 2024</p>
+      <p class="text-gray-500 text-sm font-medium" id="date">{{ $date }}</p>
     </div>
     <div class="flex items-center justify-center mt-4">
-        <i class="ri-sun-fill text-6xl text-yellow-400"></i>
-        <div class="ml-4 text-center">
-            <p id="weather-description" class="text-2xl font-semibold text-gray-800">Sunny</p>
-            <p id="temperature" class="text-xl text-gray-500">25°C</p>
-        </div>
+      <i class="{{ $weatherIcon }} text-6xl text-yellow-400"></i>
+      <div class="ml-4 text-center">
+          <p id="weather-description" class="text-2xl font-semibold text-gray-800">{{ ucfirst($weatherData['weather'][0]['main']) }}</p>
+          <p id="temperature" class="text-xl text-gray-500">{{ round($weatherData['main']['temp']) }}°C</p>
+      </div>
     </div>
-    {{-- <div class="mt-6">
-        <div class="flex justify-between text-gray-600 text-sm">
-            <p>Wind</p>
-            <p id="wind">12 km/h</p>
-        </div>
-        <div class="flex justify-between text-gray-600 text-sm mt-2">
-            <p>Humidity</p>
-            <p id="humidity">68%</p>
-        </div>
-    </div> --}}
     <h1 class="text-emerald-600 text-center font-semibold text-2xl my-10">Recommendations based on the weather and time of day</h1>
     <div class="flex items-center justify-center p-4 my-10">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -131,7 +129,7 @@
     <div 
       class="flex items-center justify-center h-96 bg-fixed bg-cover bg-center rounded-3xl w-[70rem] flex-col shadow-2xl"
       style="background-image: url('https://images.pexels.com/photos/3551722/pexels-photo-3551722.jpeg?cs=tinysrgb&w=1260&h=750&dpr=1');">
-      <h3 class="font-semibold tracking-wider text-2xl text-[#37FFAD]">Location</h3>
+      <h3 class="font-semibold tracking-wider text-2xl text-[#37FFAD]">Our Location</h3>
       <div class="flex flex-row mt-5">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-10 h-10 text-white" viewBox="0 0 24 24">
           <path d="M12 2C8.13401 2 5 5.13401 5 9C5 13.6622 11.1825 21.6618 11.5323 22.0726C11.8005 22.3945 12.1995 22.3945 12.4677 22.0726C12.8175 21.6618 19 13.6622 19 9C19 5.13401 15.866 2 12 2ZM12 11.5C10.6193 11.5 9.5 10.3807 9.5 9C9.5 7.61929 10.6193 6.5 12 6.5C13.3807 6.5 14.5 7.61929 14.5 9C14.5 10.3807 13.3807 11.5 12 11.5Z"/>
