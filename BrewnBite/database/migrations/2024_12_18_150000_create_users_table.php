@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->integer('role')->default('member');
+            $table->integer('role');
             $table->integer('membership')->default('1');
             $table->decimal('credit', 10, 2)->default(0);
             $table->decimal('total_spent', 10, 2)->default(0);

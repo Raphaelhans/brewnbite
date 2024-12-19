@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('htrans', function (Blueprint $table) {
+        Schema::create('promos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_user')->constrained('users')->onDelete('cascade');
-            $table->decimal('subtotal', 10, 2);
-            $table->foreignId('id_promo')->constrained('promos')->onDelete('set null');
-            $table->decimal('grandtotal', 10, 2);
+            $table->string('name');
+            $table->decimal('discount', 5, 2);
+            $table->decimal('min_transaction', 10, 2);
+            $table->decimal('max_discount', 10, 2);
+            $table->string('requirement')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('htrans');
+        Schema::dropIfExists('promos');
     }
 };

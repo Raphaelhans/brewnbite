@@ -18,7 +18,6 @@ return new class extends Migration
             $table->foreignId('id_dtrans')->constrained('dtrans')->onDelete('cascade');
             $table->tinyInteger('rating');
             $table->text('comment')->nullable();
-            $table->timestamps();
         });
     }
 

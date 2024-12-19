@@ -18,7 +18,6 @@ return new class extends Migration
             $table->integer('amount');
             $table->decimal('price_per_item', 10, 2);
             $table->decimal('item_subtotal', 10, 2);
-            $table->timestamps();
         });
     }
 

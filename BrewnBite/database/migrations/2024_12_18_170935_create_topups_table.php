@@ -19,7 +19,6 @@ return new class extends Migration
             $table->dateTime('transdate');
             $table->integer('status');
             $table->string('snap_token')->nullable();
-            $table->timestamps();
         });
     }
 

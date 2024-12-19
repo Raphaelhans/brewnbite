@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('promos', function (Blueprint $table) {
+        Schema::create('ingredients', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->decimal('discount', 5, 2);
-            $table->decimal('min_transaction', 10, 2);
-            $table->decimal('max_discount', 10, 2);
-            $table->string('requirement')->nullable();
+            $table->integer('stock');
+            $table->string('unit');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('promo');
+        Schema::dropIfExists('ingredients');
     }
 };
