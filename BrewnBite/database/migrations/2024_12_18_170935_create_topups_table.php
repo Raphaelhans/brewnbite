@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('topups', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_user')->constrained('users')->onDelete('cascade');
-            $table->string('method');
-            $table->decimal('amount', 10, 2);
+            $table->string('method')->default('-');
+            $table->integer('amount');
             $table->dateTime('transdate');
             $table->integer('status');
             $table->string('snap_token')->nullable();

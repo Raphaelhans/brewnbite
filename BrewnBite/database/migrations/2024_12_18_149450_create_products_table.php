@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->foreignId('id_category')->constrained('categories')->onDelete('cascade');
             $table->foreignId('id_subcategory')->constrained('subcategories')->onDelete('cascade');
-            $table->decimal('price', 10, 2);
-            $table->decimal('rating', 3, 2)->nullable();
+            $table->integer('price');
+            $table->decimal('rating', 3, 2)->default(0);
             $table->text('description')->nullable();
             $table->string('weather')->nullable();
             $table->string('img_url')->nullable();

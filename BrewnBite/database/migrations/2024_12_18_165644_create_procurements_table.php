@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('id_ingredient')->constrained('ingredients')->onDelete('cascade');
             $table->integer('amount');
-            $table->decimal('price_per_item', 10, 2);
-            $table->decimal('item_subtotal', 10, 2);
+            $table->integer('price_per_item');
+            $table->integer('item_subtotal');
             $table->timestamps();
         });
     }

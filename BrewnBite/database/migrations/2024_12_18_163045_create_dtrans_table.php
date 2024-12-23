@@ -16,8 +16,8 @@ return new class extends Migration
             $table->foreignId('id_htrans')->constrained('htrans')->onDelete('cascade');
             $table->foreignId('id_product')->constrained('products')->onDelete('cascade');
             $table->integer('amount');
-            $table->decimal('price_per_item', 10, 2);
-            $table->decimal('item_subtotal', 10, 2);
+            $table->integer('price_per_item');
+            $table->integer('item_subtotal');
         });
     }
 

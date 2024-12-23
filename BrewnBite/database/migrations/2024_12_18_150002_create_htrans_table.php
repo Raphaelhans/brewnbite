@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('htrans', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_user')->constrained('users')->onDelete('cascade');
-            $table->decimal('subtotal', 10, 2);
+            $table->integer('subtotal');
             $table->foreignId('id_promo')->nullable()->constrained('promos')->onDelete('set null');
-            $table->decimal('grandtotal', 10, 2);
+            $table->integer('grandtotal');
             $table->softDeletes();
             $table->timestamps();
         });
