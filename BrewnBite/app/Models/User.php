@@ -8,6 +8,20 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Model
 {
+    /*
+    Membership
+    0: Admin/Karyawan
+    1: 0 - 49k
+    2: 50 - 99k
+    3: 100k - 199k
+    4: +200k
+
+    Role:
+    1: Cust
+    2: Karyawan
+    3: Admin
+    */
+    
     use SoftDeletes;
     protected $table = 'users';
     protected $primaryKey = 'id';

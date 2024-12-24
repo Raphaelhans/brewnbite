@@ -14,7 +14,7 @@ class Product extends Model
     protected $primaryKey = 'id';
     public $timestamps = true;
     public $incrementing = true;
-    protected $fillable = ['name', 'id_category', 'id_subcategory', 'price', 'rating', 'description', 'weather','img_url'];
+    protected $fillable = ['name', 'id_category', 'id_subcategory', 'price', 'stock', 'rating', 'description', 'weather','img_url'];
 
     // Satu record product hanya memiliki satu record category
     public function category(): BelongsTo
@@ -44,5 +44,11 @@ class Product extends Model
     public function recipe(): HasMany
     {
         return $this->hasMany(Recipe::class, 'id_product', 'id');
+    }
+
+    // Satu record product memiliki banyak record productions
+    public function productions(): HasMany
+    {
+        return $this->hasMany(Production::class, 'id_product', 'id');
     }
 }
