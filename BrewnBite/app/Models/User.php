@@ -2,47 +2,42 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class User extends Authenticatable
+class User extends Model
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    /*
+    Membership
+    0: Admin/Karyawan
+    1: 0 - 49k
+    2: 50 - 99k
+    3: 100k - 199k
+    4: +200k
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    Role:
+    1: Cust
+    2: Karyawan
+    3: Admin
+    */
+    
+    use SoftDeletes;
+    protected $table = 'users';
+    protected $primaryKey = 'id';
+    public $timestamps = true;
+    public $incrementing = true;
+    protected $fillable = ['name', 'email', 'password', 'role', 'membership', 'credit', 'total_spent'];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
+    // Satu record user memiliki banyak record htrans
+    public function htrans(): HasMany
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        return $this->hasMany(Htrans::class, 'id_user', 'id');
+    }
+
+    // Satu record user memiliki banyak record rating
+    public function rating(): HasMany
+    {
+        return $this->hasMany(Rating::class, 'id_user', 'id');
     }
 }

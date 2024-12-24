@@ -32,9 +32,6 @@
                         <a class="nav-link" href="{{ route('admin.sales') }}">Sales</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.inventory') }}">Inventory</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin.bestsellers') }}">Best Sellers</a>
                     </li>
                     <li class="nav-item">
@@ -43,10 +40,25 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin.ratings') }}">Ratings</a>
                     </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Master
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <a class="dropdown-item" href="{{ route('admin.inventory') }}">Inventory</a>
+                          <a class="dropdown-item" href="#">Category</a>
+                          <a class="dropdown-item" href="#">Ingredient</a>
+                          <a class="dropdown-item" href="#">Product</a>
+                          <a class="dropdown-item" href="#">Promo</a>
+                          <a class="dropdown-item" href="#">Sub-category</a>
+                          <a class="dropdown-item" href="#">User</a>
+                          {{-- <div class="dropdown-divider"></div> --}}
+                        </div>
+                    </li>
                 </ul>
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link text-danger" href="#">Logout</a>
+                        <a class="nav-link text-danger" href="{{ route('logout') }}">Logout</a>
                     </li>
                 </ul>
             </div>

@@ -17,7 +17,7 @@ Route::get('/register', function () {
 });
 Route::post('/login',[AuthController::class, 'login']);
 Route::post('/register',[AuthController::class, 'register']);
-Route::get('/logout',[AuthController::class, 'logout']);
+Route::get('/logout',[AuthController::class, 'logout'])->name('logout');
 
 Route::prefix('user')->name('user.')->group(function () {
     Route::get('/', [UserController::class, 'index'])->name('index');
