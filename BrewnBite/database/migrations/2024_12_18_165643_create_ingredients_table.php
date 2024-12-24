@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->integer('stock');
             $table->string('unit');
-            $table->softDeletes();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

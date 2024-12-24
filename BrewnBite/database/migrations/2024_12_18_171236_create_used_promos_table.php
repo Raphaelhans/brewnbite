@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('id_promo')->constrained('promos')->onDelete('cascade');
             $table->foreignId('id_htrans')->constrained('htrans')->onDelete('cascade');
-            $table->softDeletes();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

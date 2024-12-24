@@ -18,8 +18,8 @@ return new class extends Migration
             $table->decimal('min_transaction', 10, 2);
             $table->decimal('max_discount', 10, 2);
             $table->integer('requirement');
-            $table->softDeletes();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

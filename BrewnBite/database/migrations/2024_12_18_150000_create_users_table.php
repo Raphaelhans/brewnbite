@@ -21,6 +21,7 @@ return new class extends Migration
             $table->decimal('credit', 10, 2)->default(0);
             $table->decimal('total_spent', 10, 2)->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

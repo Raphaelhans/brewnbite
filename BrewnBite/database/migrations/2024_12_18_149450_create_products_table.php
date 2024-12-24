@@ -17,12 +17,13 @@ return new class extends Migration
             $table->foreignId('id_category')->constrained('categories')->onDelete('cascade');
             $table->foreignId('id_subcategory')->constrained('subcategories')->onDelete('cascade');
             $table->integer('price');
+            $table->integer('stock');
             $table->decimal('rating', 3, 2)->default(0);
             $table->text('description')->nullable();
             $table->string('weather')->nullable();
             $table->string('img_url')->nullable();
-            $table->softDeletes();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

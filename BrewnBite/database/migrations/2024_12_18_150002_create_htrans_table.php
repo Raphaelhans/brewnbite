@@ -17,8 +17,8 @@ return new class extends Migration
             $table->integer('subtotal');
             $table->foreignId('id_promo')->nullable()->constrained('promos')->onDelete('set null');
             $table->integer('grandtotal');
-            $table->softDeletes();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
