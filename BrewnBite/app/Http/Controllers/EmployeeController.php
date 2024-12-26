@@ -15,4 +15,13 @@ class EmployeeController extends Controller
     {
         return view('employee.history');
     }
+
+    public function inventory()
+    {
+        return view('employee.inventory');
+    }
+    public function listmenu()
+    {
+        return view('employee.listmenu');
+    }
 }

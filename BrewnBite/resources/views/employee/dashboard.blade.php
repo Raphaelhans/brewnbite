@@ -20,8 +20,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script>
+    <link rel="stylesheet" href="{{ asset('/Adminlte/dist/css/adminlte.min.css') }}">
 
-    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -33,95 +33,87 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                <a class="nav-link active" aria-current="page" href="#">Menu</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/kar1">History</a>
+                <a class="nav-link" aria-current="page" href="{{ route('employee.listmenu') }}">List Menu</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ route('employee.history') }}">History</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ route('employee.inventory') }}">Inventory</a>
               </li>
             </ul>
           </div>
         </div>
     </nav>
-    <div class="main p-3">
-        <div>
-            <h1 class="text-center">Home</h1>
-            <h1>Add or Update Menu</h1>
-            <div style="max-width: 400px;">
-                <form action="/menu/insert" method="post">
-                    @csrf
-                    <div style="margin-bottom: 10px;">
-                        <label for="username">Name :</label>
-                        <input type="text" id="username" name="name">
-                    </div>
-                    <div style="margin-bottom: 10px;">
-                        <label for="password">Description :</label>
-                        <input type="text" id="password" name="desc">
-                    </div>
-                    <div style="margin-bottom: 10px;">
-                        <label for="name">Price :</label>
-                        <input type="text" id="name" name="price">
-                    </div>
-                    <div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-                </form>
-            </div>
+    <h1 class="text-center">Menu</h1>
+    <div class="main p-3 container d-flex justify-content-between align-items-center" >
+        <div style="max-width: 400px;" class="w-100">
+            <h3>Add Menu</h3>
+            <form action="/menu/insertmenu" method="post">
+                @csrf
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Name</label>
+                    <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Enter Menu Name">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Category</label><br>
+                    <select name="category" id="" class="form-select">
+                        <option value="">Temporary</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Sub Category</label><br>
+                    <select name="subcategory" id="" class="form-select">
+                        <option value="">Temporary</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Price</label>
+                    <input type="number" min="0" class="form-control" id="exampleInputEmail1" placeholder="Enter menu price">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Description</label>
+                    <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Enter menu price">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
         </div>
-        <br>
-        <table id="menuTable" class="table table-striped" style="width:100%">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Position</th>
-                    <th>Office</th>
-                    <th>Age</th>
-                    <th>Start date</th>
-                    <th>Salary</th>
-                </tr>
-            </thead>
-            <tbody>
-                {{-- <tr>
-                    <td>Tiger Nixon</td>
-                    <td>System Architect</td>
-                    <td>Edinburgh</td>
-                    <td>61</td>
-                    <td>2011-04-25</td>
-                    <td>$320,800</td>
-                </tr> --}}
-            </tbody>
-        </table>
-                
-        {{-- @foreach ($employees as $item)
-            <tr>
-                <td>{{ $item['name'] }}</td>
-                <td>{{ $item['username'] }}</td>
-                <td>{{ $item['password'] }}</td>
-                {{-- <td>{{ $item['status'] }}</td> --}}
-                {{-- <td>Active</td>
-                <td>
-                    <form action="/karyawan/update" method="post">
-                        @csrf
-                        @method('PATCH')
-                        <input type="hidden" name="username" value="{{ $item['username'] }}">
-                        <input type="text" name="name" placeholder="New Name" class="form-control" required>
-                        <input type="text" name="password" placeholder="New Password" class="form-control" required>
-                        <button type="submit" class="btn btn-primary mt-1">Update</button>
-                    </form>
-                </td>
-                <td>
-                    <form action="/karyawan/delete" method="post">
-                        @csrf
-                        @method('DELETE')
-                        <input type="hidden" name="username" value="{{ $item['username'] }}">
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                    </form>
-                </td>
-            </tr> --}}
-        {{-- @endforeach  --}}
+
+        <div style="max-width: 400px;" class="w-100">
+            <h3 class="mt-5">Add Recipe</h3>
+            <form action="/menu/insertrecipe" method="post">
+                @csrf
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Menu</label><br>
+                    <select name="category" id="" class="form-select">
+                        <option value="">Temporary</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Ingredient</label><br>
+                    <select name="category" id="" class="form-select">
+                        <option value="">Temporary</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Unit</label>
+                    <input type="number" min="0" class="form-control" id="exampleInputEmail1" placeholder="Enter menu price">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+        </div>
+        <br>  
     </div>
 
 <script>
-    new DataTable('#menuTable');
+    $(document).ready(function () {
+        $('#menuTable').DataTable(); 
+    });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 </html>
