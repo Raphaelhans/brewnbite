@@ -26,6 +26,8 @@ class DatabaseSeeder extends Seeder
             DtransTableSeeder::class,
             ProductionsTableSeeder::class,
             ProcurementsTableSeeder::class,
+            AddonsTableSeeder::class,
+            DaddonsTableSeeder::class,
         ]);
     }
 }
