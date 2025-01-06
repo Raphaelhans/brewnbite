@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Middleware\CheckUserRole;
 
 Route::redirect('/', '/login');
 
@@ -28,6 +29,12 @@ Route::prefix('user')->name('user.')->group(function () {
 Route::prefix('employee')->name('employee.')->group(function () {
     Route::get('/dashboard', [EmployeeController::class, 'dashboard'])->name('dashboard');
     Route::get('/history', [EmployeeController::class, 'history'])->name('history');
+    Route::get('/inventory', [EmployeeController::class, 'inventory'])->name('inventory');
+});
+Route::get('/get-category/{id}', [EmployeeController::class, 'getCategory']);
+
+Route::prefix('menu')->group(function () {
+    Route::post('/insert', [EmployeeController::class, 'menu']);
 });
 
 // Route Admin
@@ -43,6 +50,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
 Route::prefix('employee')->name('employee.')->group(function () {
     Route::get('/dashboard', [EmployeeController::class, 'dashboard'])->name('dashboard');
     Route::get('/history', [EmployeeController::class, 'history'])->name('history');
+    Route::get('/inventory', [EmployeeController::class, 'inventory'])->name('inventory');
+    Route::get('/listmenu', [EmployeeController::class, 'listmenu'])->name('listmenu');
 });
 
 // Route Admin

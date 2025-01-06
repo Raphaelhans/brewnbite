@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Employee History</title>
+    <title>Employee</title>
 
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <script src="https://kit.fontawesome.com/b9b5e10605.js" crossorigin="anonymous"></script>
@@ -20,6 +20,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script>
+    <link rel="stylesheet" href="{{ asset('/Adminlte/dist/css/adminlte.min.css') }}">
+
 </head>
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -34,10 +36,10 @@
                 <a class="nav-link" aria-current="page" href="{{ route('employee.dashboard') }}">Menu</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link " aria-current="page" href="{{ route('employee.listmenu') }}">List Menu</a>
+                <a class="nav-link active" aria-current="page" href="#">List Menu</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" href="#">History</a>
+                <a class="nav-link" href="{{ route('employee.history') }}">History</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="{{ route('employee.inventory') }}">Inventory</a>
@@ -48,68 +50,49 @@
     </nav>
     <div class="main p-3">
         <div>
-            <h1 class="text-center">History</h1>
-        </div>
-        <table id="historyTable" class="table table-striped" style="width:100%">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Position</th>
-                    <th>Office</th>
-                    <th>Age</th>
-                    <th>Start date</th>
-                    <th>Salary</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Tiger Nixon</td>
-                    <td>System Architect</td>
-                    <td>Edinburgh</td>
-                    <td>61</td>
-                    <td>2011-04-25</td>
-                    <td>$320,800</td>
-                </tr>
-                <tr>
-                    <td>Garrett Winters</td>
-                    <td>Accountant</td>
-                    <td>Tokyo</td>
-                    <td>63</td>
-                    <td>2011-07-25</td>
-                    <td>$170,750</td>
-                </tr>
-                <tr>
-                    <td>Ashton Cox</td>
-                    <td>Junior Technical Author</td>
-                    <td>San Francisco</td>
-                    <td>66</td>
-                    <td>2009-01-12</td>
-                    <td>$86,000</td>
-                </tr>
-                <tr>
-                    <td>Cedric Kelly</td>
-                    <td>Senior Javascript Developer</td>
-                    <td>Edinburgh</td>
-                    <td>22</td>
-                    <td>2012-03-29</td>
-                    <td>$433,060</td>
-                </tr>
-                <tr>
-                    <td>Airi Satou</td>
-                    <td>Accountant</td>
-                    <td>Tokyo</td>
-                    <td>33</td>
-                    <td>2008-11-28</td>
-                    <td>$162,700</td>
-                </tr>
-            </tbody>
-        </table>
-        <br>
-        
+            <h1 class="text-center">List Menu</h1>
+            
+            <table id="menuTable" class="table table-striped " style="width:100%">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Sub Category</th>
+                        <th>Price</th>
+                        <th>Stock</th>
+                        <th>Rating</th>
+                        <th>Description</th>
+                        <th>Created</th>
+                        <th>Updated</th>
+                        <th>Deleted</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($menu as $m)
+                    <tr>
+                        <td>{{ $m->id }}</td>
+                        <td>{{ $m->name }}</td>
+                        <td>{{ $m->category->name }}</td>
+                        <td>{{ $m->subcategory->name }}</td>
+                        <td>{{ $m->price }}</td>
+                        <td>{{ $m->stock }}</td>
+                        <td>{{ $m->rating }}</td>
+                        <td>{{ $m->description }}</td>
+                        <td>{{ $m->created_at }}</td>
+                        <td>{{ $m->updated_at }}</td>
+                        <td>{{ $m->deleted_at }}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>            
     </div>
 
 <script>
-    new DataTable('#historyTable');
+    $(document).ready(function () {
+        $('#menuTable').DataTable(); 
+    });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 </html>
