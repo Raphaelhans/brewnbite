@@ -6,11 +6,14 @@
         <h2 class="text-2xl font-bold text-emerald-600 text-center mb-6">Edit Profile</h2>
 
         <div class="flex justify-center mb-4">
-            <img 
-                src="https://via.placeholder.com/100" 
-                alt="Current Profile Picture" 
-                class="w-24 h-24 rounded-full border-4 border-gray-300"
-            >
+            {{-- <img 
+                src="" 
+                alt=""
+                class="h-24 w-24 bg-[#fcdad0] rounded-full flex items-center justify-center text-emerald-600 font-semibold text-center"
+            > --}}
+            <div class="h-24 w-24 bg-[#fcdad0] rounded-full flex items-center justify-center text-emerald-600 font-semibold text-center text-4xl">
+                S
+            </div>
         </div>
         <form action="" method="post">
             <div class="mb-4">

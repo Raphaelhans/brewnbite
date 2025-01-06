@@ -94,9 +94,9 @@
           <div class="font-medium truncate mt-1">Balance : Rp 50000</div>
         </div>
         <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownInformationButton">
-		  <li><a href="/profile" class="block px-4 py-2 hover:bg-emerald-100">Edit Profile</a></li>
-          <li><a href="/topup" class="block px-4 py-2 hover:bg-emerald-100">Top Up Balance</a></li>
-          <li><a href="/topup" class="block px-4 py-2 hover:bg-emerald-100">Promo & Voucher</a></li>
+		  <li><a href="/user/profile" class="block px-4 py-2 hover:bg-emerald-100">Edit Profile</a></li>
+          <li><a href="/user/topup" class="block px-4 py-2 hover:bg-emerald-100">Top Up Balance</a></li>
+          <li><a href="/" class="block px-4 py-2 hover:bg-emerald-100">Promo & Voucher</a></li>
           <li><a href="/logout" class="block px-4 py-2 hover:bg-emerald-100">Log Out</a></li>
         </ul>
       </div>
