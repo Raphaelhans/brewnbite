@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
@@ -21,6 +22,10 @@ Route::get('/logout',[AuthController::class, 'logout'])->name('logout');
 
 Route::prefix('user')->name('user.')->group(function () {
     Route::get('/', [UserController::class, 'index'])->name('index');
+    Route::get('/news', [NewsController::class, 'news'])->name('news');
+    Route::get('/detailNews/{id}', [NewsController::class, 'detailNews'])->name('detail.news');
+    Route::get('/profile', [UserController::class, 'displayProfile'])->name('profile');
+    Route::get('/topup', [UserController::class, 'displayTopUp'])->name('topup');
     Route::get('/menu', [UserController::class, 'menu'])->name('menu');
 });
 
@@ -52,4 +57,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/ratings', [AdminController::class, 'ratings'])->name('ratings');
     Route::get('/sales', [AdminController::class, 'sales'])->name('sales');
     Route::get('/bestsellers', [AdminController::class, 'bestsellers'])->name('bestsellers');
+    Route::get('/news', [NewsController::class, 'news'])->name('news');
+    Route::get('/detailNews/{id}', [NewsController::class, 'detailNews'])->name('detail.news');
+    Route::get('/profile', [UserController::class, 'displayProfile'])->name('profile');
+    Route::get('/topup', [UserController::class, 'displayTopUp'])->name('topup');
 });
