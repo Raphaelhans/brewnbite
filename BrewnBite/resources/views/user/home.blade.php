@@ -61,7 +61,8 @@
       <p class="text-gray-500 text-sm font-medium" id="date">{{ $date }}</p>
     </div>
     <div class="flex items-center justify-center mt-4">
-      <i class="{{ $weatherIcon }} text-6xl text-yellow-400"></i>
+      {{-- <i class="{{ $weatherIcon }} text-6xl text-yellow-400"></i> --}}
+      <img src="http://openweathermap.org/img/wn/{{ $weatherData['weather'][0]['icon'] }}@2x.png" alt="Weather Icon">
       <div class="ml-4 text-center">
           <p id="weather-description" class="text-2xl font-semibold text-gray-800">{{ ucfirst($weatherData['weather'][0]['main']) }}</p>
           <p id="temperature" class="text-xl text-gray-500">{{ round($weatherData['main']['temp']) }}°C</p>
