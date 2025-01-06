@@ -33,21 +33,6 @@ Route::prefix('employee')->name('employee.')->group(function () {
 // Route Admin
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
-    Route::get('/inventory', [AdminController::class, 'inventory'])->name('inventory');
-    Route::get('/ratings', [AdminController::class, 'ratings'])->name('ratings');
-    Route::get('/sales', [AdminController::class, 'sales'])->name('sales');
-    Route::get('/bestsellers', [AdminController::class, 'bestsellers'])->name('bestsellers');
-});
-
-// Route Karyawan
-Route::prefix('employee')->name('employee.')->group(function () {
-    Route::get('/dashboard', [EmployeeController::class, 'dashboard'])->name('dashboard');
-    Route::get('/history', [EmployeeController::class, 'history'])->name('history');
-});
-
-// Route Admin
-Route::prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
     Route::get('/ratings', [AdminController::class, 'ratings'])->name('ratings');
     Route::get('/sales', [AdminController::class, 'sales'])->name('sales');
     Route::get('/bestsellers', [AdminController::class, 'bestsellers'])->name('bestsellers');
