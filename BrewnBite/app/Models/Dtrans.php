@@ -32,4 +32,10 @@ class Dtrans extends Model
     {
         return $this->hasOne(Rating::class, 'id_dtrans', 'id');
     }
+
+    // Satu record dtrans memiliki banyak record daddons
+    public function daddons()
+    {
+        return $this->hasMany(Daddon::class, 'id_dtrans', 'id');
+    }
 }
