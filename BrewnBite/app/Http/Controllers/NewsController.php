@@ -10,7 +10,8 @@ class NewsController extends Controller
 {
     public function news()
     {
-        $response = Http::get('https://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey=' . '8882727ad8564d3ab0383c421f328972');
+        $key = '8882727ad8564d3ab0383c421f328972';
+        $response = Http::get('https://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey=' . $key);
         $news = $response->json();
         
         $articles = collect($news['articles']);
@@ -20,7 +21,8 @@ class NewsController extends Controller
 
     public function detailNews($id)
     {
-        $response = Http::get('https://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey=' . '8882727ad8564d3ab0383c421f328972');
+        $key = '8882727ad8564d3ab0383c421f328972';
+        $response = Http::get('https://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey=' . $key);
         $news = $response->json();
 
         $articles = collect($news['articles']);
