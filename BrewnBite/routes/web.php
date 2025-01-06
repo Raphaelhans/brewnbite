@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\NewsController;
 use App\Http\Middleware\CheckUserRole;
 
 Route::redirect('/', '/login');
