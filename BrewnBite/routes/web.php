@@ -23,11 +23,26 @@ Route::get('/logout',[AuthController::class, 'logout'])->name('logout');
 
 Route::prefix('user')->name('user.')->group(function () {
     Route::get('/', [UserController::class, 'index'])->name('index');
-    Route::get('/menu', [UserController::class, 'menu'])->name('menu');
     Route::get('/news', [NewsController::class, 'news'])->name('news');
     Route::get('/detailNews/{id}', [NewsController::class, 'detailNews'])->name('detail.news');
     Route::get('/profile', [UserController::class, 'displayProfile'])->name('profile');
     Route::get('/topup', [UserController::class, 'displayTopUp'])->name('topup');
+    Route::prefix('/menu')->name('menu.')->group(function () {
+        Route::get('/', [UserController::class, 'menu'])->name('index');
+        Route::get('/detail', [UserController::class, 'detailMenu'])->name('detail');
+    });
+});
+
+// Route Karyawan
+Route::prefix('employee')->name('employee.')->group(function () {
+    Route::get('/dashboard', [EmployeeController::class, 'dashboard'])->name('dashboard');
+    Route::get('/history', [EmployeeController::class, 'history'])->name('history');
+    Route::get('/inventory', [EmployeeController::class, 'inventory'])->name('inventory');
+});
+Route::get('/get-category/{id}', [EmployeeController::class, 'getCategory']);
+
+Route::prefix('menu')->group(function () {
+    Route::post('/insert', [EmployeeController::class, 'menu']);
 });
 
 // Route Karyawan
