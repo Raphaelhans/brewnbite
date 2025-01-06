@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
@@ -23,18 +24,10 @@ Route::get('/logout',[AuthController::class, 'logout'])->name('logout');
 Route::prefix('user')->name('user.')->group(function () {
     Route::get('/', [UserController::class, 'index'])->name('index');
     Route::get('/menu', [UserController::class, 'menu'])->name('menu');
-});
-
-// Route Karyawan
-Route::prefix('employee')->name('employee.')->group(function () {
-    Route::get('/dashboard', [EmployeeController::class, 'dashboard'])->name('dashboard');
-    Route::get('/history', [EmployeeController::class, 'history'])->name('history');
-    Route::get('/inventory', [EmployeeController::class, 'inventory'])->name('inventory');
-});
-Route::get('/get-category/{id}', [EmployeeController::class, 'getCategory']);
-
-Route::prefix('menu')->group(function () {
-    Route::post('/insert', [EmployeeController::class, 'menu']);
+    Route::get('/news', [NewsController::class, 'news'])->name('news');
+    Route::get('/detailNews/{id}', [NewsController::class, 'detailNews'])->name('detail.news');
+    Route::get('/profile', [UserController::class, 'displayProfile'])->name('profile');
+    Route::get('/topup', [UserController::class, 'displayTopUp'])->name('topup');
 });
 
 // Route Karyawan
@@ -44,10 +37,16 @@ Route::prefix('employee')->name('employee.')->group(function () {
     Route::get('/inventory', [EmployeeController::class, 'inventory'])->name('inventory');
     Route::get('/listmenu', [EmployeeController::class, 'listmenu'])->name('listmenu');
 });
+Route::get('/get-category/{id}', [EmployeeController::class, 'getCategory']);
+
+Route::prefix('menu')->group(function () {
+    Route::post('/insert', [EmployeeController::class, 'menu']);
+});
 
 // Route Admin
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::get('/inventory', [AdminController::class, 'inventory'])->name('inventory');
     Route::get('/ratings', [AdminController::class, 'ratings'])->name('ratings');
     Route::get('/sales', [AdminController::class, 'sales'])->name('sales');
     Route::get('/bestsellers', [AdminController::class, 'bestsellers'])->name('bestsellers');
