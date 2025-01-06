@@ -49,34 +49,48 @@
         </div>
     </nav>
     <h1 class="text-center">Menu</h1>
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('status') }}
+        </div>
+    @endif
+    @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('status') }}
+        </div>
+    @endif
     <div class="main p-3 container d-flex justify-content-between align-items-center" >
         <div style="max-width: 400px;" class="w-100">
             <h3>Add Menu</h3>
-            <form action="/menu/insertmenu" method="post">
+            <form action="menu/insert" method="post">
                 @csrf
                 <div class="form-group">
                     <label for="exampleInputEmail1">Name</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Enter Menu Name">
+                    <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Enter Menu Name" name="name" required>
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Category</label><br>
-                    <select name="category" id="" class="form-select">
-                        <option value="">Temporary</option>
+                    <select name="category" id="category" class="form-select" onchange="fetchCategory()">
+                        @foreach ($category as $item)
+                            <option value="{{ $item->id }}">{{ $item->name }}</option>  
+                        @endforeach
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Sub Category</label><br>
-                    <select name="subcategory" id="" class="form-select">
-                        <option value="">Temporary</option>
+                    <select name="subcategory" id="subcategory" class="form-select">
+                        @foreach ($subcategory as $item)
+                            <option value="{{ $item->id }}">{{ $item->name }}</option>  
+                        @endforeach
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Price</label>
-                    <input type="number" min="0" class="form-control" id="exampleInputEmail1" placeholder="Enter menu price">
+                    <input type="number" min="0" class="form-control" id="exampleInputEmail1" placeholder="Enter menu price" name="price" required>
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Description</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Enter menu price">
+                    <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Enter menu price" name="desc" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
@@ -88,19 +102,33 @@
                 @csrf
                 <div class="form-group">
                     <label for="exampleInputEmail1">Menu</label><br>
-                    <select name="category" id="" class="form-select">
-                        <option value="">Temporary</option>
+                    <select name="menu" id="menu" class="form-select" >
+                        @foreach ($menu as $item)
+                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Ingredient</label><br>
-                    <select name="category" id="" class="form-select">
-                        <option value="">Temporary</option>
+                    <select name="ingredient" id="" class="form-select">
+                        @foreach ($ingredient as $item)
+                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                        @endforeach
                     </select>
                 </div>
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Unit</label>
-                    <input type="number" min="0" class="form-control" id="exampleInputEmail1" placeholder="Enter menu price">
+                <div class="d-flex">
+                    <div class="form-group w-100">
+                        <label for="exampleInputEmail1">Stock</label>
+                        <input type="number" min="0" class="form-control" id="exampleInputEmail1" placeholder="Enter Stock" name="stock">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Unit</label>
+                        <select name="unit" id="" class="form-select">
+                            <option value="gr">gr</option>
+                            <option value="ml">ml</option>
+                            <option value="pcs">pcs</option>
+                        </select>
+                    </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
@@ -113,6 +141,28 @@
     $(document).ready(function () {
         $('#menuTable').DataTable(); 
     });
+
+    function fetchCategory() {
+        const menuId = document.getElementById('category').value;
+        const BASE_URL = "{{ url('/') }}";
+
+        fetch(`${BASE_URL}/get-category/${menuId}`)
+            .then(response => response.json())
+            .then(data => {
+                const subcategorySelect = document.getElementById('subcategory');
+                subcategorySelect.innerHTML = '';
+                data.forEach(subcategory => {
+                    const option = document.createElement('option');
+                    option.value = subcategory.id;
+                    option.textContent = subcategory.name;
+                    subcategorySelect.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching category:', error);
+            });
+    }
+
 </script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>

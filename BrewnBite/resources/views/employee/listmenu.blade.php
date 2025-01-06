@@ -55,54 +55,37 @@
             <table id="menuTable" class="table table-striped " style="width:100%">
                 <thead>
                     <tr>
+                        <th>ID</th>
                         <th>Name</th>
-                        <th>Position</th>
-                        <th>Office</th>
-                        <th>Age</th>
-                        <th>Start date</th>
-                        <th>Salary</th>
+                        <th>Category</th>
+                        <th>Sub Category</th>
+                        <th>Price</th>
+                        <th>Stock</th>
+                        <th>Rating</th>
+                        <th>Description</th>
+                        <th>Created</th>
+                        <th>Updated</th>
+                        <th>Deleted</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {{-- <tr>
-                        <td>Tiger Nixon</td>
-                        <td>System Architect</td>
-                        <td>Edinburgh</td>
-                        <td>61</td>
-                        <td>2011-04-25</td>
-                        <td>$320,800</td>
-                    </tr> --}}
+                    @foreach ($menu as $m)
+                    <tr>
+                        <td>{{ $m->id }}</td>
+                        <td>{{ $m->name }}</td>
+                        <td>{{ $m->category->name }}</td>
+                        <td>{{ $m->subcategory->name }}</td>
+                        <td>{{ $m->price }}</td>
+                        <td>{{ $m->stock }}</td>
+                        <td>{{ $m->rating }}</td>
+                        <td>{{ $m->description }}</td>
+                        <td>{{ $m->created_at }}</td>
+                        <td>{{ $m->updated_at }}</td>
+                        <td>{{ $m->deleted_at }}</td>
+                    </tr>
+                    @endforeach
                 </tbody>
-            </table>
-                    
-            {{-- @foreach ($employees as $item)
-                <tr>
-                    <td>{{ $item['name'] }}</td>
-                    <td>{{ $item['username'] }}</td>
-                    <td>{{ $item['password'] }}</td>
-                    {{-- <td>{{ $item['status'] }}</td> --}}
-                    {{-- <td>Active</td>
-                    <td>
-                        <form action="/karyawan/update" method="post">
-                            @csrf
-                            @method('PATCH')
-                            <input type="hidden" name="username" value="{{ $item['username'] }}">
-                            <input type="text" name="name" placeholder="New Name" class="form-control" required>
-                            <input type="text" name="password" placeholder="New Password" class="form-control" required>
-                            <button type="submit" class="btn btn-primary mt-1">Update</button>
-                        </form>
-                    </td>
-                    <td>
-                        <form action="/karyawan/delete" method="post">
-                            @csrf
-                            @method('DELETE')
-                            <input type="hidden" name="username" value="{{ $item['username'] }}">
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                        </form>
-                    </td>
-                </tr> --}}
-            {{-- @endforeach  --}}
-            
+            </table>            
     </div>
 
 <script>
