@@ -26,4 +26,10 @@ class Category extends Model
     {
         return $this->hasMany(Subcategory::class, 'id_category', 'id');
     }
+
+    // Satu record category memiliki banyak record addon
+    public function addon(): HasMany
+    {
+        return $this->hasMany(Addon::class, 'id_category', 'id');
+    }
 }

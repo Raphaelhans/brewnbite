@@ -37,7 +37,7 @@
 <head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Brew & Bite</title>
+		<title>Moviemate </title>
 		<script src="https://cdn.tailwindcss.com"></script>
 		<link rel="preconnect" href="https://fonts.bunny.net">
 		<link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
@@ -62,13 +62,13 @@
       <h1 class="font-semibold text-lg text-emerald-500 ml-2">Brew & Bite</h1>
     </div>
     <ul class="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2  mx-auto flex items-center w-auto space-x-6">
-			<li><a class="text-sm font-semibold  text-emerald-500 hover:text-emerald-700" href="{{route('user.index')}}{{ route('user.index') }}">Home</a></li>
+			<li><a class="text-sm font-semibold  text-emerald-500 hover:text-emerald-700" href="{{ route('user.index') }}">Home</a></li>
 			<li class="text-gray-300">
 				<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill" viewBox="0 0 24 24">
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
 				</svg>
 			</li>
-      <li><a class="text-sm font-semibold  text-emerald-500 hover:text-emerald-700" href="{{route('user.news')}}">News</a></li>
+      <li><a class="text-sm font-semibold  text-emerald-500 hover:text-emerald-700" href="/offers">News</a></li>
 			<li class="text-gray-300">
 				<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill" viewBox="0 0 24 24">
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
@@ -96,9 +96,8 @@
           <div class="font-medium truncate mt-1">Balance : Rp 50000</div>
         </div>
         <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownInformationButton">
-		  <li><a href="/user/profile" class="block px-4 py-2 hover:bg-emerald-100">Edit Profile</a></li>
-          <li><a href="/user/topup" class="block px-4 py-2 hover:bg-emerald-100">Top Up Balance</a></li>
-          <li><a href="/" class="block px-4 py-2 hover:bg-emerald-100">Promo & Voucher</a></li>
+          <li><a href="/topup" class="block px-4 py-2 hover:bg-emerald-100">Top Up Balance</a></li>
+          <li><a href="/topup" class="block px-4 py-2 hover:bg-emerald-100">Promo & Voucher</a></li>
           <li><a href="/logout" class="block px-4 py-2 hover:bg-emerald-100">Log Out</a></li>
         </ul>
       </div>

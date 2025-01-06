@@ -1,3 +1,11 @@
+@php
+    if (!function_exists('formatRupiah')) {
+        function formatRupiah($number)
+        {
+            return 'Rp' . number_format($number, 2, ',', '.');
+        }
+    }
+@endphp
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,6 +46,9 @@
                         <a class="nav-link" href="#">Top Spenders</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.addemployee.add') }}">Add Employee</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin.ratings') }}">Ratings</a>
                     </li>
                     <li class="nav-item dropdown">
@@ -45,13 +56,12 @@
                           Master
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                          <a class="dropdown-item" href="{{ route('admin.inventory') }}">Inventory</a>
-                          <a class="dropdown-item" href="#">Category</a>
-                          <a class="dropdown-item" href="#">Ingredient</a>
-                          <a class="dropdown-item" href="#">Product</a>
-                          <a class="dropdown-item" href="#">Promo</a>
-                          <a class="dropdown-item" href="#">Sub-category</a>
-                          <a class="dropdown-item" href="#">User</a>
+                          <a class="dropdown-item" href="{{ route('admin.master.categories.categories') }}">Categories</a>
+                          <a class="dropdown-item" href="{{ route('admin.master.ingredients.ingredients') }}">Ingredients</a>
+                          <a class="dropdown-item" href="{{ route('admin.master.products.products') }}">Products</a>
+                          <a class="dropdown-item" href="{{ route('admin.master.promos.promos') }}">Promos</a>
+                          <a class="dropdown-item" href="{{ route('admin.master.subcategories.subcategories') }}">Sub-categories</a>
+                          <a class="dropdown-item" href="{{ route('admin.master.users.users') }}">Users</a>
                           {{-- <div class="dropdown-divider"></div> --}}
                         </div>
                     </li>
