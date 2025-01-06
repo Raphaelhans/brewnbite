@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
@@ -100,4 +101,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::post('/edit', [AdminController::class, 'doEditUser'])->name('doedit');
         });
     });
+    Route::get('/news', [NewsController::class, 'news'])->name('news');
+    Route::get('/detailNews/{id}', [NewsController::class, 'detailNews'])->name('detail.news');
+    Route::get('/profile', [UserController::class, 'displayProfile'])->name('profile');
+    Route::get('/topup', [UserController::class, 'displayTopUp'])->name('topup');
 });

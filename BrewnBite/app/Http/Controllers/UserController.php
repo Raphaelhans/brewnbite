@@ -26,4 +26,12 @@ class UserController extends Controller
 	public function menu() {
 		return view('user.menu');
 	}
+
+	public function displayProfile(){
+		return view('user.profile');
+	}
+
+	public function displayTopUp(){
+		return view('user.topup');
+	}
 }
