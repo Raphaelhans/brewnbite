@@ -47,8 +47,8 @@
       <p class="text-gray-800 font-semibold">Rp 150,000</p>
     </div>
     <div class="flex justify-between items-center mb-4">
-      <p class="text-gray-700">Discount</p>
-      <p class="text-emerald-700 font-semibold">-Rp 22,500</p>
+      <p class="text-red-500">Discount</p>
+      <p class="text-red-500 font-semibold">-Rp 22,500</p>
     </div>
     <div class="border-t border-gray-300 my-4"></div>
     <div class="flex justify-between items-center">
