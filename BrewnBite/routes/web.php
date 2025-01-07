@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\NewsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
@@ -32,18 +31,6 @@ Route::prefix('user')->name('user.')->group(function () {
         Route::get('/', [UserController::class, 'menu'])->name('index');
         Route::get('/detail', [UserController::class, 'detailMenu'])->name('detail');
     });
-});
-
-// Route Karyawan
-Route::prefix('employee')->name('employee.')->group(function () {
-    Route::get('/dashboard', [EmployeeController::class, 'dashboard'])->name('dashboard');
-    Route::get('/history', [EmployeeController::class, 'history'])->name('history');
-    Route::get('/inventory', [EmployeeController::class, 'inventory'])->name('inventory');
-});
-Route::get('/get-category/{id}', [EmployeeController::class, 'getCategory']);
-
-Route::prefix('menu')->group(function () {
-    Route::post('/insert', [EmployeeController::class, 'menu']);
 });
 
 
