@@ -1,35 +1,3 @@
-{{-- <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Moviemate </title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.bunny.net">
-  <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
-  <script src="https://kit.fontawesome.com/fcd689d6ac.js" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/@themesberg/flowbite@latest/dist/flowbite.bundle.js"></script>
-  <!-- Styles -->
-  <style>
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-  * {
-    font-family: 'Poppins', sans-serif;
-  }
-  ::-webkit-scrollbar {
-    display: none;
-    }
-  </style>
-</head>
-<body>
-  <div class="">
-    @include('user.navbar')
-    
-    @yield('content')
-
-    @include('user.footer')
-  </div>
-</body>
-</html> --}}
 <?php
 ?>
 <!DOCTYPE html>
@@ -68,36 +36,57 @@
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
 				</svg>
 			</li>
-      <li><a class="text-sm font-semibold  text-emerald-500 hover:text-emerald-700" href="/offers">News</a></li>
+      <li><a class="text-sm font-semibold  text-emerald-500 hover:text-emerald-700" href="{{route('user.news')}}">News</a></li>
 			<li class="text-gray-300">
 				<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill" viewBox="0 0 24 24">
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
 				</svg>
 			</li>
-			<li><a class="text-sm font-semibold text-emerald-500 hover:text-emerald-700" href="{{ route('user.menu') }}">Menu</a></li>
+			<li><a class="text-sm font-semibold text-emerald-500 hover:text-emerald-700" href="{{ route('user.menu.index') }}">Menu</a></li>
 			<li class="text-gray-300">
 				<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill" viewBox="0 0 24 24">
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
 				</svg>
 			</li>
-			<li><a class="text-sm font-semibold  text-emerald-500 hover:text-emerald-700" href="/historyTicket">History</a></li>
+			<li><a class="text-sm font-semibold  text-emerald-500 hover:text-emerald-700" href="{{ route('user.history.index') }}">History</a></li>
 		</ul>
     <div class="flex items-center space-x-4">
-      <i class="fa-solid fa-cart-shopping text-emerald-500 text-lg"></i>
-      <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" 
-        class="h-8 w-8 bg-[#fcdad0] rounded-full flex items-center justify-center text-emerald-600 font-semibold text-sm" type="button">S</button>
+			<a href="{{ route('user.cart.index') }}">
+				<i class="fa-solid fa-cart-shopping text-emerald-500 text-lg"></i>
+			</a>
+      <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" class="h-8 w-8 bg-[#fcdad0] rounded-full flex items-center justify-center text-emerald-600 font-semibold text-sm" type="button">
+        {{-- @if ($profile_picture)  
+            <img 
+                src="{{ $profile_picture }}" 
+                alt="Profile Picture"
+                class="h-8 w-8 bg-[#fcdad0] rounded-full"
+            >
+        @else
+            {{ $initials }}  
+        @endif --}}
+    </button>
       <!-- Dropdown menu -->
       <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg w-auto border border-gray-200 shadow-xl">
-        <div class="px-4 py-3 text-sm text-gray-700">
-          <div>sipengeming69@gmail.com</div>
-          <div class="bg-gradient-to-br from-yellow-300 via-yellow-400 to-yellow-500 text-yellow-900 font-semibold rounded-xl shadow-md p-2 my-2">
-            <p class="text-center text-white">Gold Membership</p>
-          </div>
-          <div class="font-medium truncate mt-1">Balance : Rp 50000</div>
-        </div>
+        {{-- <div class="px-4 py-3 text-sm text-gray-700">
+          <div>{{ session('user.email', 'guest@example.com') }}</div>
+          <div class="
+				rounded-xl shadow-md p-2 my-2 
+				{{
+					$membership === 'Diamond' ? 'bg-gradient-to-br from-blue-500 to-blue-400' :
+					($membership === 'Gold' ? 'bg-gradient-to-br from-yellow-500 to-yellow-400' :
+					($membership === 'Silver' ? 'bg-gradient-to-br from-gray-500 to-gray-400' :
+					'bg-gradient-to-br from-orange-500 to-orange-400'))
+				}}">
+				<p class="text-center text-white font-semibold">
+					{{ $membership }} Membership
+				</p>
+				</div>
+          <div class="font-medium truncate mt-1">Balance : Rp {{ number_format(session('user.credit', 0), 2) }}</div>
+				</div> --}}
         <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownInformationButton">
-          <li><a href="/topup" class="block px-4 py-2 hover:bg-emerald-100">Top Up Balance</a></li>
-          <li><a href="/topup" class="block px-4 py-2 hover:bg-emerald-100">Promo & Voucher</a></li>
+			<li><a href="{{route('user.profile')}}" class="block px-4 py-2 hover:bg-emerald-100">Edit Profile</a></li>
+          <li><a href="{{route('user.topup')}}" class="block px-4 py-2 hover:bg-emerald-100">Top Up Balance</a></li>
+          <li><a href="{{ route('user.promo.index') }}" class="block px-4 py-2 hover:bg-emerald-100">All Promotions</a></li>
           <li><a href="/logout" class="block px-4 py-2 hover:bg-emerald-100">Log Out</a></li>
         </ul>
       </div>

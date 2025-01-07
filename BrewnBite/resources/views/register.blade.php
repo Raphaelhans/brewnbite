@@ -20,7 +20,8 @@
           <p class="text-sm font-light text-justify text-emerald-600">Join Brew & Bite, your go-to destination for all things food and drink! Whether you're craving the perfect coffee or a delicious bite, we provide a seamless experience to connect with your culinary needs.</p>
         </div>
         <div class="lg:w-6/12 p-[4rem]">
-          <form action="register" method="post">
+          <form action="{{ route('register') }}" method="post">
+            @csrf
             <div class="flex flex-row justify-center items-center">
               <h1 class="font-semibold text-emerald-600 pb-1 ml-2">Brew & Bite</h1>
             </div>
@@ -29,15 +30,27 @@
             </div>
             <div>
               <input type="text" name="name" class="w-full px-8 py-4 rounded-xl font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-emerald-400 focus:bg-white" placeholder="Enter your Name" required>
-            </div>
-            <div class="mt-5">
-              <input type="password" name="password" class="w-full px-8 py-4 rounded-xl font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-emerald-400 focus:bg-white" placeholder="Password" required>
+              @error('name')
+                  <div class="text-red-500 text-xs mt-2">{{ $message }}</div>
+              @enderror
             </div>
             <div class="mt-5">
               <input type="email" name="email" class="w-full px-8 py-4 rounded-xl font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-emerald-400 focus:bg-white" placeholder="Enter your Email" required>
+              @error('email')
+                <div class="text-red-500 text-xs mt-2">{{ $message }}</div>
+              @enderror
             </div>
             <div class="mt-5">
-              <input type="text" name="phone" class="w-full px-8 py-4 rounded-xl font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-emerald-400 focus:bg-white" placeholder="Enter your Phone Number" required>
+              <input type="password" name="password" class="w-full px-8 py-4 rounded-xl font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-emerald-400 focus:bg-white" placeholder="Password" required>
+              @error('password')
+                <div class="text-red-500 text-xs mt-2">{{ $message }}</div>
+              @enderror
+            </div>
+            <div class="mt-5">
+              <input type="password" name="confirm_password" class="w-full px-8 py-4 rounded-xl font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-emerald-400 focus:bg-white" placeholder="Confirm Password" required>
+              @error('confirm_password')
+                <div class="text-red-500 text-xs mt-2">{{ $message }}</div>
+              @enderror
             </div>
             <div class="text-center flex flex-col">
               <button type="submit" name="register" class="mt-5 tracking-wide font-semibold bg-emerald-500 text-gray-100 w-full py-4 rounded-xl hover:bg-emerald-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">

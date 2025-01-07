@@ -10,7 +10,7 @@
 
 @section('content')
     <div class="container-fluid px-3 mt-3 bg-body-tertiary flex-grow-1">
-        <h2 class="my-4">Inventory</h2>
+        <h2 class="my-4">Ingredients</h2>
         <div class="card">
             <div class="card-body">
                 <table id="example2" class="table table-bordered table-hover dataTable dtr-inline">
