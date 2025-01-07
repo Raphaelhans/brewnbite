@@ -48,7 +48,7 @@
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
 				</svg>
 			</li>
-			<li><a class="text-sm font-semibold  text-emerald-500 hover:text-emerald-700" href="/historyTicket">History</a></li>
+			<li><a class="text-sm font-semibold  text-emerald-500 hover:text-emerald-700" href="{{ route('user.history.index') }}">History</a></li>
 		</ul>
     <div class="flex items-center space-x-4">
 			<a href="{{ route('user.cart.index') }}">
@@ -86,7 +86,7 @@
         <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownInformationButton">
 			<li><a href="{{route('user.profile')}}" class="block px-4 py-2 hover:bg-emerald-100">Edit Profile</a></li>
           <li><a href="{{route('user.topup')}}" class="block px-4 py-2 hover:bg-emerald-100">Top Up Balance</a></li>
-          <li><a href="/topup" class="block px-4 py-2 hover:bg-emerald-100">Promo & Voucher</a></li>
+          <li><a href="{{ route('user.promo.index') }}" class="block px-4 py-2 hover:bg-emerald-100">All Promotions</a></li>
           <li><a href="/logout" class="block px-4 py-2 hover:bg-emerald-100">Log Out</a></li>
         </ul>
       </div>
