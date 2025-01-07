@@ -57,8 +57,18 @@ Route::prefix('employee')->name('employee.')->group(function () {
     Route::get('/history', [EmployeeController::class, 'history'])->name('history');
     Route::get('/inventory', [EmployeeController::class, 'inventory'])->name('inventory');
     Route::get('/listmenu', [EmployeeController::class, 'listmenu'])->name('listmenu');
+    Route::get('/editmenu/{id}', [EmployeeController::class, 'toeditMenu'])->name('editmenu');
+    Route::post('/menu/insert', [EmployeeController::class, 'addmenu']);
+    Route::post('/menu/deletemenu', [EmployeeController::class, 'deletemenu']);
+    Route::post('/menu/insertrecipe', [EmployeeController::class, 'addrecipe']);
+    Route::post('/menu/editmenu', [EmployeeController::class, 'editmenu']);
+    Route::post('/menu/editrecipe', [EmployeeController::class, 'editrecipe']);
+    Route::post('/ingredient/insert', [EmployeeController::class, 'insertIngredient']);
+    Route::post('/ingredient/update', [EmployeeController::class, 'updateIngredient']);
+    Route::post('/ingredient/delete', [EmployeeController::class, 'deleteIngredient']);
 });
 Route::get('/get-category/{id}', [EmployeeController::class, 'getCategory']);
+Route::get('/get-unit/{id}', [EmployeeController::class, 'getUnit']);
 
 Route::prefix('menu')->group(function () {
     Route::post('/insert', [EmployeeController::class, 'menu']);
