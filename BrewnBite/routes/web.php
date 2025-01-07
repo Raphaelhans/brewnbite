@@ -31,6 +31,20 @@ Route::prefix('user')->name('user.')->group(function () {
         Route::get('/', [UserController::class, 'menu'])->name('index');
         Route::get('/detail', [UserController::class, 'detailMenu'])->name('detail');
     });
+    Route::prefix('/cart')->name('cart.')->group(function () {
+        Route::get('/', [UserController::class, 'cart'])->name('index');
+        Route::get('/summary', [UserController::class, 'summary'])->name('summary');
+        Route::get('/checkout', [UserController::class, 'checkout'])->name('checkout');
+    });
+    Route::prefix('/history')->name('history.')->group(function () {
+        Route::get('/', [UserController::class, 'history'])->name('index');
+        Route::get('/detail', [UserController::class, 'detailHistory'])->name('detail');
+        Route::get('/rating', [UserController::class, 'rating'])->name('rating');
+    });
+    Route::prefix('/promo')->name('promo.')->group(function () {
+        Route::get('/', [UserController::class, 'promo'])->name('index');
+        Route::get('/redeem', [UserController::class, 'redeemPromo'])->name('reedem');
+    });
 });
 
 

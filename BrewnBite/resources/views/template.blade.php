@@ -51,7 +51,9 @@
 			<li><a class="text-sm font-semibold  text-emerald-500 hover:text-emerald-700" href="/historyTicket">History</a></li>
 		</ul>
     <div class="flex items-center space-x-4">
-      <i class="fa-solid fa-cart-shopping text-emerald-500 text-lg"></i>
+			<a href="{{ route('user.cart.index') }}">
+				<i class="fa-solid fa-cart-shopping text-emerald-500 text-lg"></i>
+			</a>
       <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" 
         class="h-8 w-8 bg-[#fcdad0] rounded-full flex items-center justify-center text-emerald-600 font-semibold text-sm" type="button">S</button>
       <!-- Dropdown menu -->

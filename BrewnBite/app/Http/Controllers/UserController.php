@@ -37,4 +37,36 @@ class UserController extends Controller
 	public function displayTopUp(){
 		return view('user.topup');
 	}
+
+	public function cart(){
+		return view('user.cart');
+	}
+
+	public function summary(){
+		return view('user.checkoutSummary');
+	}
+
+	public function checkout(){
+
+	}
+
+	public function history(){
+		return view('user.history');
+	}
+
+	public function detailHistory(){
+		return view('user.detailHistory');
+	}
+
+	public function rating(){
+
+	}
+
+	public function promo(){
+		return view('user.listPromo');
+	}
+
+	public function redeemPromo(){
+
+	}
 }
