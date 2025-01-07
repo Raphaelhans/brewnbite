@@ -21,13 +21,13 @@ class User extends Model
     2: Karyawan
     3: Admin
     */
-    
+
     use SoftDeletes;
     protected $table = 'users';
     protected $primaryKey = 'id';
     public $timestamps = true;
     public $incrementing = true;
-    protected $fillable = ['name', 'email', 'password', 'role', 'membership', 'credit', 'total_spent'];
+    protected $fillable = ['name', 'email', 'password', 'profile_picture' , 'role', 'membership', 'credit', 'total_spent'];
 
     // Satu record user memiliki banyak record htrans
     public function htrans(): HasMany

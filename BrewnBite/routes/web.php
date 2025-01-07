@@ -17,9 +17,11 @@ Route::get('/login', function () {
 Route::get('/register', function () {
     return view('register');
 });
+
 Route::post('/login',[AuthController::class, 'login']);
-Route::post('/register',[AuthController::class, 'register']);
+Route::post('/register',[AuthController::class, 'register'])->name('register');
 Route::get('/logout',[AuthController::class, 'logout'])->name('logout');
+
 
 Route::prefix('user')->name('user.')->group(function () {
     Route::get('/', [UserController::class, 'index'])->name('index');
@@ -46,6 +48,7 @@ Route::prefix('user')->name('user.')->group(function () {
         Route::get('/redeem', [UserController::class, 'redeemPromo'])->name('reedem');
     });
 });
+Route::post('/profile', [UserController::class, 'editProfile'])->name('user.update');
 
 
 // Route Karyawan
