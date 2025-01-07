@@ -3,7 +3,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#F4A298" fill-opacity="1" d="M0,128L34.3,112C68.6,96,137,64,206,85.3C274.3,107,343,181,411,192C480,203,549,149,617,144C685.7,139,754,181,823,170.7C891.4,160,960,96,1029,74.7C1097.1,53,1166,75,1234,74.7C1302.9,75,1371,53,1406,42.7L1440,32L1440,0L1405.7,0C1371.4,0,1303,0,1234,0C1165.7,0,1097,0,1029,0C960,0,891,0,823,0C754.3,0,686,0,617,0C548.6,0,480,0,411,0C342.9,0,274,0,206,0C137.1,0,69,0,34,0L0,0Z"></path></svg>
 <div class="flex flex-col items-center justify-center mb-10">
   <div class="flex flex-col items-center space-y-4">
-    <h1 class="text-5xl font-bold text-emerald-700 animate-bounce">Our Menu <span></span></h1>
+    <h1 class="text-5xl font-bold text-emerald-700 animate-bounce">Our Menu</h1>
   </div>
   <div class="flex items-center border border-gray-300 rounded-full px-4 py-2 shadow-md mt-8">
     <i class="fa-solid fa-magnifying-glass text-emerald-700 pl-2"></i>
@@ -50,7 +50,7 @@
             <span class="text-gray-400 text-sm">(76 reviews)</span>
           </div>
           <button class="mt-6 w-full bg-gradient-to-r from-emerald-500 to-emerald-700 text-white py-3 px-6 text-sm font-semibold rounded-xl hover:from-emerald-600 hover:to-emerald-800 shadow-md transition-all duration-300">
-            Add to Cart
+            Buy Now
           </button>
         </div>
       </div>
@@ -69,7 +69,7 @@
             <span class="text-gray-400 text-sm">(76 reviews)</span>
           </div>
           <button class="mt-6 w-full bg-gradient-to-r from-emerald-500 to-emerald-700 text-white py-3 px-6 text-sm font-semibold rounded-xl hover:from-emerald-600 hover:to-emerald-800 shadow-md transition-all duration-300">
-            Add to Cart
+            Buy Now
           </button>
         </div>
       </div>
@@ -88,7 +88,7 @@
             <span class="text-gray-400 text-sm">(76 reviews)</span>
           </div>
           <button class="mt-6 w-full bg-gradient-to-r from-emerald-500 to-emerald-700 text-white py-3 px-6 text-sm font-semibold rounded-xl hover:from-emerald-600 hover:to-emerald-800 shadow-md transition-all duration-300">
-            Add to Cart
+            Buy Now
           </button>
         </div>
       </div>
