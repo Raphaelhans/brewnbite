@@ -36,7 +36,7 @@
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
 				</svg>
 			</li>
-      <li><a class="text-sm font-semibold  text-emerald-500 hover:text-emerald-700" href="/offers">News</a></li>
+      <li><a class="text-sm font-semibold  text-emerald-500 hover:text-emerald-700" href="{{route('user.news')}}">News</a></li>
 			<li class="text-gray-300">
 				<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill" viewBox="0 0 24 24">
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
@@ -64,7 +64,8 @@
           <div class="font-medium truncate mt-1">Balance : Rp 50000</div>
         </div>
         <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownInformationButton">
-          <li><a href="/topup" class="block px-4 py-2 hover:bg-emerald-100">Top Up Balance</a></li>
+			<li><a href="{{route('user.profile')}}" class="block px-4 py-2 hover:bg-emerald-100">Edit Profile</a></li>
+          <li><a href="{{route('user.topup')}}" class="block px-4 py-2 hover:bg-emerald-100">Top Up Balance</a></li>
           <li><a href="/topup" class="block px-4 py-2 hover:bg-emerald-100">Promo & Voucher</a></li>
           <li><a href="/logout" class="block px-4 py-2 hover:bg-emerald-100">Log Out</a></li>
         </ul>
