@@ -6,22 +6,23 @@
         <h2 class="text-2xl font-bold text-emerald-600 text-center mb-6">Edit Profile</h2>
 
         <div class="flex justify-center mb-4">
-            {{-- <img 
-                src="" 
-                alt=""
-                class="h-24 w-24 bg-[#fcdad0] rounded-full flex items-center justify-center text-emerald-600 font-semibold text-center"
-            > --}}
-            <div class="h-24 w-24 bg-[#fcdad0] rounded-full flex items-center justify-center text-emerald-600 font-semibold text-center text-4xl">
-                S
-            </div>
+            @if ($profile_picture)
+                <img src="{{ $profile_picture }}" alt="Profile Picture" class="h-24 w-24 bg-[#fcdad0] rounded-full">
+            @else
+                <div class="h-24 w-24 bg-[#fcdad0] rounded-full flex items-center justify-center text-emerald-600 font-semibold text-center text-4xl">
+                    {{ $initials }} 
+                </div>
+            @endif
         </div>
-        <form action="" method="post">
+        <form action="{{ route('user.update') }}" method="post" enctype="multipart/form-data">
+            @csrf
             <div class="mb-4">
                 <label for="email" class="block text-sm font-medium text-gray-600 mb-1">Email</label>
                 <input 
                     type="email" 
-                    id="email" 
-                    value="sipengeming69@gmail.com" 
+                    id="email"
+                    name="email"
+                    value="{{ $user['email'] }}" 
                     disabled
                     class="w-full px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent cursor-not-allowed"
                 >
@@ -32,6 +33,8 @@
                 <input 
                     type="text" 
                     id="name" 
+                    name="name"
+                    value="{{ $user['name']}}"
                     placeholder="Enter your name" 
                     class="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
                 >
@@ -42,17 +45,8 @@
                 <input 
                     type="password" 
                     id="password" 
+                    name="password"
                     placeholder="Enter your password" 
-                    class="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
-                >
-            </div>
-
-            <div class="mb-4">
-                <label for="phone_number" class="block text-sm font-medium text-gray-600 mb-1">Phone Number</label>
-                <input 
-                    type="text" 
-                    id="name" 
-                    placeholder="Enter your phone number" 
                     class="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
                 >
             </div>
@@ -62,6 +56,7 @@
                 <input 
                     type="file" 
                     id="profile-picture" 
+                    name="profile_picture"
                     class="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
                 >
             </div>

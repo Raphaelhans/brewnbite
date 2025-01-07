@@ -52,16 +52,34 @@
 		</ul>
     <div class="flex items-center space-x-4">
       <i class="fa-solid fa-cart-shopping text-emerald-500 text-lg"></i>
-      <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" 
-        class="h-8 w-8 bg-[#fcdad0] rounded-full flex items-center justify-center text-emerald-600 font-semibold text-sm" type="button">S</button>
+      <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" class="h-8 w-8 bg-[#fcdad0] rounded-full flex items-center justify-center text-emerald-600 font-semibold text-sm" type="button">
+        @if ($profile_picture)  
+            <img 
+                src="{{ $profile_picture }}" 
+                alt="Profile Picture"
+                class="h-8 w-8 bg-[#fcdad0] rounded-full"
+            >
+        @else
+            {{ $initials }}  
+        @endif
+    </button>
       <!-- Dropdown menu -->
       <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg w-auto border border-gray-200 shadow-xl">
         <div class="px-4 py-3 text-sm text-gray-700">
-          <div>sipengeming69@gmail.com</div>
-          <div class="bg-gradient-to-br from-yellow-300 via-yellow-400 to-yellow-500 text-yellow-900 font-semibold rounded-xl shadow-md p-2 my-2">
-            <p class="text-center text-white">Gold Membership</p>
-          </div>
-          <div class="font-medium truncate mt-1">Balance : Rp 50000</div>
+          <div>{{ session('user.email', 'guest@example.com') }}</div>
+          <div class="
+				rounded-xl shadow-md p-2 my-2 
+				{{
+					$membership === 'Diamond' ? 'bg-gradient-to-br from-blue-500 to-blue-400' :
+					($membership === 'Gold' ? 'bg-gradient-to-br from-yellow-500 to-yellow-400' :
+					($membership === 'Silver' ? 'bg-gradient-to-br from-gray-500 to-gray-400' :
+					'bg-gradient-to-br from-orange-500 to-orange-400'))
+				}}">
+				<p class="text-center text-white font-semibold">
+					{{ $membership }} Membership
+				</p>
+			</div>
+          <div class="font-medium truncate mt-1">Balance : Rp {{ number_format(session('user.credit', 0), 2) }}</div>
         </div>
         <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownInformationButton">
 			<li><a href="{{route('user.profile')}}" class="block px-4 py-2 hover:bg-emerald-100">Edit Profile</a></li>
