@@ -69,8 +69,19 @@ class UserController extends Controller
 		$user = User::find(session('user')['id']);
 		$initials = $this->getInitials($user['name']);
 		$profilePictureUrl = $user['profile_picture'] ? asset('storage/' . $user['profile_picture']) : null;
+
+		$totalSpent = $user->total_spent;
+		$membership = 'Bronze'; 
+		if ($totalSpent >= 200000) {
+			$membership = 'Diamond';
+		} elseif ($totalSpent >= 100000) {
+			$membership = 'Gold';
+		} elseif ($totalSpent >= 50000) {
+			$membership = 'Silver';
+		}
+
 		return view('user.profile', ['user' => $user,
-			'initials' => $initials, 'profile_picture' => $profilePictureUrl]);
+			'initials' => $initials, 'profile_picture' => $profilePictureUrl,  'membership' => $membership]);
 	}
 
 	public function editProfile(Request $request)
