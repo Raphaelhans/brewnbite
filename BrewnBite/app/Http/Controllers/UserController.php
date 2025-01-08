@@ -80,13 +80,16 @@ class UserController extends Controller
 		]);
 	}
 
-	public function detailMenu() {
+	public function detailMenu($id) {
 		$user = session('user');
 		$profilePictureUrl = $user['profile_picture'] ?? null;
 
+		$data = Product::find($id);
+
 		return view('user.detailMenu' , [
 			'profile_picture' => $profilePictureUrl, 
-			'user' => $user
+			'user' => $user,
+			'data' => $data,
 		]);
 	}
 	public function displayProfile(){
@@ -199,7 +202,7 @@ class UserController extends Controller
 	
 			return redirect()->route('user.topup.payment', $topup->id);
 		} catch (\Exception $e) {
-			dd($e->getMessage()); // Debug untuk melihat pesan error
+			dd($e->getMessage());
 			Log::error('Midtrans Error: ' . $e->getMessage());
 			return redirect()->back()->withErrors(['error' => 'An error occurred while processing your request. Please try again.']);
 		}

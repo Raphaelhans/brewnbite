@@ -6,9 +6,9 @@
         <h2 class="text-6xl font-bold text-left text-emerald-600">Sipping Happiness</h2>
         <h2 class="text-6xl font-bold text-left text-emerald-600">Brewing Moments</h2>
         <h2 class="text-6xl font-bold text-left text-emerald-600">Biting Joy</h2>
-        <button class="bg-gradient-to-r from-[#F4A298] to-[#E8897A] hover:from-[#e8897a] hover:to-[#d97060] text-white font-bold py-3 px-8 rounded-full w-44 shadow-lg hover:shadow-2xl transition-all duration-300  mt-10">
-          Shop Now
-        </button>
+        <a href="{{ route('user.menu.index') }}" class="bg-gradient-to-r from-[#F4A298] to-[#E8897A] hover:from-[#e8897a] hover:to-[#d97060] text-white text-center font-bold py-3 px-8 rounded-full w-44 shadow-lg transition-all duration-300  mt-10">
+          Our Menu
+        </a>
       </div>
     </div>
     <div class="w-1/2 flex justify-center">
@@ -48,7 +48,7 @@
       <p class="text-gray-500 text-sm font-medium" id="date">{{ $date }}</p>
     </div>
     <div class="flex items-center justify-center mt-4">
-      <img src="http://openweathermap.org/img/wn/{{ $weatherData['weather'][0]['icon'] }}@2x.png" alt="Weather Icon">
+      <img src="http://openweathermap.org/img/wn/{{ $weatherData['weather'][0]['icon'] }}@2x.png"  alt="Weather Icon">
       <div class="ml-4 text-center">
           <p id="weather-description" class="text-2xl font-semibold text-gray-800">{{ ucfirst($weatherData['weather'][0]['main']) }}</p>
           <p id="temperature" class="text-xl text-gray-500">{{ round($weatherData['main']['temp']) }}°C</p>

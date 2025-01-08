@@ -37,7 +37,7 @@ Route::prefix('user')->name('user.')->group(function () {
     });
     Route::prefix('/menu')->name('menu.')->group(function () {
         Route::get('/', [UserController::class, 'menu'])->name('index');
-        Route::get('/detail', [UserController::class, 'detailMenu'])->name('detail');
+        Route::get('/detail/{id}', [UserController::class, 'detailMenu'])->name('detail');
     });
     Route::prefix('/cart')->name('cart.')->group(function () {
         Route::get('/', [UserController::class, 'cart'])->name('index');
