@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -59,7 +60,7 @@ class UserController extends Controller
 		return $initials;
 	}
 
-	public function menu() {
+	public function menu(Request $request) {
 		$user = User::find(session('user')['id']);
 		$profilePictureUrl = $user['profile_picture'] ? asset('storage/' . $user['profile_picture']) : null;
 		$initials = $this->getInitials($user['name']);
@@ -74,11 +75,39 @@ class UserController extends Controller
 			$membership = 'Silver';
 		}
 
+		$categoryFilter = $request->query('category', null);
+		$subcategoryFilter = $request->query('subcategory', 'All');
+
+		$subcategories = [];
+		if ($categoryFilter) {
+			$subcategories = \App\Models\Subcategory::whereHas('category', function ($query) use ($categoryFilter) {
+				$query->where('name', $categoryFilter);
+			})->get();
+		}
+
+		$query = Product::query();
+
+		if ($categoryFilter) {
+			$query->join('categories', 'products.id_category', '=', 'categories.id')
+				->where('categories.name', $categoryFilter);
+		}
+
+		if ($subcategoryFilter !== 'All') {
+			$query->join('subcategories', 'products.id_subcategory', '=', 'subcategories.id')
+				->where('subcategories.name', $subcategoryFilter);
+		}
+
+		$products = $query->select('products.*')->get();
+
 		return view('user.menu' ,[
 			'initials' => $initials, 
 			'membership' => $membership, 
 			'profile_picture' => $profilePictureUrl, 
-			'user' => $user
+			'user' => $user,
+			'product' => $products,
+			'categoryFilter' => $categoryFilter,
+        	'subcategoryFilter' => $subcategoryFilter,
+			'subcategories' => $subcategories,
 		]);
 	}
 
@@ -165,7 +194,7 @@ class UserController extends Controller
 		return redirect()->route('user.index')->with('success', 'Profile updated successfully.');
 	}
 
-
+	
 	public function displayTopUp(){
 		$user = User::find(session('user')['id']);
 		$profilePictureUrl = $user['profile_picture'] ? asset('storage/' . $user['profile_picture']) : null;
