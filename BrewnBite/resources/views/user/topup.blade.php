@@ -10,13 +10,13 @@
     <form action="{{ route('user.topup.process') }}" method="post" class="space-y-4">
 			@csrf
       <div>
-        <label for="topup" class="block text-sm font-medium text-gray-700 mb-1">Enter Amount</label>
+        <label for="topup" class="block text-sm font-medium text-gray-700 mb-1">Amount</label>
         <input 
           type="number" 
           id="topup" 
-          name="topup" 
+          name="amount" 
 					min="0"
-          placeholder="Enter number here"
+          placeholder="Enter amount here"
           class="w-full px-4 py-2 bg-gray-100 border border-gray-300 rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent text-sm"
         >
       </div>
@@ -26,6 +26,27 @@
         Proceed to Payment
       </button>
     </form>
+		@if(session('error'))
+        <div class="p-4 mb-4 mx-4 mt-4 text-sm text-red-800 rounded-lg bg-red-200" role="alert">
+            <span class="font-medium">{{ session('error') }}</span> try submitting again.
+        </div>
+    @endif
+
+    @if(session('success'))
+        <div class="p-4 mb-4 mx-4 mt-4 text-sm text-green-800 rounded-lg bg-green-200" role="alert">
+            <span class="font-medium">{{ session('success') }}</span>
+        </div>
+    @endif
+
+    @if ($errors->any())
+        <div class="p-4 mb-4 mx-4 mt-4 text-sm text-red-800 rounded-lg bg-red-200" role="alert">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
   </div>
 </div>
 

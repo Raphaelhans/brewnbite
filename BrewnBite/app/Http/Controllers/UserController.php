@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Topup;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -162,15 +164,17 @@ class UserController extends Controller
 		$req->validate([
 			'amount' => 'required|integer|min:1',
 		]);
-	
+		
 		try {
 			$data = $req->all();
-	
+			
+			
 			$topup = Topup::create([
-				'customer' => session('login')->username,
+				'id_user' => session('user.id'),
 				'amount' => $data['amount'],
 			]);
-	
+			
+
 			\Midtrans\Config::$serverKey = config('midtrans.serverKey');
 			\Midtrans\Config::$isProduction = false;
 			\Midtrans\Config::$isSanitized = true;
@@ -182,38 +186,41 @@ class UserController extends Controller
 					'gross_amount' => $data['amount'],
 				),
 				'customer_details' => array(
-					'first_name' => session('login')->username,
-					'email' => session('login')->email,
+					'first_name' => session('user.name'),
+					'email' => session('user.email'),
 				),
 			);
 	
 			$snapToken = \Midtrans\Snap::getSnapToken($params);
+
 	
 			$topup->snap_token = $snapToken;
 			$topup->save();
 	
-			return redirect()->route('topup.checkout', $topup->id);
+			return redirect()->route('user.topup.payment', $topup->id);
 		} catch (\Exception $e) {
+			dd($e->getMessage()); // Debug untuk melihat pesan error
+			Log::error('Midtrans Error: ' . $e->getMessage());
 			return redirect()->back()->withErrors(['error' => 'An error occurred while processing your request. Please try again.']);
 		}
 	}
 	
-	// function checkout(Topup $topup) {
-	// 	$data = Topup::where('id', $topup->id)->first();
-	// 	return view('user_site.checkout', compact('topup', 'data'));
-	// }
+	function payment(Topup $topup) {
+		$data = Topup::where('id', $topup->id)->first();
+		return view('user.payment', compact('topup', 'data'));
+	}
 	
-	// function success(Topup $topup) {
-	// 	$topup->status = 1;
-	// 	$topup->save();
+	function success(Topup $topup) {
+		$topup->status = 1;
+		$topup->save();
 	
-	// 	$user = User::find($topup->customer);
-	// 	$user->increment('balance', $topup->amount);
+		$user = User::find($topup->id_user);
+		$user->increment('credit', $topup->amount);
 	
-	// 	session(['login' => $user]);
+		session()->put('user.credit', $user->credit);
 	
-	// 	return redirect()->route('topup.index');
-	// }
+		return redirect()->route('user.topup.index');
+	}
 	
 
 	public function cart(){

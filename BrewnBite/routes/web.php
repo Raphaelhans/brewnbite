@@ -32,6 +32,8 @@ Route::prefix('user')->name('user.')->group(function () {
     Route::prefix('/topup')->name('topup.')->group(function () {
         Route::get('/', [UserController::class, 'topup'])->name('index');
         Route::post('/process', [UserController::class, 'process'])->name('process');
+        Route::get('/payment/{topup}', [UserController::class, 'payment'])->name('payment');
+        Route::get('/success/{topup}', [UserController::class, 'success'])->name('success');
     });
     Route::prefix('/menu')->name('menu.')->group(function () {
         Route::get('/', [UserController::class, 'menu'])->name('index');
