@@ -13,88 +13,68 @@
   </div>
 
   <div class="flex gap-12 my-10">
-    {{-- <button class="bg-gradient-to-b from-emerald-500 to-emerald-700 hover:bg-brown-600 text-white rounded-full px-6 text-sm">All</button> --}}
-    <a href="" class="flex flex-col items-center gap-2 text-sm text-gray-600">
-      <img src="{{ asset('assets/beverage.png') }}"class="w-14">
-      <p class="font-semibold">Beverage</p>
+    {{-- <button href="{{ route('user.menu.index') }}" class="bg-gradient-to-b from-emerald-500 to-emerald-700 hover:bg-brown-600 text-white rounded-full px-6 text-sm">All</button> --}}
+    <a href="{{ route('user.menu.index', ['category' => 'Beverage']) }}" class="flex flex-col items-center gap-2 text-sm text-gray-600">
+        <img src="{{ asset('assets/beverage.png') }}" class="w-14">
+        <p class="font-semibold">Beverage</p>
     </a>
-    <a href="" class="flex flex-col items-center gap-2 text-sm text-gray-600">
-      <img src="{{ asset('assets/snack.png') }}"class="w-14">
-      <p class="font-semibold">Snack</p>
+    <a href="{{ route('user.menu.index', ['category' => 'Snack']) }}" class="flex flex-col items-center gap-2 text-sm text-gray-600">
+        <img src="{{ asset('assets/snack.png') }}" class="w-14">
+        <p class="font-semibold">Snack</p>
     </a>
-    <a href="" class="flex flex-col items-center gap-2 text-sm text-gray-600">
-      <img src="{{ asset('assets/dessert.png') }}"class="w-14">
-      <p class="font-semibold">Dessert</p>
+    <a href="{{ route('user.menu.index', ['category' => 'Dessert']) }}" class="flex flex-col items-center gap-2 text-sm text-gray-600">
+        <img src="{{ asset('assets/dessert.png') }}" class="w-14">
+        <p class="font-semibold">Dessert</p>
     </a>
   </div>
-  <p>All kinds of beverages</p>
-  <div class="flex gap-4 mt-10">
-    <button class="bg-gradient-to-b from-emerald-500 to-emerald-700 hover:bg-brown-600 text-white rounded-full px-4 py-2 text-sm">All</button>
-    <button class="bg-gradient-to-b from-emerald-500 to-emerald-700 hover:bg-brown-600 text-white rounded-full px-4 py-2 text-sm">Non Coffe</button>
-    <button class="bg-gradient-to-b from-emerald-500 to-emerald-700 hover:bg-brown-600 text-white rounded-full px-4 py-2 text-sm">Tea</button>
-  </div>
+  @if ($categoryFilter === 'Beverage')
+      <p>All kinds of beverages</p>
+  @elseif ($categoryFilter === 'Snack')
+      <p>All kinds of snacks</p>
+  @elseif ($categoryFilter === 'Dessert')
+      <p>All kinds of desserts</p>
+  @else
+      <p>Browse our menu</p>
+  @endif
+  @if ($categoryFilter)
+    <div class="flex gap-4 mt-10">
+      <a href="{{ route('user.menu.index', ['subcategory' => 'All', 'category' => $categoryFilter]) }}" 
+        class="bg-gradient-to-b from-emerald-500 to-emerald-700 hover:bg-brown-600 text-white rounded-full px-4 py-2 text-sm">
+          All
+      </a>
+      @foreach ($subcategories as $subcategory)
+          <a href="{{ route('user.menu.index', ['subcategory' => $subcategory->name, 'category' => $categoryFilter]) }}" 
+            class="bg-gradient-to-b from-emerald-500 to-emerald-700 hover:bg-brown-600 text-white rounded-full px-4 py-2 text-sm">
+              {{ $subcategory->name }}
+          </a>
+      @endforeach
+    </div>
+  @endif
   <div class="flex items-center justify-center p-4 my-10">
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      @foreach ($product as $item)        
       <div class="bg-white rounded-3xl shadow-xl overflow-hidden w-full transform hover:scale-105 transition-transform duration-300">
-        <button class="absolute top-3 left-3 bg-gradient-to-b from-[#F4A298] to-[#F27D6A] text-white rounded-full px-4 py-1 text-xs shadow-md">Coffee
-        </button>
-        <img src="https://assets.promediateknologi.id/crop/0x0:0x0/750x500/webp/photo/2023/05/22/Red-Velvet-cake-2453917777.png" alt="Red Velvet Cake" class="w-full h-48 object-cover">
-        <div class="p-5">
-          <div class="flex justify-between items-center">
-            <h3 class="font-bold text-emerald-600 text-base">Red Velvet Cake</h3>
-            <p class="text-gray-500 text-sm font-medium">Rp 50.000</p>
-          </div>
-          <div class="flex items-center mt-3 space-x-2">
-            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
-            <span class="text-gray-600 font-medium text-sm">4.96</span>
-            <span class="text-gray-400 text-sm">(76 reviews)</span>
-          </div>
-          <button class="mt-6 w-full bg-gradient-to-r from-emerald-500 to-emerald-700 text-white py-3 px-6 text-sm font-semibold rounded-xl hover:from-emerald-600 hover:to-emerald-800 shadow-md transition-all duration-300">
-            Buy Now
+          <button class="absolute top-3 left-3 bg-gradient-to-b from-[#F4A298] to-[#F27D6A] text-white rounded-full px-4 py-1 text-xs shadow-md">
+              {{ $item->subcategory->name }}
           </button>
-        </div>
+          <img src="https://assets.promediateknologi.id/crop/0x0:0x0/750x500/webp/photo/2023/05/22/Red-Velvet-cake-2453917777.png" alt="Red Velvet Cake" class="w-full h-48 object-cover">
+          <div class="p-5">
+              <div class="flex justify-between items-center">
+                  <h3 class="font-bold text-emerald-600 text-base">{{ $item->name }}</h3>
+                  <p class="text-gray-500 text-sm font-medium">Rp {{ number_format($item->price, 0, ',', '.') }}</p>
+              </div>
+              <div class="flex items-center mt-3 space-x-2">
+                  <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+                  <span class="text-gray-600 font-medium text-sm">{{ $item->rating }}</span>
+                  <span class="text-gray-400 text-sm">({{ $item->reviews_count }} reviews)</span>
+              </div>
+              <button class="mt-6 w-full bg-gradient-to-r from-emerald-500 to-emerald-700 text-white py-3 px-6 text-sm font-semibold rounded-xl hover:from-emerald-600 hover:to-emerald-800 shadow-md transition-all duration-300">
+                  Buy Now
+              </button>
+          </div>
       </div>
-      <div class="bg-white rounded-3xl shadow-xl overflow-hidden w-full transform hover:scale-105 transition-transform duration-300">
-        <button class="absolute top-3 left-3 bg-gradient-to-b from-[#F4A298] to-[#F27D6A] text-white rounded-full px-4 py-1 text-xs shadow-md">Coffee
-        </button>
-        <img src="https://assets.promediateknologi.id/crop/0x0:0x0/750x500/webp/photo/2023/05/22/Red-Velvet-cake-2453917777.png" alt="Red Velvet Cake" class="w-full h-48 object-cover">
-        <div class="p-5">
-          <div class="flex justify-between items-center">
-            <h3 class="font-bold text-emerald-600 text-base">Red Velvet Cake</h3>
-            <p class="text-gray-500 text-sm font-medium">Rp 50.000</p>
-          </div>
-          <div class="flex items-center mt-3 space-x-2">
-            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
-            <span class="text-gray-600 font-medium text-sm">4.96</span>
-            <span class="text-gray-400 text-sm">(76 reviews)</span>
-          </div>
-          <button class="mt-6 w-full bg-gradient-to-r from-emerald-500 to-emerald-700 text-white py-3 px-6 text-sm font-semibold rounded-xl hover:from-emerald-600 hover:to-emerald-800 shadow-md transition-all duration-300">
-            Buy Now
-          </button>
-        </div>
-      </div>
-      <div class="bg-white rounded-3xl shadow-xl overflow-hidden w-full transform hover:scale-105 transition-transform duration-300">
-        <button class="absolute top-3 left-3 bg-gradient-to-b from-[#F4A298] to-[#F27D6A] text-white rounded-full px-4 py-1 text-xs shadow-md">Coffee
-        </button>
-        <img src="https://assets.promediateknologi.id/crop/0x0:0x0/750x500/webp/photo/2023/05/22/Red-Velvet-cake-2453917777.png" alt="Red Velvet Cake" class="w-full h-48 object-cover">
-        <div class="p-5">
-          <div class="flex justify-between items-center">
-            <h3 class="font-bold text-emerald-600 text-base">Red Velvet Cake</h3>
-            <p class="text-gray-500 text-sm font-medium">Rp 50.000</p>
-          </div>
-          <div class="flex items-center mt-3 space-x-2">
-            <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
-            <span class="text-gray-600 font-medium text-sm">4.96</span>
-            <span class="text-gray-400 text-sm">(76 reviews)</span>
-          </div>
-          <button class="mt-6 w-full bg-gradient-to-r from-emerald-500 to-emerald-700 text-white py-3 px-6 text-sm font-semibold rounded-xl hover:from-emerald-600 hover:to-emerald-800 shadow-md transition-all duration-300">
-            Buy Now
-          </button>
-        </div>
-      </div>
-      
+      @endforeach
     </div>
   </div>
 </div>
-
 @endsection
