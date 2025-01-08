@@ -156,12 +156,36 @@ class EmployeeController extends Controller
     {
         $menu = Product::where('id', $req->id)->first();
 
+        $recipe = Recipe::where('id_product', $menu->id)->get();
+
+        if ($recipe->isEmpty()) {
+            return redirect()->back()->with('error', 'Menu has no associated recipe');
+        }
+
+        foreach ($recipe as $item) {
+            $ingredient = Ingredient::where('id', $item->id_ingredient)->first();
+            if (!$ingredient || $ingredient->stock < $item->amount * $req->stock) {
+                return redirect()->back()->with(
+                    'error',
+                    'Not enough stock for ingredient: ' . ($ingredient->name ?? 'Unknown')
+                );
+            }
+        }
+
         $menu->name = $req->name;
         $menu->id_category = $req->category;
         $menu->id_subcategory = $req->subcategory;
         $menu->price = $req->price;
         $menu->description = $req->desc;
         $menu->img_url = $req->file('image')? $req->file('image')->store('images', 'public') : $menu->img_url;
+
+        foreach ($recipe as $item) {
+            $ingredient = Ingredient::where('id', $item->id_ingredient)->first();
+            $ingredient->stock -= $item->amount * $req->stock;
+            $ingredient->save();
+        }
+    
+        $menu->stock = $req->stock;
         $menu->save();
         return redirect()->back()->with('success', 'Menu updated successfully');
     }

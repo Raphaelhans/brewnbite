@@ -90,6 +90,14 @@
                     <input type="number" min="0" class="form-control" id="exampleInputEmail1" placeholder="Enter menu price" name="price" value="{{$current->price}}" required>
                 </div>
                 <div class="form-group">
+                    <label for="exampleInputEmail1">Current Stock</label>
+                    <input type="number" min="0" class="form-control" id="exampleInputEmail1" placeholder="Enter menu stock" name="currstock" value="{{$current->stock}}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Add Stock</label>
+                    <input type="number" min="0" class="form-control" id="exampleInputEmail1" placeholder="Enter menu stock" name="stock" required>
+                </div>
+                <div class="form-group">
                     <label for="exampleInputEmail1">Description</label>
                     <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Enter menu description" name="desc" value="{{$current->description}}" required>
                 </div>
