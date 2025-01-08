@@ -67,7 +67,7 @@
       <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg w-auto border border-gray-200 shadow-xl">
         <div class="px-4 py-3 text-sm text-gray-700">
           <div>{{ session('user.email', 'guest@example.com') }}</div>
-          <div class="
+          	<div class="
 				rounded-xl shadow-md p-2 my-2 
 				{{
 					$membership === 'Diamond' ? 'bg-gradient-to-br from-blue-500 to-blue-400' :
