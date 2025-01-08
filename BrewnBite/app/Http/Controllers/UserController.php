@@ -195,7 +195,7 @@ class UserController extends Controller
 	}
 
 	
-	public function displayTopUp(){
+	public function topup(){
 		$user = User::find(session('user')['id']);
 		$profilePictureUrl = $user['profile_picture'] ? asset('storage/' . $user['profile_picture']) : null;
 		$initials = $this->getInitials($user['name']);
@@ -217,6 +217,64 @@ class UserController extends Controller
 			'user' => $user
 		]);
 	}
+
+	function process(Request $req) {
+		$req->validate([
+			'amount' => 'required|integer|min:1',
+		]);
+	
+		try {
+			$data = $req->all();
+	
+			$topup = Topup::create([
+				'customer' => session('login')->username,
+				'amount' => $data['amount'],
+			]);
+	
+			\Midtrans\Config::$serverKey = config('midtrans.serverKey');
+			\Midtrans\Config::$isProduction = false;
+			\Midtrans\Config::$isSanitized = true;
+			\Midtrans\Config::$is3ds = true;
+	
+			$params = array(
+				'transaction_details' => array(
+					'order_id' => rand(),
+					'gross_amount' => $data['amount'],
+				),
+				'customer_details' => array(
+					'first_name' => session('login')->username,
+					'email' => session('login')->email,
+				),
+			);
+	
+			$snapToken = \Midtrans\Snap::getSnapToken($params);
+	
+			$topup->snap_token = $snapToken;
+			$topup->save();
+	
+			return redirect()->route('topup.checkout', $topup->id);
+		} catch (\Exception $e) {
+			return redirect()->back()->withErrors(['error' => 'An error occurred while processing your request. Please try again.']);
+		}
+	}
+	
+	// function checkout(Topup $topup) {
+	// 	$data = Topup::where('id', $topup->id)->first();
+	// 	return view('user_site.checkout', compact('topup', 'data'));
+	// }
+	
+	// function success(Topup $topup) {
+	// 	$topup->status = 1;
+	// 	$topup->save();
+	
+	// 	$user = User::find($topup->customer);
+	// 	$user->increment('balance', $topup->amount);
+	
+	// 	session(['login' => $user]);
+	
+	// 	return redirect()->route('topup.index');
+	// }
+	
 
 	public function cart(){
 		return view('user.cart');
@@ -243,7 +301,26 @@ class UserController extends Controller
 	}
 
 	public function promo(){
-		return view('user.listPromo');
+		$user = User::find(session('user')['id']);
+		$profilePictureUrl = $user['profile_picture'] ? asset('storage/' . $user['profile_picture']) : null;
+		$initials = $this->getInitials($user['name']);
+
+		$totalSpent = $user->total_spent;
+		$membership = 'Bronze'; 
+		if ($totalSpent >= 200000) {
+			$membership = 'Diamond';
+		} elseif ($totalSpent >= 100000) {
+			$membership = 'Gold';
+		} elseif ($totalSpent >= 50000) {
+			$membership = 'Silver';
+		}
+
+		return view('user.listPromo' , [
+			'initials' => $initials, 
+			'membership' => $membership, 
+			'profile_picture' => $profilePictureUrl, 
+			'user' => $user
+		]);
 	}
 
 	public function redeemPromo(){

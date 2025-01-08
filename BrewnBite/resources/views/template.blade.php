@@ -85,7 +85,7 @@
 				</div>
         <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownInformationButton">
 			<li><a href="{{route('user.profile')}}" class="block px-4 py-2 hover:bg-emerald-100">Edit Profile</a></li>
-          <li><a href="{{route('user.topup')}}" class="block px-4 py-2 hover:bg-emerald-100">Top Up Balance</a></li>
+          <li><a href="{{route('user.topup.index')}}" class="block px-4 py-2 hover:bg-emerald-100">Top Up Balance</a></li>
           <li><a href="{{ route('user.promo.index') }}" class="block px-4 py-2 hover:bg-emerald-100">All Promotions</a></li>
           <li><a href="/logout" class="block px-4 py-2 hover:bg-emerald-100">Log Out</a></li>
         </ul>
@@ -122,5 +122,6 @@
 			</div>
 		</div>
 	</div>
+	@yield('scripts')
 </body>
 </html>

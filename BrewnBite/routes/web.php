@@ -29,6 +29,10 @@ Route::prefix('user')->name('user.')->group(function () {
     Route::get('/detailNews/{id}', [NewsController::class, 'detailNews'])->name('detail.news');
     Route::get('/profile', [UserController::class, 'displayProfile'])->name('profile');
     Route::get('/topup', [UserController::class, 'displayTopUp'])->name('topup');
+    Route::prefix('/topup')->name('topup.')->group(function () {
+        Route::get('/', [UserController::class, 'topup'])->name('index');
+        Route::post('/process', [UserController::class, 'process'])->name('process');
+    });
     Route::prefix('/menu')->name('menu.')->group(function () {
         Route::get('/', [UserController::class, 'menu'])->name('index');
         Route::get('/detail', [UserController::class, 'detailMenu'])->name('detail');

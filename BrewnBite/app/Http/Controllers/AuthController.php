@@ -83,4 +83,9 @@ class AuthController extends Controller
         return redirect('/login')->with('success', 'Account created successfully');
     }
 
+    public function logout(){
+        session()->forget('user');
+        return redirect('/login'); 
+    }
+
 }
