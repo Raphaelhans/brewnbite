@@ -74,10 +74,9 @@
       {{-- <button class="mt-8 bg-gradient-to-b from-[#F4A298] to-[#F27D6A] text-white py-3 px-8 rounded-lg text-xl shadow-md hover:from-[#F27D6A] hover:to-[#F4A298] focus:ring-4 focus:ring-[#F4A298] focus:outline-none transition-all">
         Add to Cart
       </button> --}}
-      <button class="bg-gradient-to-r from-[#F4A298] to-[#E8897A] hover:from-[#e8897a] hover:to-[#d97060] text-white text-lg font-bold py-3 px-8 rounded-full w-fit shadow-lg transition-all duration-300  mt-10">
+      <button class="bg-gradient-to-r from-[#F4A298] to-[#E8897A] hover:from-[#e8897a] hover:to-[#d97060] text-white text-lg font-semibold py-3 px-8 rounded-full w-fit shadow-lg transition-all duration-300 my-10">
         Add to Cart
       </button>
-      
     </div>
   </div>
 </div>
