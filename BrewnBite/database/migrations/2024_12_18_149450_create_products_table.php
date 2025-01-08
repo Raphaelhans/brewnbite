@@ -21,7 +21,7 @@ return new class extends Migration
             $table->decimal('rating', 3, 2)->default(0);
             $table->text('description')->nullable();
             $table->string('weather')->nullable();
-            $table->string('img_url')->nullable();
+            $table->string('img_url')->default('menus/default.jpg');
             $table->timestamps();
             $table->softDeletes();
         });
