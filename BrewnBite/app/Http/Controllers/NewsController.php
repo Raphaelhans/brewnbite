@@ -17,20 +17,8 @@ class NewsController extends Controller
 		$user = User::find(session('user')['id']);
         $profilePictureUrl = $user['profile_picture'] ? asset('storage/' . $user['profile_picture']) : null;
         $articles = collect($news['articles']);
-		$initials = $this->getInitials($user['name']);
 
-        $totalSpent = $user->total_spent;
-		$membership = 'Bronze'; 
-		if ($totalSpent >= 200000) {
-			$membership = 'Diamond';
-		} elseif ($totalSpent >= 100000) {
-			$membership = 'Gold';
-		} elseif ($totalSpent >= 50000) {
-			$membership = 'Silver';
-		}
-
-    
-        return view('user.news', ['articles' => $articles, 'profile_picture' => $profilePictureUrl, 'membership' => $membership, 'initials' => $initials]); 
+        return view('user.news', ['articles' => $articles, 'profile_picture' => $profilePictureUrl, 'user' => $user]); 
     }
 
     public function detailNews($id)
@@ -44,31 +32,8 @@ class NewsController extends Controller
         $article = $articles->get($id);
         $user = User::find(session('user')['id']);
         $profilePictureUrl = $user['profile_picture'] ? asset('storage/' . $user['profile_picture']) : null;
-		$initials = $this->getInitials($user['name']);
 
-        $totalSpent = $user->total_spent;
-		$membership = 'Bronze'; 
-		if ($totalSpent >= 200000) {
-			$membership = 'Diamond';
-		} elseif ($totalSpent >= 100000) {
-			$membership = 'Gold';
-		} elseif ($totalSpent >= 50000) {
-			$membership = 'Silver';
-		}
-
-        return view('user.detailnews', ['article' => $article, 'profile_picture' => $profilePictureUrl, 'membership' => $membership, 'initials' => $initials]);
+        return view('user.detailnews', ['article' => $article, 'profile_picture' => $profilePictureUrl, 'user' => $user]);
     }
 
-    public function getInitials($name)
-	{
-		$words = explode(' ', trim($name));
-		$initials = '';
-
-		foreach ($words as $index => $word) {
-			if ($index > 1) break; 
-			$initials .= strtoupper(substr($word, 0, 1));
-		}
-
-		return $initials;
-	} 
 }
