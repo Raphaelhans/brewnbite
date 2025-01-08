@@ -10,11 +10,11 @@
 
 @section('content')
 <div class="container d-flex justify-content-center align-items-center" style="min-height: 90vh;">
-    <div class="card card-warning" style="width: 100%; max-width: 600px;">
+    <div class="card card-primary" style="width: 100%; max-width: 600px;">
         <div class="card-header">
             <h3 class="card-title">Add Employee</h3>
         </div>
-        <form action="{{ route('admin.addemployee.doadd') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.master.users.doadd') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="card-body">
                 <div class="form-group">

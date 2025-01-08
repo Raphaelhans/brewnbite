@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('pfp')->default('profile_pictures/default.png');
             $table->integer('role');
             $table->integer('membership')->default('1');
             $table->decimal('credit', 10, 2)->default(0);
