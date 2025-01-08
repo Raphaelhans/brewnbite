@@ -22,58 +22,21 @@ class UserController extends Controller
 
 		$date = Carbon::now()->translatedFormat('l, F d, Y');
 
-		$user = User::find(session('user')['id']);
-		$profilePictureUrl = $user['profile_picture'] ? asset('storage/' . $user['profile_picture']) : null;
-		$initials = $this->getInitials($user['name']);
-		
-		$totalSpent = $user->total_spent;
-		$membership = 'Bronze'; 
-		if ($totalSpent >= 200000) {
-			$membership = 'Diamond';
-		} elseif ($totalSpent >= 100000) {
-			$membership = 'Gold';
-		} elseif ($totalSpent >= 50000) {
-			$membership = 'Silver';
-		}
+		$user = session('user');
+		$profilePictureUrl = $user['profile_picture'] ?? null;
 
 		return view('user.home', [
 			'weatherData' => $weatherData,
 			'date' => $date,
 			'user' => $user,
-			'initials' => $initials,
 			'profile_picture' => $profilePictureUrl,
-			'membership' => $membership,
 		]);
 
 	}
 
-	public function getInitials($name)
-	{
-		$words = explode(' ', trim($name));
-		$initials = '';
-
-		foreach ($words as $index => $word) {
-			if ($index > 1) break; 
-			$initials .= strtoupper(substr($word, 0, 1));
-		}
-
-		return $initials;
-	}
-
 	public function menu(Request $request) {
-		$user = User::find(session('user')['id']);
-		$profilePictureUrl = $user['profile_picture'] ? asset('storage/' . $user['profile_picture']) : null;
-		$initials = $this->getInitials($user['name']);
-
-		$totalSpent = $user->total_spent;
-		$membership = 'Bronze'; 
-		if ($totalSpent >= 200000) {
-			$membership = 'Diamond';
-		} elseif ($totalSpent >= 100000) {
-			$membership = 'Gold';
-		} elseif ($totalSpent >= 50000) {
-			$membership = 'Silver';
-		}
+		$user = session('user');
+		$profilePictureUrl = $user['profile_picture'] ?? null;
 
 		$categoryFilter = $request->query('category', null);
 		$subcategoryFilter = $request->query('subcategory', 'All');
@@ -100,8 +63,6 @@ class UserController extends Controller
 		$products = $query->select('products.*')->get();
 
 		return view('user.menu' ,[
-			'initials' => $initials, 
-			'membership' => $membership, 
 			'profile_picture' => $profilePictureUrl, 
 			'user' => $user,
 			'product' => $products,
@@ -112,33 +73,19 @@ class UserController extends Controller
 	}
 
 	public function detailMenu() {
-		$user = User::find(session('user')['id']);
-		$profilePictureUrl = $user['profile_picture'] ? asset('storage/' . $user['profile_picture']) : null;
-		$initials = $this->getInitials($user['name']);
-
-		$totalSpent = $user->total_spent;
-		$membership = 'Bronze'; 
-		if ($totalSpent >= 200000) {
-			$membership = 'Diamond';
-		} elseif ($totalSpent >= 100000) {
-			$membership = 'Gold';
-		} elseif ($totalSpent >= 50000) {
-			$membership = 'Silver';
-		}
+		$user = session('user');
+		$profilePictureUrl = $user['profile_picture'] ?? null;
 
 		return view('user.detailMenu' , [
-			'initials' => $initials, 
-			'membership' => $membership, 
 			'profile_picture' => $profilePictureUrl, 
 			'user' => $user
 		]);
 	}
 	public function displayProfile(){
-		$user = User::find(session('user')['id']);
-		$initials = $this->getInitials($user['name']);
-		$profilePictureUrl = $user['profile_picture'] ? asset('storage/' . $user['profile_picture']) : null;
+		$user = session('user');
+		$profilePictureUrl = $user['profile_picture'] ?? null;
 
-		$totalSpent = $user->total_spent;
+		$totalSpent = $user['total_spent'] ?? 0;
 		$membership = 'Bronze'; 
 		if ($totalSpent >= 200000) {
 			$membership = 'Diamond';
@@ -150,7 +97,6 @@ class UserController extends Controller
 
 		return view('user.profile', [
 			'user' => $user,
-			'initials' => $initials, 
 			'profile_picture' => $profilePictureUrl,  
 			'membership' => $membership,
 		]);
@@ -165,11 +111,11 @@ class UserController extends Controller
 		]);
 
 		$user = User::find(session('user')['id']);
-		$user->name = $request->input('name');
+		if (!$user) {
+			return redirect()->route('user.index')->withErrors(['error' => 'User not found.']);
+		}
 
-		$sessionData = session('user');
-		$sessionData['name'] = $user->name;
-		$sessionData['initials'] = $this->getInitials($user->name);
+		$user->name = $request->input('name');
 
 		if ($request->filled('password')) {
 			$user->password = bcrypt($request->input('password'));
@@ -183,36 +129,26 @@ class UserController extends Controller
 			$fileName = $user->id . '.jpg';
 			$filePath = $request->file('profile_picture')->storeAs('profile_pictures', $fileName, 'public');
 			$user->profile_picture = $filePath;
-			
-			$sessionData['profile_picture'] = asset('storage/' . $filePath);
 		}
 
 		$user->save();
-		
+
+		$sessionData = session('user');
+		$sessionData['name'] = $user->name;
+		$sessionData['profile_picture'] = $user->profile_picture ? asset('storage/' . $user->profile_picture) : null;
+
 		session(['user' => $sessionData]);
 
 		return redirect()->route('user.index')->with('success', 'Profile updated successfully.');
 	}
 
+
 	
 	public function displayTopUp(){
-		$user = User::find(session('user')['id']);
-		$profilePictureUrl = $user['profile_picture'] ? asset('storage/' . $user['profile_picture']) : null;
-		$initials = $this->getInitials($user['name']);
-
-		$totalSpent = $user->total_spent;
-		$membership = 'Bronze'; 
-		if ($totalSpent >= 200000) {
-			$membership = 'Diamond';
-		} elseif ($totalSpent >= 100000) {
-			$membership = 'Gold';
-		} elseif ($totalSpent >= 50000) {
-			$membership = 'Silver';
-		}
+		$user = session('user');
+		$profilePictureUrl = $user['profile_picture'] ?? null;
 
 		return view('user.topup' , [
-			'initials' => $initials, 
-			'membership' => $membership, 
 			'profile_picture' => $profilePictureUrl, 
 			'user' => $user
 		]);
@@ -243,7 +179,13 @@ class UserController extends Controller
 	}
 
 	public function promo(){
-		return view('user.listPromo');
+		$user = session('user');
+		$profilePictureUrl = $user['profile_picture'] ?? null;
+
+		return view('user.listPromo', [
+			'user' => $user,
+			'profile_picture' => $profilePictureUrl, 
+		]);
 	}
 
 	public function redeemPromo(){
