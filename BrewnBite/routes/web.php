@@ -17,9 +17,11 @@ Route::get('/login', function () {
 Route::get('/register', function () {
     return view('register');
 });
+
 Route::post('/login',[AuthController::class, 'login']);
-Route::post('/register',[AuthController::class, 'register']);
+Route::post('/register',[AuthController::class, 'register'])->name('register');
 Route::get('/logout',[AuthController::class, 'logout'])->name('logout');
+
 
 Route::prefix('user')->name('user.')->group(function () {
     Route::get('/', [UserController::class, 'index'])->name('index');
@@ -31,7 +33,22 @@ Route::prefix('user')->name('user.')->group(function () {
         Route::get('/', [UserController::class, 'menu'])->name('index');
         Route::get('/detail', [UserController::class, 'detailMenu'])->name('detail');
     });
+    Route::prefix('/cart')->name('cart.')->group(function () {
+        Route::get('/', [UserController::class, 'cart'])->name('index');
+        Route::get('/summary', [UserController::class, 'summary'])->name('summary');
+        Route::get('/checkout', [UserController::class, 'checkout'])->name('checkout');
+    });
+    Route::prefix('/history')->name('history.')->group(function () {
+        Route::get('/', [UserController::class, 'history'])->name('index');
+        Route::get('/detail', [UserController::class, 'detailHistory'])->name('detail');
+        Route::get('/rating', [UserController::class, 'rating'])->name('rating');
+    });
+    Route::prefix('/promo')->name('promo.')->group(function () {
+        Route::get('/', [UserController::class, 'promo'])->name('index');
+        Route::get('/redeem', [UserController::class, 'redeemPromo'])->name('reedem');
+    });
 });
+Route::post('/profile', [UserController::class, 'editProfile'])->name('user.update');
 
 
 // Route Karyawan
@@ -40,8 +57,18 @@ Route::prefix('employee')->name('employee.')->group(function () {
     Route::get('/history', [EmployeeController::class, 'history'])->name('history');
     Route::get('/inventory', [EmployeeController::class, 'inventory'])->name('inventory');
     Route::get('/listmenu', [EmployeeController::class, 'listmenu'])->name('listmenu');
+    Route::get('/editmenu/{id}', [EmployeeController::class, 'toeditMenu'])->name('editmenu');
+    Route::post('/menu/insert', [EmployeeController::class, 'addmenu']);
+    Route::post('/menu/deletemenu', [EmployeeController::class, 'deletemenu']);
+    Route::post('/menu/insertrecipe', [EmployeeController::class, 'addrecipe']);
+    Route::post('/menu/editmenu', [EmployeeController::class, 'editmenu']);
+    Route::post('/menu/editrecipe', [EmployeeController::class, 'editrecipe']);
+    Route::post('/ingredient/insert', [EmployeeController::class, 'insertIngredient']);
+    Route::post('/ingredient/update', [EmployeeController::class, 'updateIngredient']);
+    Route::post('/ingredient/delete', [EmployeeController::class, 'deleteIngredient']);
 });
 Route::get('/get-category/{id}', [EmployeeController::class, 'getCategory']);
+Route::get('/get-unit/{id}', [EmployeeController::class, 'getUnit']);
 
 Route::prefix('menu')->group(function () {
     Route::post('/insert', [EmployeeController::class, 'menu']);
