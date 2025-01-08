@@ -27,7 +27,7 @@ class User extends Model
     protected $primaryKey = 'id';
     public $timestamps = true;
     public $incrementing = true;
-    protected $fillable = ['name', 'email', 'password', 'role', 'membership', 'credit', 'total_spent'];
+    protected $fillable = ['name', 'email', 'password', 'pfp', 'role', 'membership', 'credit', 'total_spent'];
 
     // Satu record user memiliki banyak record htrans
     public function htrans(): HasMany
