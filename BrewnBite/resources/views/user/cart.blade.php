@@ -34,7 +34,7 @@
   <div class="border-t border-gray-300 my-8"></div>
 
   <div class="flex flex-col md:flex-row  justify-between">
-    <p class="text-xl font-bold text-gray-800">Total <span class="text-emerald-700">Rp 50000</span></p>
+    <p class="text-xl font-bold text-gray-800">Total <span class="text-emerald-700"> Rp 50000</span></p>
     <button class="w-fit mt-4 md:mt-0 bg-gradient-to-r from-emerald-600 to-emerald-400 text-white px-8 py-3 rounded-3xl shadow-lg text-lg  font-semibold hover:from-emerald-700 hover:to-emerald-500  focus:ring-emerald-200 focus:outline-none transition-all mb-10">
       Proceed to Checkout
     </button>
