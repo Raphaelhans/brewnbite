@@ -41,6 +41,8 @@ class UserController extends Controller
 		$categoryFilter = $request->query('category', null);
 		$subcategoryFilter = $request->query('subcategory', 'All');
 
+		$searchQuery = $request->query('search', null);
+
 		$subcategories = [];
 		if ($categoryFilter) {
 			$subcategories = \App\Models\Subcategory::whereHas('category', function ($query) use ($categoryFilter) {
@@ -58,6 +60,10 @@ class UserController extends Controller
 		if ($subcategoryFilter !== 'All') {
 			$query->join('subcategories', 'products.id_subcategory', '=', 'subcategories.id')
 				->where('subcategories.name', $subcategoryFilter);
+		}
+
+		if ($searchQuery) {
+			$query->where('products.name', 'LIKE', '%' . $searchQuery . '%');
 		}
 
 		$products = $query->select('products.*')->get();
@@ -142,8 +148,6 @@ class UserController extends Controller
 		return redirect()->route('user.index')->with('success', 'Profile updated successfully.');
 	}
 
-
-	
 	public function displayTopUp(){
 		$user = session('user');
 		$profilePictureUrl = $user['profile_picture'] ?? null;
