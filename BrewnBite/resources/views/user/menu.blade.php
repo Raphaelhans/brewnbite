@@ -6,10 +6,19 @@
     <h1 class="text-5xl font-bold text-emerald-700 animate-bounce">Our Menu</h1>
   </div>
   <div class="flex items-center border border-gray-300 rounded-full px-4 py-2 shadow-md mt-8">
-    <i class="fa-solid fa-magnifying-glass text-emerald-700 pl-2"></i>
-    <input type="text" placeholder="Search here" class="outline-none px-4 py-2 text-sm text-gray-600 w-64"
-    />
-    <button class="bg-gradient-to-b from-emerald-500 to-emerald-700 hover:bg-brown-600 text-white rounded-full px-4 py-2 text-sm">Search</button>
+    <form action="{{ route('user.menu.index') }}" method="GET" class="flex items-center w-full">
+      <i class="fa-solid fa-magnifying-glass text-emerald-700 pl-2"></i>
+      <input 
+          type="text" 
+          name="search" 
+          value="{{ request('search') }}" 
+          placeholder="Search here" 
+          class="outline-none px-4 py-2 text-sm text-gray-600 w-64"
+      />
+      <button type="submit" class="bg-gradient-to-b from-emerald-500 to-emerald-700 hover:bg-brown-600 text-white rounded-full px-4 py-2 text-sm">
+          Search
+      </button>
+    </form>
   </div>
 
   <div class="flex gap-12 my-10">

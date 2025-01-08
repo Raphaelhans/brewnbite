@@ -8,19 +8,6 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-	private function getInitials($name)
-    {
-        $words = explode(' ', trim($name));
-        $initials = '';
-
-        foreach ($words as $index => $word) {
-            if ($index > 1) break; 
-            $initials .= strtoupper(substr($word, 0, 1));
-        }
-
-        return $initials;
-    }
-
     public function login(Request $request) {
         $request->validate([
             'email' => 'required|email',
@@ -28,25 +15,30 @@ class AuthController extends Controller
         ]);
     
         $user = User::where('email', $request->email)->first();
-        if ($user && Hash::check($request->password, $user->password)) {
-            $profilePictureUrl = $user->profile_picture ? asset('storage/' . $user->profile_picture) : null;
-            $initials = $this->getInitials($user->name);
-            
-            $request->session()->put('user', [
-                'id' => $user->id,
-                'name' => $user->name,
-                'email' => $user->email,
-                'membership' => $user->membership, 
-                'credit' => $user->credit,  
-                'total_spent' => $user->total_spent,
-                'profile_picture' => $profilePictureUrl,
-                'initials' => $initials
-            ]);
-    
-            return redirect('/user');
+
+        if (!$user) {
+            return back()->withErrors(['email' => 'Account does not exist']);
         }
-    
-        return back()->withErrors(['password' => 'Email/password invalid']);
+
+        if (!Hash::check($request->password, $user->password)) {
+            return back()->withErrors(['password' => 'Invalid login details']);
+        }
+
+        if (!Hash::check($request->password, $user->password)) {
+            return back()->withErrors(['password' => 'Invalid login details']);
+        }
+
+        session(['user' => [
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+            'membership' => $user->membership,
+            'credit' => $user->credit,
+            'total_spent' => $user->total_spent,
+            'profile_picture' => $user->profile_picture ? asset('storage/' . $user->profile_picture) : null,
+        ]]);
+
+        return redirect('/user');
     }
 
     public function register(Request $request){
@@ -57,19 +49,17 @@ class AuthController extends Controller
             'confirm_password' => 'required|same:password'
         ]);
         
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->role = 1; 
-        $user->membership = 0; 
-        $user->credit = 0;
-        $user->total_spent = 0;
+        $user = User::create([
+            'email' => $request['email'],
+            'password' => Hash::make($request['password']),
+            'name' => $request['name'],
+            'role' => 1,
+            'membership' => 0,
+            'credit' => 0,
+            'total_spent' => 0,
+        ]);
 
-        $user->save();
-
-        $initials = $this->getInitials($user->name);
-        session()->put('user', [
+        session(['user' => [
             'id' => $user->id,
             'name' => $user->name,
             'email' => $user->email,
@@ -77,8 +67,7 @@ class AuthController extends Controller
             'credit' => $user->credit,
             'total_spent' => $user->total_spent,
             'profile_picture' => null,
-            'initials' => $initials
-        ]);
+        ]]);
 
         return redirect('/login')->with('success', 'Account created successfully');
     }
