@@ -51,7 +51,11 @@
     <div class="main p-3">
         <div>
             <h1 class="text-center">List Menu</h1>
-            
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
             <table id="menuTable" class="table table-striped " style="width:100%">
                 <thead>
                     <tr>
@@ -66,6 +70,8 @@
                         <th>Created</th>
                         <th>Updated</th>
                         <th>Deleted</th>
+                        <th style="width: 11vw" class="text-center">Action</th>
+                        
                     </tr>
                 </thead>
                 <tbody>
@@ -82,6 +88,23 @@
                         <td>{{ $m->created_at }}</td>
                         <td>{{ $m->updated_at }}</td>
                         <td>{{ $m->deleted_at }}</td>
+                        <td class="align-middle">
+                          <div class="d-flex ">
+                            <a
+                              name=""
+                              id=""
+                              class="btn btn-primary me-2"
+                              href="{{ route('employee.editmenu', $m->id) }}"
+                              role="button"
+                              >Edit</a
+                            >
+                            <form action="menu/deletemenu" method="post">
+                              @csrf
+                              <input type="text" name="id" value="{{ $m->id }}" hidden>
+                              <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                          </div>
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>

@@ -30,10 +30,10 @@
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse " id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Menu</a>
+                <a class="nav-link" aria-current="page" href="{{ route('employee.dashboard') }}">Menu</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" aria-current="page" href="{{ route('employee.listmenu') }}">List Menu</a>
@@ -48,7 +48,7 @@
           </div>
         </div>
     </nav>
-    <h1 class="text-center">Menu</h1>
+    <h1 class="text-center">Edit Page</h1>
     @if (session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
@@ -59,25 +59,21 @@
             {{ session('error') }}
         </div>
     @endif
-    @foreach ($errors->all() as $error)
-    <div class="alert alert-danger">
-        {{ $error }}
-    </div>
-    @endforeach
     <div class="main p-3 container d-flex justify-content-between align-items-center" >
         <div style="max-width: 400px;" class="w-100">
-            <h3>Add Menu</h3>
-            <form action="menu/insert" method="post" enctype="multipart/form-data">
+            <h3>Edit Menu</h3>
+            <form action="{{url('/employee/menu/editmenu')}}" method="post" enctype="multipart/form-data">
                 @csrf
+                <input type="hidden" name="id" value="{{$current->id}}">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Name</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Enter Menu Name" name="name" required>
+                    <input type="text" class="form-control" id="exampleInputEmail1" value="{{$current->name}}" name="name" placeholder="Enter Menu Name" required>
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Category</label><br>
                     <select name="category" id="category" class="form-select" onchange="fetchCategory()">
                         @foreach ($category as $item)
-                            <option value="{{ $item->id }}">{{ $item->name }}</option>  
+                            <option value="{{ $item->id }}" {{ $item->id == $current->id_category ? 'selected' : '' }}>{{ $item->name }}</option>  
                         @endforeach
                     </select>
                 </div>
@@ -85,41 +81,45 @@
                     <label for="exampleInputEmail1">Sub Category</label><br>
                     <select name="subcategory" id="subcategory" class="form-select">
                         @foreach ($subcategory as $item)
-                            <option value="{{ $item->id }}">{{ $item->name }}</option>  
+                        <option value="{{ $item->id }}" {{ $item->id == $current->id_subcategory ? 'selected' : '' }}>{{ $item->name }}</option>  
                         @endforeach
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Price</label>
-                    <input type="number" min="0" class="form-control" id="exampleInputEmail1" placeholder="Enter menu price" name="price" required>
+                    <input type="number" min="0" class="form-control" id="exampleInputEmail1" placeholder="Enter menu price" name="price" value="{{$current->price}}" required>
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Description</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Enter menu description" name="desc" required>
+                    <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Enter menu description" name="desc" value="{{$current->description}}" required>
                 </div>
                 <div class="form-group">
                     <label for="image">Image</label>
-                    <input type="file" class="form-control" id="image" name="image" accept="image/*" required>
+                    <input type="file" class="form-control" id="image" name="image" accept="image/*" >
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">Edit</button>
             </form>
         </div>
 
         <div style="max-width: 400px;" class="w-100">
-            <h3 class="mt-5">Add Recipe</h3>
-            <form action="menu/insertrecipe" method="post">
+            <h3 class="mt-5">Edit Recipe</h3>
+            <form action="{{url('/employee/menu/editrecipe')}}" method="post">
                 @csrf
                 <div class="form-group">
                     <label for="exampleInputEmail1">Menu</label><br>
-                    <select name="menu" id="menu" class="form-select" >
-                        @foreach ($menu as $item)
-                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                    <input type="text" name="menu" value="{{$current->name}}" class="form-control" id="menu" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Current Ingredient</label><br>
+                    <select name="curringredient" id="" class="form-select">
+                        @foreach ($curringredients as $item)
+                            <option value="{{ $item->id }}">{{ $item->ingredients->name }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Ingredient</label><br>
-                    <select name="ingredient" id="ingredient" class="form-select" onchange="fetchUnit()">
+                    <label for="exampleInputEmail1">Edit Ingredient</label><br>
+                    <select name="editingredient" id="newingredient" class="form-select" onchange="fetchUnit()">
                         @foreach ($ingredient as $item)
                             <option value="{{ $item->id }}">{{ $item->name }}</option>
                         @endforeach
@@ -128,14 +128,14 @@
                 <div class="d-flex">
                     <div class="form-group w-100">
                         <label for="exampleInputEmail1">Amount</label>
-                        <input type="number" min="0" class="form-control" id="exampleInputEmail1" placeholder="Enter Amount" name="amount" required>
+                        <input type="number" min="0" class="form-control" id="exampleInputEmail1" placeholder="Enter Amount" name="amount">
                     </div>
                     <div class="form-group ms-2">
                         <label for="exampleInputEmail1">Unit</label>
                         <input type="text" name="unit" value="g" class="form-control" id="unit" readonly>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">Edit</button>
             </form>
         </div>
         </div>
@@ -169,7 +169,7 @@
     }
 
     function fetchUnit() {
-        const ingredientId = document.getElementById('ingredient').value;
+        const ingredientId = document.getElementById('newingredient').value;
         const BASE_URL = "{{ url('/') }}";
 
         fetch(`${BASE_URL}/get-unit/${ingredientId}`)

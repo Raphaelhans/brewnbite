@@ -33,7 +33,7 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="#">Menu</a>
+                <a class="nav-link" aria-current="page" href="{{ route('employee.dashboard') }}">Menu</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" aria-current="page" href="{{ route('employee.listmenu') }}">List Menu</a>
@@ -42,7 +42,7 @@
                 <a class="nav-link" href="{{ route('employee.history') }}">History</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" href="{{ route('employee.inventory') }}">Inventory</a>
+                <a class="nav-link active" href="#">Inventory</a>
               </li>
             </ul>
           </div>
@@ -50,20 +50,39 @@
     </nav>
     <div class="main p-3">
         <div>
-            <h1 class="text-center">Home</h1>
-            <h3>Add or Update Inventory</h1>
+            <h1 class="text-center">Inventory</h1>
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+            @if (session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
+            <h3 id="subheader">Add Inventory</h1>
             <div style="max-width: 400px;">
-                <form action="/menu/insert" method="post">
+                <form action="ingredient/insert" method="post" id="ingredientForm">
                     @csrf
+                    <input type="hidden" name="idingredient" id="idingredient">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Name</label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Enter Menu Name">
+                        <input type="text" class="form-control" id="name" placeholder="Enter Menu Name" name="name" required>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Stock</label>
-                        <input type="number" min="0" class="form-control" id="exampleInputEmail1" placeholder="Enter menu price">
+                        <input type="number" min="0" class="form-control" id="stock" placeholder="Enter menu price" name="stock" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Unit</label>
+                        <select name="unit" id="unit" class="form-select">
+                            <option value="g">g</option>  
+                            <option value="ml">ml</option>  
+                            <option value="pcs">pcs</option>  
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="submitButton">Submit</button>
                 </form>
             </div>
         </div>
@@ -72,57 +91,82 @@
             <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Position</th>
-                    <th>Office</th>
-                    <th>Age</th>
-                    <th>Start date</th>
-                    <th>Salary</th>
+                    <th class="text-start">Stock</th>
+                    <th>Unit</th>
+                    <th class="text-start">Created at</th>
+                    <th class="text-start">Updated at</th>
+                    <th>Deleted at</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-                {{-- <tr>
-                    <td>Tiger Nixon</td>
-                    <td>System Architect</td>
-                    <td>Edinburgh</td>
-                    <td>61</td>
-                    <td>2011-04-25</td>
-                    <td>$320,800</td>
-                </tr> --}}
+                @foreach ($ingredient as $item)
+                    <tr>
+                        <td class="text-start">{{ $item->name }}</td>
+                        <td class="text-start">{{ $item->stock }}</td>
+                        <td class="text-start">{{ $item->unit }}</td>
+                        <td class="text-start">{{ $item->created_at }}</td>
+                        <td class="text-start">{{ $item->updated_at }}</td>
+                        <td class="text-start">{{ $item->deleted_at }}</td>
+                        <td class="align-middle">
+                            <div class="d-flex">
+                                <button 
+                                    class="btn btn-primary me-2 edit-button" 
+                                    data-id="{{ $item->id }}" 
+                                    data-name="{{ $item->name }}" 
+                                    data-stock="{{ $item->stock }}" 
+                                    data-unit="{{ $item->unit }}"
+                                >
+                                    Edit
+                                </button>
+                                <form action="ingredient/delete" method="post">
+                                    @csrf
+                                    <input type="text" name="id" value="{{ $item->id }}" hidden>
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>                   
+                @endforeach
             </tbody>
         </table>
-                
-        {{-- @foreach ($employees as $item)
-            <tr>
-                <td>{{ $item['name'] }}</td>
-                <td>{{ $item['username'] }}</td>
-                <td>{{ $item['password'] }}</td>
-                {{-- <td>{{ $item['status'] }}</td> --}}
-                {{-- <td>Active</td>
-                <td>
-                    <form action="/karyawan/update" method="post">
-                        @csrf
-                        @method('PATCH')
-                        <input type="hidden" name="username" value="{{ $item['username'] }}">
-                        <input type="text" name="name" placeholder="New Name" class="form-control" required>
-                        <input type="text" name="password" placeholder="New Password" class="form-control" required>
-                        <button type="submit" class="btn btn-primary mt-1">Update</button>
-                    </form>
-                </td>
-                <td>
-                    <form action="/karyawan/delete" method="post">
-                        @csrf
-                        @method('DELETE')
-                        <input type="hidden" name="username" value="{{ $item['username'] }}">
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                    </form>
-                </td>
-            </tr> --}}
-        {{-- @endforeach  --}}
     </div>
 
 <script>
     $(document).ready(function () {
         $('#menuTable').DataTable(); 
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const editButtons = document.querySelectorAll('.edit-button');
+        const form = document.getElementById('ingredientForm');
+        const nameInput = document.getElementById('name');
+        const stockInput = document.getElementById('stock');
+        const unitSelect = document.getElementById('unit');
+        const idIngredient = document.getElementById('idingredient');
+        const subheader = document.getElementById('subheader');
+        const submitButton = document.getElementById('submitButton');
+
+        editButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                const id = button.getAttribute('data-id');
+                const name = button.getAttribute('data-name');
+                const stock = button.getAttribute('data-stock');
+                const unit = button.getAttribute('data-unit');
+
+                nameInput.value = name;
+                stockInput.value = stock;
+                unitSelect.value = unit;
+                idIngredient.value = id;
+
+                form.action = `ingredient/update`;
+
+                submitButton.textContent = 'Update';
+                subheader.textContent = 'Edit Inventory';
+            });
+        });
     });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
