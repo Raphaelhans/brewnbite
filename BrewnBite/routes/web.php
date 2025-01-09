@@ -80,6 +80,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/inventory', [AdminController::class, 'inventory'])->name('inventory');
     Route::get('/ratings', [AdminController::class, 'ratings'])->name('ratings');
     Route::get('/sales', [AdminController::class, 'sales'])->name('sales');
+    Route::get('/topspenders', [AdminController::class, 'topspenders'])->name('topspenders');
     Route::get('/bestsellers', [AdminController::class, 'bestsellers'])->name('bestsellers');
     Route::prefix('master')->name('master.')->group(function () {
         Route::prefix('/addons')->name('addons.')->group(function () {
