@@ -10,7 +10,7 @@
 
 @section('content')
     <div class="container-fluid px-3 mt-3 flex-grow-1">
-        <h2 class="my-4">Welcome, {{$user['name']}} (admin)</h2>
+        <h2 class="my-4">Welcome, {{$user['name']}}</h2>
         <div class="row mb-3">
             <div class="col-md-6">
                 <div class="card h-100">

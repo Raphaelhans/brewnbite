@@ -48,7 +48,7 @@
           </div>
         </div>
     </nav>
-    <h5 class="m-5">Welcome, {{$user['name']}} (Employee)</h5>
+    <h5 class="m-5">Welcome, {{$user['name']}}</h5>
     <h1 class="text-center">Menu</h1>
     @if (session('success'))
         <div class="alert alert-success">
