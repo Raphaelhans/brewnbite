@@ -31,8 +31,8 @@
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse " id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
-              <li class="nav-item">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
+                  <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="#">Menu</a>
               </li>
               <li class="nav-item">
@@ -48,6 +48,7 @@
           </div>
         </div>
     </nav>
+    <h5 class="m-5">Welcome, {{$user['name']}} (Employee)</h5>
     <h1 class="text-center">Menu</h1>
     @if (session('success'))
         <div class="alert alert-success">

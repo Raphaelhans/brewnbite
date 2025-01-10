@@ -19,7 +19,8 @@ class AdminController extends Controller
     // Main Sites
     public function dashboard()
     {
-        return view('admin.dashboard');
+        $user= session('user');
+        return view('admin.dashboard' , ['user' => $user]);
     }
 
     public function sales()

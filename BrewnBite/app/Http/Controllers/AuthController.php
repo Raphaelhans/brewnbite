@@ -21,11 +21,7 @@ class AuthController extends Controller
         }
 
         if (!Hash::check($request->password, $user->password)) {
-            return back()->withErrors(['password' => 'Invalid login details']);
-        }
-
-        if (!Hash::check($request->password, $user->password)) {
-            return back()->withErrors(['password' => 'Invalid login details']);
+            return back()->withErrors(['password' => 'Invalid password details']);
         }
 
         session(['user' => [
@@ -38,7 +34,17 @@ class AuthController extends Controller
             'profile_picture' => $user->profile_picture ? asset('storage/' . $user->profile_picture) : null,
         ]]);
 
-        return redirect('/user');
+        $checkRole = [
+            1 => '/user',               
+            2 => '/employee/dashboard', 
+            3 => '/admin/dashboard',   
+        ];
+    
+        if (isset($checkRole[$user->role])) {
+            return redirect($checkRole[$user->role]);
+        }
+    
+        return back()->withErrors(['role' => 'Invalid user role']);
     }
 
     public function register(Request $request){
