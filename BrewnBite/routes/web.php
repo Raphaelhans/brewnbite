@@ -57,6 +57,7 @@ Route::prefix('employee')->name('employee.')->group(function () {
     Route::get('/history', [EmployeeController::class, 'history'])->name('history');
     Route::get('/inventory', [EmployeeController::class, 'inventory'])->name('inventory');
     Route::get('/listmenu', [EmployeeController::class, 'listmenu'])->name('listmenu');
+    Route::get('/addInventory/{id}', [EmployeeController::class, 'addInventory'])->name('addInventory');
     Route::get('/editmenu/{id}', [EmployeeController::class, 'toeditMenu'])->name('editmenu');
     Route::post('/menu/insert', [EmployeeController::class, 'addmenu']);
     Route::post('/menu/deletemenu', [EmployeeController::class, 'deletemenu']);

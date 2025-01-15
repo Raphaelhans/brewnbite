@@ -61,29 +61,17 @@
                     {{ session('error') }}
                 </div>
             @endif
-            <h3 id="subheader">Add Inventory</h1>
-            <div style="max-width: 400px;">
-                <form action="ingredient/insert" method="post" id="ingredientForm">
-                    @csrf
-                    <input type="hidden" name="idingredient" id="idingredient">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Name</label>
-                        <input type="text" class="form-control" id="name" placeholder="Enter Menu Name" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Stock</label>
-                        <input type="number" min="0" class="form-control" id="stock" placeholder="Enter menu price" name="stock" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Unit</label>
-                        <select name="unit" id="unit" class="form-select">
-                            <option value="g">g</option>  
-                            <option value="ml">ml</option>  
-                            <option value="pcs">pcs</option>  
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary" id="submitButton">Submit</button>
-                </form>
+            <h3 id="subheader" class="text-end">Add Inventory</h1>
+            <div class="text-end">
+                <a
+                    name=""
+                    id=""
+                    class="btn btn-primary ms-auto"
+                    style="width: 5vw"
+                    href="{{ route('employee.addInventory', 'none') }}"
+                    role="button"
+                    >Add</a
+                >
             </div>
         </div>
         <br>
@@ -109,16 +97,16 @@
                         <td class="text-start">{{ $item->updated_at }}</td>
                         <td class="text-start">{{ $item->deleted_at }}</td>
                         <td class="align-middle">
-                            <div class="d-flex">
-                                <button 
-                                    class="btn btn-primary me-2 edit-button" 
-                                    data-id="{{ $item->id }}" 
-                                    data-name="{{ $item->name }}" 
-                                    data-stock="{{ $item->stock }}" 
-                                    data-unit="{{ $item->unit }}"
+                            <div class="d-flex justify-content-evenly">
+                                <a
+                                    name=""
+                                    id=""
+                                    class="btn btn-primary"
+                                    href="{{ route('employee.addInventory', $item->id) }}"
+                                    role="button"
+                                    >Edit</a
                                 >
-                                    Edit
-                                </button>
+                                
                                 <form action="ingredient/delete" method="post">
                                     @csrf
                                     <input type="text" name="id" value="{{ $item->id }}" hidden>

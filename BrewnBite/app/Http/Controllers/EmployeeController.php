@@ -58,6 +58,15 @@ class EmployeeController extends Controller
         return response()->json($unit);
     }   
 
+    public function addInventory($id)
+    {
+        if($id != 'none'){
+            $ingredient = Ingredient::where('id', $id)->first();
+            return view('employee.addinventory', ['ingredient' => $ingredient]);
+        }
+        return view('employee.addinventory', ['ingredient' => null]);
+    }
+
     public function toeditMenu($id)
     {
         $category = Category::select('id','name')->get();
