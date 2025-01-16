@@ -13,6 +13,7 @@ use App\Models\Subcategory;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -114,6 +115,69 @@ class AdminController extends Controller
         $topspenders = User::where('role', 1)->orderBy('total_spent', 'desc')->take(5)->get();
         $alltopspenders = User::where('role', 1)->orderBy('total_spent', 'desc')->get();
         return view('admin.topspenders', ['topspenders' => $topspenders, 'alltopspenders' => $alltopspenders]);
+    }
+
+    public function production(Request $request, $id){
+        $item = Product::where('id', $id)->first();
+        return view('admin.form.production', ['item' => $item]);
+    }
+
+    public function restock(Request $request, $id){
+        $item = Ingredient::where('id', $id)->first();
+        return view('admin.form.restock', ['item' => $item]);
+    }
+
+    public function updateRestock(Request $request){
+        $validated = $request->validate([
+            'id' => 'required|exists:ingredients,id',
+            'qty' => 'required|numeric|min:0',
+            'price' => 'required|numeric|min:0',
+        ]);
+        $item = Ingredient::where('id', $validated['id'])->first();
+        $item->stock += $validated['qty'];
+        $item->save();
+        DB::table('procurements')->insert([
+            'id_ingredient' => $validated['id'],
+            'amount' => $validated['qty'],
+            'price_per_item' => $validated['price'],
+            'item_subtotal' => $validated['price'] * $validated['qty'],
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        return redirect()->route('admin.restock.restock', ['id' => $item->id, 'item' => $item])->with('success', 'Restock successful');
+    }
+    public function updateProduction(Request $request){
+        $validated = $request->validate([
+            'id' => 'required|exists:products,id',
+            'qty' => 'required|numeric|min:0',
+        ]);
+        $item = Product::where('id', $validated['id'])->first();
+        $recipe = DB::table('recipes')->where('id_product', $validated['id'])->get();
+        $continue = true;
+        foreach ($recipe as $r) {
+            $ingredient = Ingredient::where('id', $r->id_ingredient)->first();
+            if ($ingredient->stock < $r->amount * $validated['qty']) {
+                $continue = false;
+            }
+        }
+        if ($continue) {
+            foreach ($recipe as $r) {
+                $ingredient = Ingredient::where('id', $r->id_ingredient)->first();
+                $ingredient->stock -= $r->amount * $validated['qty'];
+                $ingredient->save();
+            }
+            $item->stock += $validated['qty'];
+            $item->save();
+            DB::table('production')->insert([
+                'id_product' => $validated['id'],
+                'amount' => $validated['qty'],
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+            return redirect()->route('admin.production.production', ['id' => $item->id, 'item' => $item])->with('success', 'Production successful');
+        }else{
+            return redirect()->route('admin.production.production', ['id' => $item->id, 'item' => $item])->with('error', 'Not enough stock');
+        }
     }
     // --- End of Main Sites
 
@@ -359,6 +423,14 @@ class AdminController extends Controller
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+        DB::table('procurements')->insert([
+            'id_ingredient' => DB::table('ingredients')->max('id'),
+            'amount' => $validated['stock'],
+            'price_per_item' => 0,
+            'item_subtotal' => 0,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
         return redirect()->route('admin.master.ingredients.add')->with('success', 'Ingredient added successfully');
     }
 
@@ -398,22 +470,21 @@ class AdminController extends Controller
             'category' => 'required|exists:categories,id',
             'subcategory' => 'required|exists:subcategories,id',
             'price' => 'required|numeric|min:0',
-            'stock' => 'required|numeric|min:0',
             'rating' => 'required|numeric|min:0',
             'description' => 'required|string',
             'weather' => 'required|string',
+            'image' => 'required|string',
         ]);
-        // Kurang foto
         Product::create([
             'name' => $validated['name'],
             'id_category' => $validated['category'],
             'id_subcategory' => $validated['subcategory'],
             'price' => $validated['price'],
-            'stock' => $validated['stock'],
+            'stock' => 0,
             'rating' => $validated['rating'],
             'description' => $validated['description'],
             'weather' => $validated['weather'],
-            'img_url' => "-",
+            'img_url' => $validated['image'],
         ]);
         return redirect()->route('admin.master.products.add')->with('success', 'Product added successfully');
     }
@@ -438,30 +509,17 @@ class AdminController extends Controller
     {
         // cek foto keisi ga
         // kalo keisi, upload foto, kalo kosong, variabel foto = url lama
-        if ($request->hasFile('img_url')) {
-            DB::table('products')->where('id', $request->id)->update([
-                'name' => $request->name,
-                'id_category' => $request->category,
-                'id_subcategory' => $request->subcategory,
-                'price' => $request->price,
-                'stock' => $request->stock,
-                'rating' => $request->rating,
-                'description' => $request->description,
-                'weather' => $request->weather,
-                'img_url' => $request->file('img_url')->store('product')
-            ]);
-        }else{
-            DB::table('products')->where('id', $request->id)->update([
-                'name' => $request->name,
-                'id_category' => $request->category,
-                'id_subcategory' => $request->subcategory,
-                'price' => $request->price,
-                'stock' => $request->stock,
-                'rating' => $request->rating,
-                'description' => $request->description,
-                'weather' => $request->weather,
-            ]);
-        }
+        DB::table('products')->where('id', $request->id)->update([
+            'name' => $request->name,
+            'id_category' => $request->category,
+            'id_subcategory' => $request->subcategory,
+            'price' => $request->price,
+            'stock' => $request->stock,
+            'rating' => $request->rating,
+            'description' => $request->description,
+            'weather' => $request->weather,
+            'img_url' => $request->image
+        ]);
         return redirect()->route('admin.master.products.products');
     }
     // --- End of Master Products
@@ -586,12 +644,18 @@ class AdminController extends Controller
         // cek foto keisi ga
         // kalo keisi, upload foto, kalo kosong, variabel foto = url lama
         if ($request->hasFile('profile')) {
+            $file = $request->file('profile');
+            $tujuan_upload = 'profile_pictures';
+            $profilePictureName = $request->id . '.' . $file->getClientOriginalExtension();
+            $user = User::where('id', $request->id)->first();
+            Storage::disk('public')->delete($user->profile_picture);
             DB::table('users')->where('id', $request->id)->update([
                 'name' => $request->name,
                 'email' => $request->email,
                 'updated_at' => now(),
-                // 'profile' => $request->file('profile')->store('profile')
+                'profile_picture' => $tujuan_upload . '/' . $profilePictureName
             ]);
+            Storage::disk('public')->putFileAs($tujuan_upload, $file, $profilePictureName);
         }else{
             DB::table('users')->where('id', $request->id)->update([
                 'name' => $request->name,
@@ -604,6 +668,14 @@ class AdminController extends Controller
 
     public function doAddEmployee(Request $request)
     {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+        $file = $request->file('profile');
+        $tujuan_upload = 'profile_pictures';
+        // dd($file);
         DB::table('users')->insert([
             'name' => $request->name,
             'email' => $request->email,
@@ -612,10 +684,17 @@ class AdminController extends Controller
             'role' => 2,
             'credit' => 0,
             'total_spent' => 0,
+            'profile_picture'=> "",
             'created_at' => now(),
             'updated_at' => now()
         ]);
-        return redirect()->route('admin.addemployee.add')->with('success', 'Employee added successfully');
+        $emp = DB::table('users')->where('email', $request->email)->first();
+        $profilePictureName = $emp->id . '.' . $file->getClientOriginalExtension();
+        DB::table('users')
+        ->where('email', $request->email)
+        ->update(['profile_picture' => $tujuan_upload . '/' . $profilePictureName]);
+        Storage::disk('public')->putFileAs($tujuan_upload, $file, $profilePictureName);
+        return redirect()->route('admin.master.users.add')->with('success', 'Employee added successfully');
     }
     // --- End of Master Users
 

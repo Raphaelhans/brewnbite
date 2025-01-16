@@ -61,12 +61,7 @@
                 </div>
                 <div class="form-group">
                     <label for="inputimage">Image</label>
-                    <div class="input-group">
-                      <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="inputimage" name="image" required>
-                        <label class="custom-file-label" for="inputimage">Choose file</label>
-                      </div>
-                    </div>
+                    <input type="text" class="form-control" id="inputimage" placeholder="Enter image link" name="image" required>
                 </div>
                 @if(session('success'))
                     <div class="alert alert-success">

@@ -29,7 +29,10 @@ $sales = [$sales[0]->total_grandtotal, $sales[1]->total_grandtotal, $sales[2]->t
                 <div class="card h-100">
                     <div class="card-body mb-0">
                         <div class="card-header border-0">
-                            <h3 class="card-title">Best Sellers</h3>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h3 class="card-title">Best Sellers</h3>
+                                <a href="{{ route('admin.bestsellers') }}">View Report</a>
+                            </div>
                         </div>
                         <div class="card-body table-responsive p-0">
                             <table class="table table-striped table-valign-middle">
@@ -60,7 +63,7 @@ $sales = [$sales[0]->total_grandtotal, $sales[1]->total_grandtotal, $sales[2]->t
                         <div class="card-header border-0">
                             <div class="d-flex justify-content-between align-items-center">
                                 <h3 class="card-title">Sales</h3>
-                                <a href="javascript:void(0);">View Report</a>
+                                <a href="{{ route('admin.sales') }}">View Report</a>
                             </div>
                         </div>
                         <div class="card-body">
@@ -95,7 +98,10 @@ $sales = [$sales[0]->total_grandtotal, $sales[1]->total_grandtotal, $sales[2]->t
                 <div class="card h-100">
                     <div class="card-body pb-0">
                         <div class="card-header">
-                            <h3 class="card-title">Top Spenders</h3>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h3 class="card-title">Top Spenders</h3>
+                                <a href="{{ route('admin.topspenders') }}">View Report</a>
+                            </div>
                         </div>
                         <div class="card-body">
                             <canvas id="pieChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
@@ -107,7 +113,10 @@ $sales = [$sales[0]->total_grandtotal, $sales[1]->total_grandtotal, $sales[2]->t
                 <div class="card mb-0">
                     <div class="card-body">
                         <div class="card-header border-0">
-                            <h3 class="card-title">Inventory</h3>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h3 class="card-title">Inventory</h3>
+                                <a href="{{ route('admin.master.ingredients.ingredients') }}">View Report</a>
+                            </div>
                         </div>
                         <div class="card-body table-responsive p-0">
                             <table class="table table-striped table-valign-middle">
@@ -123,10 +132,14 @@ $sales = [$sales[0]->total_grandtotal, $sales[1]->total_grandtotal, $sales[2]->t
                                     @foreach ($ingredients as $item)
                                         <tr>
                                             <td>{{$item->name}}</td>
-                                            <td>{{$item->stock}}</td>
+                                            <td>
+                                                <span class="{{ $item->stock < 100 ? 'text-danger' : ($item->stock < 1000 ? 'text-warning' : 'text-success') }}">
+                                                    {{$item->stock}}
+                                                </span>
+                                            </td>
                                             <td>{{$item->unit}}</td>
                                             <td>
-                                                <a href="#" class="text-muted">
+                                                <a href="{{ route('admin.restock.restock', ['id' => $item->id]) }}" class="text-muted">
                                                     <i class="fas fa-search"></i>
                                                 </a>
                                             </td>

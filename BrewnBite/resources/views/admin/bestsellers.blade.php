@@ -1,3 +1,11 @@
+@php
+    if (!function_exists('formatRupiah')) {
+        function formatRupiah($number)
+        {
+            return 'Rp' . number_format($number, 2, ',', '.');
+        }
+    }
+@endphp
 @extends('admin.layout')
 
 @section('title')
@@ -31,12 +39,12 @@
                             @foreach ($bestsellers1 as $item)
                                 <tr>
                                     <td>{{$item->name}}</td>
-                                    <td>{{$item->price}}</td>
+                                    <td>{{formatRupiah($item->price)}}</td>
                                     <td>{{$item->total_sold}}</td>
                                     <td>{{$item->rating}}</td>
-                                    <td>{{$item->total_revenue}}</td>
+                                    <td>{{formatRupiah($item->total_revenue)}}</td>
                                     <td>
-                                        <a href="#" class="text-muted">
+                                        <a href="{{ route('admin.production.production', ['id' => $item->id]) }}" class="text-muted">
                                             <i class="fas fa-search"></i>
                                         </a>
                                     </td>

@@ -26,7 +26,6 @@ $sales = [$sales[0]->total_grandtotal, $sales[1]->total_grandtotal, $sales[2]->t
                 <div class="card-header border-0">
                     <div class="d-flex justify-content-between align-items-center">
                         <h3 class="card-title">Sales</h3>
-                        <a href="javascript:void(0);">View Report</a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -76,7 +75,7 @@ $sales = [$sales[0]->total_grandtotal, $sales[1]->total_grandtotal, $sales[2]->t
                                 <td>
                                     @php
                                         $this_month_sales = $all_sales[$key]->total_grandtotal;
-                                        $prev_month_sales = $key > 0 ? $all_sales[$key - 1]->total_grandtotal : 0;
+                                        $prev_month_sales = $key < count($all_sales) - 1 ? $all_sales[$key + 1]->total_grandtotal : 0;
                                         if ($prev_month_sales > 0) {
                                             $percentageChange = (($this_month_sales - $prev_month_sales) / $prev_month_sales) * 100;
                                         } else {
@@ -95,46 +94,6 @@ $sales = [$sales[0]->total_grandtotal, $sales[1]->total_grandtotal, $sales[2]->t
                                 </td>
                             </tr>
                         @endforeach
-                        {{-- <tr>
-                            <td>1.</td>
-                            <td>November 2024</td>
-                            <td>$100.000</td>
-                            <td>4000</td>
-                            <td>$80.000</td>
-                            <td style="display: flex; justify-content: center;"><span class="badge bg-success h-100">80%</span></td>
-                        </tr>
-                        <tr>
-                            <td>1.</td>
-                            <td>November 2024</td>
-                            <td>$100.000</td>
-                            <td>4000</td>
-                            <td>$80.000</td>
-                            <td style="display: flex; justify-content: center;"><span class="badge bg-success h-100">80%</span></td>
-                        </tr>
-                        <tr>
-                            <td>1.</td>
-                            <td>November 2024</td>
-                            <td>$100.000</td>
-                            <td>4000</td>
-                            <td>$80.000</td>
-                            <td style="display: flex; justify-content: center;"><span class="badge bg-success h-100">80%</span></td>
-                        </tr>
-                        <tr>
-                            <td>1.</td>
-                            <td>November 2024</td>
-                            <td>$100.000</td>
-                            <td>4000</td>
-                            <td>$80.000</td>
-                            <td style="display: flex; justify-content: center;"><span class="badge bg-success h-100">80%</span></td>
-                        </tr>
-                        <tr>
-                            <td>1.</td>
-                            <td>November 2024</td>
-                            <td>$100.000</td>
-                            <td>4000</td>
-                            <td>$80.000</td>
-                            <td style="display: flex; justify-content: center;"><span class="badge bg-success h-100">80%</span></td>
-                        </tr> --}}
                     </tbody>
                 </table>
             </div>

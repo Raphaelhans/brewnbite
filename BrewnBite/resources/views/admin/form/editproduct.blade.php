@@ -55,6 +55,10 @@
                     <input type="number" class="form-control" id="inputrating" placeholder="Enter rating" name="rating" value="{{ $product->rating }}" required>
                 </div>
                 <div class="form-group">
+                    <label for="inputstock">Stock</label>
+                    <input type="number" class="form-control" id="inputstock" placeholder="Enter rating" name="stock" value="{{ $product->stock }}" required>
+                </div>
+                <div class="form-group">
                     <label for="inputdesc">Description</label>
                     <textarea class="form-control" rows="3" placeholder="Enter Description" id="inputdesc" name="description">{{ $product->description }}</textarea>
                 </div>
@@ -102,12 +106,7 @@
                 </div>
                 <div class="form-group">
                     <label for="inputimage">Image</label>
-                    <div class="input-group">
-                      <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="inputimage" name="image">
-                        <label class="custom-file-label" for="inputimage">Choose file</label>
-                      </div>
-                    </div>
+                    <input type="text" class="form-control" id="inputimage" placeholder="Enter image link" name="image" required>
                 </div>
             </div>
             <div class="card-footer d-flex justify-content-between">
