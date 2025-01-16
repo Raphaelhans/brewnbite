@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Htrans;
 use App\Models\Product;
 use App\Models\Topup;
 use Carbon\Carbon;
@@ -239,7 +240,14 @@ class UserController extends Controller
 	}
 
 	public function history(){
-		return view('user.history');
+		$listTrans = Htrans::with(['dtrans.product'])
+			->where('id_user', session('user.id'))
+			->orderBy('created_at', 'desc')
+			->get();
+
+		return view('user.history', [
+			'listTrans' => $listTrans,
+		]);
 	}
 
 	public function detailHistory(){
