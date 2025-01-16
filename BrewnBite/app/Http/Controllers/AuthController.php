@@ -34,11 +34,14 @@ class AuthController extends Controller
             'profile_picture' => $user->profile_picture ? asset('storage/' . $user->profile_picture) : null,
         ]]);
 
+        session(['cart' => []]);
+        
         $checkRole = [
             1 => '/user',               
             2 => '/employee/dashboard', 
             3 => '/admin/dashboard',   
         ];
+
     
         if (isset($checkRole[$user->role])) {
             return redirect($checkRole[$user->role]);
@@ -64,16 +67,6 @@ class AuthController extends Controller
             'credit' => 0,
             'total_spent' => 0,
         ]);
-
-        session(['user' => [
-            'id' => $user->id,
-            'name' => $user->name,
-            'email' => $user->email,
-            'membership' => $user->membership,
-            'credit' => $user->credit,
-            'total_spent' => $user->total_spent,
-            'profile_picture' => null,
-        ]]);
 
         return redirect('/login')->with('success', 'Account created successfully');
     }

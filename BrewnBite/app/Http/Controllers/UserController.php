@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Models\User;
+use App\Models\Addon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
@@ -227,9 +228,103 @@ class UserController extends Controller
 	
 
 	public function cart(){
-		return view('user.cart');
+		$cart = session('cart', []);
+		return view('user.cart', compact('cart'));
 	}
 
+	
+	public function addCart(Request $request) {
+		$request->validate([
+			'id_product' => 'required|integer',
+			'quantity' => 'required|integer|min:1',
+		]);
+	
+		$product = Product::find($request->input('id_product'));
+		if (!$product) {
+			return redirect()->route('user.menu')->withErrors(['error' => 'Product not found.']);
+		}
+	
+		$extraCost = 0;
+	
+		if ($product->category->name == "Beverage") {
+			$request->validate([
+				'temperature' => 'required|in:hot,cold',
+				'size' => 'required|in:small,medium,large',
+			]);
+	
+			$addon = Addon::where('name', $request->input('size'))->where('id_category', $product->category->id)->first();
+	
+			if ($addon) {
+				$extraCost = $addon->price;
+			} else {
+				if ($request->input('size') == 'small') {
+					$extraCost = 5000;
+				} elseif ($request->input('size') == 'medium') {
+					$extraCost = 10000;
+				} elseif ($request->input('size') == 'large') {
+					$extraCost = 12000;
+				}
+			}
+		}
+	
+		$cart = session('cart', []);
+		$found = false;
+	
+		
+		foreach ($cart as &$item) {
+			if ($item['id_product'] == $product->id &&
+				($item['temperature'] == $request->input('temperature', null)) &&
+				($item['size'] == $request->input('size', null))) {
+				$item['quantity'] += $request->input('quantity');
+				$found = true;
+				break;
+			}
+		}
+	
+		if (!$found) {
+			$cart[] = [
+				'id_product' => $product->id,
+				'name' => $product->name,
+				'price' => $product->price + $extraCost,
+				'quantity' => $request->input('quantity'),
+				'temperature' => $request->input('temperature', null),
+				'size' => $request->input('size', null),
+			];
+		}
+	
+		session(['cart' => $cart]);
+	
+		return redirect()->back();
+	}
+
+	public function removeCart($index)
+    {
+        $cart = session('cart', []);
+        if (isset($cart[$index])) {
+            unset($cart[$index]); 
+            session(['cart' => array_values($cart)]); 
+        }
+		return redirect()->back();    
+	}
+	public function addQuantity($index){
+		$cart = session('cart', []);
+        if (isset($cart[$index])) {
+            $cart[$index]['quantity'] += 1; 
+            $cart[$index]['price'] = $cart[$index]['price'] / $cart[$index]['quantity'] * $cart[$index]['quantity']; 
+            session(['cart' => $cart]); 
+        }
+        return redirect()->back();
+	}
+	
+	public function reduceQuantity($index){
+		$cart = session('cart', []);
+        if (isset($cart[$index]) && $cart[$index]['quantity'] > 1) {
+            $cart[$index]['quantity'] -= 1;
+            $cart[$index]['total_price'] = $cart[$index]['price'] * $cart[$index]['quantity'];
+            session(['cart' => $cart]); 
+        }
+		return redirect()->back();
+	}
 	public function summary(){
 		return view('user.checkoutSummary');
 	}
