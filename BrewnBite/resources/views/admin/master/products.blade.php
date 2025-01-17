@@ -25,9 +25,6 @@
                             <th>Description</th>
                             <th>Weather</th>
                             <th>Image</th>
-                            <th style="width: 10%">Created at</th>
-                            <th style="width: 10%">Updated at</th>
-                            <th style="width: 10%">Deleted at</th>
                             <th style="width: 10%">Edit</th>
                             <th style="width: 10%">Status</th>
                         </tr>
@@ -43,10 +40,7 @@
                                 <td>{{$item->rating}}</td>
                                 <td>{{$item->description}}</td>
                                 <td>{{$item->weather}}</td>
-                                <td>{{$item->img_url}}</td>
-                                <td>{{$item->created_at}}</td>
-                                <td>{{$item->updated_at}}</td>
-                                <td>{{$item->deleted_at}}</td>
+                                <td><img src="{{$item->img_url}}" alt="" style="width: 100px; height: 56.25;"></td>
                                 <td>
                                     <form action="{{ route('admin.master.products.edit', ['id' => $item->id]) }}" method="get">
                                         <input type="hidden" name="id" value="{{$item->id}}">

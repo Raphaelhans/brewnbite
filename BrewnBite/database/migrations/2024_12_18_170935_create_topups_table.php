@@ -16,8 +16,8 @@ return new class extends Migration
             $table->foreignId('id_user')->constrained('users')->onDelete('cascade');
             $table->string('method')->default('-');
             $table->integer('amount');
-            $table->dateTime('transdate');
-            $table->integer('status');
+            $table->timestamp('transdate');
+            $table->integer('status')->default(0);
             $table->string('snap_token')->nullable();
         });
     }

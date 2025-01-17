@@ -24,7 +24,7 @@
                 </div>
                 <div class="form-group">
                     <label for="inputdesc">Description</label>
-                    <textarea class="form-control" rows="3" placeholder="Enter Description" id="inputdesc" name="description">{{ $subcategory->id }}</textarea>
+                    <textarea class="form-control" rows="3" placeholder="Enter Description" id="inputdesc" name="description">{{ $subcategory->description }}</textarea>
                 </div>
                 <div class="form-group">
                     <label for="category">Category</label>

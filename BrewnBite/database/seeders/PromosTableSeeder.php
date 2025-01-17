@@ -15,7 +15,7 @@ class PromosTableSeeder extends Seeder
     {
         DB::table('promos')->insert([
             [
-                'name' => 'Waffle Wednesdays',
+                'name' => 'WaffleWednesdays',
                 'discount' => 10,
                 'min_transaction' => 50000,
                 'max_discount' => 10000,
@@ -24,7 +24,7 @@ class PromosTableSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Tea Time Treats',
+                'name' => 'TeaTimeTreats',
                 'discount' => 15,
                 'min_transaction' => 60000,
                 'max_discount' => 15000,
@@ -33,7 +33,7 @@ class PromosTableSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Coffee Lovers Delight',
+                'name' => 'CoffeeLoversDelight',
                 'discount' => 20,
                 'min_transaction' => 80000,
                 'max_discount' => 20000,
@@ -42,7 +42,7 @@ class PromosTableSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Sweet Tooth Saturday',
+                'name' => 'SweetToothSaturday',
                 'discount' => 25,
                 'min_transaction' => 100000,
                 'max_discount' => 25000,
@@ -51,7 +51,7 @@ class PromosTableSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Frosty Friday',
+                'name' => 'FrostyFriday',
                 'discount' => 30,
                 'min_transaction' => 120000,
                 'max_discount' => 30000,
