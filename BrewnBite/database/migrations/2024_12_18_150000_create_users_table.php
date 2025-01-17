@@ -16,11 +16,11 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('profile_picture')->default('profile_pictures/default.png');
+            $table->string('profile_picture')->nullable();
             $table->integer('role');
             $table->integer('membership')->default('1');
-            $table->decimal('credit', 10, 2)->default(0);
-            $table->decimal('total_spent', 10, 2)->default(0);
+            $table->integer('credit')->default(0);
+            $table->integer('total_spent')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

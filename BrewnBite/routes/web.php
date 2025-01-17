@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\NewsController;
+use App\Http\Middleware\CheckAdminRole;
 use App\Http\Middleware\CheckUserRole;
 
 Route::redirect('/', '/login');
@@ -85,12 +86,21 @@ Route::prefix('menu')->group(function () {
 });
 
 // Route Admin
-Route::prefix('admin')->name('admin.')->group(function () {
+Route::prefix('admin')->middleware('checkAdmin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
     Route::get('/inventory', [AdminController::class, 'inventory'])->name('inventory');
     Route::get('/ratings', [AdminController::class, 'ratings'])->name('ratings');
     Route::get('/sales', [AdminController::class, 'sales'])->name('sales');
+    Route::get('/topspenders', [AdminController::class, 'topspenders'])->name('topspenders');
     Route::get('/bestsellers', [AdminController::class, 'bestsellers'])->name('bestsellers');
+    Route::prefix('/production')->name('production.')->group(function () {
+        Route::get('/{id}', [AdminController::class, 'production'])->name('production');
+        Route::post('/update', [AdminController::class, 'updateProduction'])->name('update');
+    });
+    Route::prefix('restock')->name('restock.')->group(function () {
+        Route::get('/{id}', [AdminController::class, 'restock'])->name('restock');
+        Route::post('/update', [AdminController::class, 'updateRestock'])->name('update');
+    });
     Route::prefix('master')->name('master.')->group(function () {
         Route::prefix('/addons')->name('addons.')->group(function () {
             Route::get('/', [AdminController::class, 'addons'])->name('addons');

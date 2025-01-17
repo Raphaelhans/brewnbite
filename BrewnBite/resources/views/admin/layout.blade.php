@@ -43,7 +43,7 @@
                         <a class="nav-link" href="{{ route('admin.bestsellers') }}">Best Sellers</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Top Spenders</a>
+                        <a class="nav-link" href="{{ route('admin.topspenders') }}">Top Spenders</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin.ratings') }}">Ratings</a>

@@ -31,7 +31,7 @@
                 </div>
                 <div class="form-group">
                     <label for="inputconfirm">Confirm Password</label>
-                    <input type="password" class="form-control" id="inputconfirm" placeholder="Confirm Password" name="confirm" required>
+                    <input type="password" class="form-control" id="inputconfirm" placeholder="Confirm Password" name="password_confirmation" required>
                 </div>
                 <div class="form-group">
                     <label for="inputProfile">Profile</label>
@@ -45,6 +45,15 @@
                 @if(session('success'))
                     <div class="alert alert-success">
                         {{ session('success') }}
+                    </div>
+                @endif
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
                     </div>
                 @endif
             </div>
