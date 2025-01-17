@@ -44,6 +44,12 @@
               <li class="nav-item">
                 <a class="nav-link active" href="{{ route('employee.inventory') }}">Inventory</a>
               </li>
+              <li class="nav-item">
+                <form action="employee/logout" method="post">
+                    @csrf
+                    <button type="submit" class="btn btn-link text-danger">Logout</button>
+                </form>
+              </li>
             </ul>
           </div>
         </div>
