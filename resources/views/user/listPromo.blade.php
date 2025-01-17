@@ -11,19 +11,14 @@
   </div>
 
   <div class="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-    <div class="bg-gradient-to-br from-white to-gray-50 border border-gray-200 rounded-3xl shadow-md p-6">
-      <h3 class="text-lg font-semibold text-gray-800">Waffle Wednesdays</h3>
-      <p class="text-sm text-gray-600 mt-2">Discount: <span class="text-emerald-700 font-semibold">10%</span></p>
-      <p class="text-sm text-gray-600">Min Transaction: Rp 50,000</p>
-      <p class="text-sm text-gray-600">Max Discount: Rp 10,000</p>
-    </div>
-
-    <div class="bg-gradient-to-br from-white to-gray-50 border border-gray-200 rounded-3xl shadow-md p-6">
-      <h3 class="text-lg font-semibold text-gray-800">Tea Time Treats</h3>
-      <p class="text-sm text-gray-600 mt-2">Discount: <span class="text-emerald-700 font-semibold">15%</span></p>
-      <p class="text-sm text-gray-600">Min Transaction: Rp 60,000</p>
-      <p class="text-sm text-gray-600">Max Discount: Rp 15,000</p>
-    </div>
+    @foreach ($listPromo as $item)
+      <div class="bg-gradient-to-br from-white to-gray-50 border border-gray-200 rounded-3xl shadow-md p-6">
+        <h3 class="text-lg font-semibold text-gray-800">{{$item->name}}</h3>
+        <p class="text-sm text-gray-600 mt-2">Discount: <span class="text-emerald-700 font-semibold">{{ number_format($item->discount, 0) }}%</span></p>
+        <p class="text-sm text-gray-600">Min Transaction: Rp {{ number_format($item->min_transaction, 0, ',', '.') }}</p>
+        <p class="text-sm text-gray-600">Max Discount: Rp {{ number_format($item->max_discount, 0, ',', '.') }}</p>
+      </div>
+    @endforeach
 
   </div>
 </div>

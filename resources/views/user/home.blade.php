@@ -57,57 +57,28 @@
     <h1 class="text-emerald-600 text-center font-semibold text-2xl my-10">Recommendations based on the weather and time of day</h1>
     <div class="flex items-center justify-center p-4 my-10">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div class="bg-white rounded-3xl shadow-xl overflow-hidden w-72 md:w-80 transform hover:scale-105 transition-transform duration-300">
-          <img src="https://assets.promediateknologi.id/crop/0x0:0x0/750x500/webp/photo/2023/05/22/Red-Velvet-cake-2453917777.png" alt="Red Velvet Cake" class="w-full h-48 object-cover">
-          <div class="p-5">
-            <div class="flex justify-between items-center">
-              <h3 class="font-bold text-emerald-600 text-base">Red Velvet Cake</h3>
-              <p class="text-gray-500 text-sm font-medium">Rp 50.000</p>
-            </div>
-            <div class="flex items-center mt-3 space-x-2">
-              <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
-              <span class="text-gray-600 font-medium text-sm">4.96</span>
-              <span class="text-gray-400 text-sm">(76 reviews)</span>
-            </div>
-            <button class="mt-6 w-full bg-gradient-to-r from-emerald-500 to-emerald-700 text-white py-3 px-6 text-sm font-semibold rounded-xl hover:from-emerald-600 hover:to-emerald-800 shadow-md transition-all duration-300">
-              Buy Now
-            </button>
-          </div>
-        </div>
-        <div class="bg-white rounded-3xl shadow-xl overflow-hidden w-72 md:w-80 transform hover:scale-105 transition-transform duration-300">
-          <img src="https://assets.promediateknologi.id/crop/0x0:0x0/750x500/webp/photo/2023/05/22/Red-Velvet-cake-2453917777.png" alt="Red Velvet Cake" class="w-full h-48 object-cover">
-          <div class="p-5">
-            <div class="flex justify-between items-center">
-              <h3 class="font-bold text-emerald-600 text-base">Red Velvet Cake</h3>
-              <p class="text-gray-500 text-sm font-medium">Rp 50.000</p>
-            </div>
-            <div class="flex items-center mt-3 space-x-2">
-              <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
-              <span class="text-gray-600 font-medium text-sm">4.96</span>
-              <span class="text-gray-400 text-sm">(76 reviews)</span>
-            </div>
-            <button class="mt-6 w-full bg-gradient-to-r from-emerald-500 to-emerald-700 text-white py-3 px-6 text-sm font-semibold rounded-xl hover:from-emerald-600 hover:to-emerald-800 shadow-md transition-all duration-300">
-              Buy Now
-            </button>
-          </div>
-        </div>
-        <div class="bg-white rounded-3xl shadow-xl overflow-hidden w-72 md:w-80 transform hover:scale-105 transition-transform duration-300">
-          <img src="https://assets.promediateknologi.id/crop/0x0:0x0/750x500/webp/photo/2023/05/22/Red-Velvet-cake-2453917777.png" alt="Red Velvet Cake" class="w-full h-48 object-cover">
-          <div class="p-5">
-            <div class="flex justify-between items-center">
-              <h3 class="font-bold text-emerald-600 text-base">Red Velvet Cake</h3>
-              <p class="text-gray-500 text-sm font-medium">Rp 50.000</p>
-            </div>
-            <div class="flex items-center mt-3 space-x-2">
-              <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
-              <span class="text-gray-600 font-medium text-sm">4.96</span>
-              <span class="text-gray-400 text-sm">(76 reviews)</span>
-            </div>
-            <button class="mt-6 w-full bg-gradient-to-r from-emerald-500 to-emerald-700 text-white py-3 px-6 text-sm font-semibold rounded-xl hover:from-emerald-600 hover:to-emerald-800 shadow-md transition-all duration-300">
-              Buy Now
-            </button>
-          </div>
-        </div>
+        @foreach ($topProducts as $item)
+					<form action="{{ route('user.menu.detail', ['id' => $item->id]) }}" method="get">
+						@csrf
+						<div class="bg-white rounded-3xl shadow-xl overflow-hidden w-72 md:w-80 transform hover:scale-105 transition-transform duration-300">
+							<img src="{{ $item->img_url }}" alt="img" class="w-full h-48 object-cover">
+							<div class="p-5">
+								<div class="flex justify-between items-center">
+									<h3 class="font-bold text-emerald-600 text-base">{{ $item->name }}</h3>
+									<p class="text-gray-500 text-sm font-medium">Rp {{ number_format($item->price, 0, ',', '.') }}</p>
+								</div>
+								<div class="flex items-center mt-3 space-x-2">
+									<i class="fa-solid fa-star text-yellow-400 text-sm"></i>
+									<span class="text-gray-600 font-medium text-sm">{{$item->rating}}</span>
+									<span class="text-gray-400 text-sm">({{ $item->reviewCount }} reviews)</span>
+								</div>
+								<button class="mt-6 w-full bg-gradient-to-r from-emerald-500 to-emerald-700 text-white py-3 px-6 text-sm font-semibold rounded-xl hover:from-emerald-600 hover:to-emerald-800 shadow-md transition-all duration-300">
+									Buy Now
+								</button>
+							</div>
+						</div>
+					</form> 
+        @endforeach
       </div>
     </div>
   </div>

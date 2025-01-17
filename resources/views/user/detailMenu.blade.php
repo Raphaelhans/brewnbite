@@ -9,7 +9,7 @@
   <div class="flex justify-center items-center min-h-screen bg-cover bg-center py-10 w-full" style="background-image: url('{{ asset('assets/linen.jpg') }}');">
     <div class="max-w-6xl w-full flex space-x-10">
       <div class="w-1/2">
-        <img src="https://images.pexels.com/photos/20106383/pexels-photo-20106383/free-photo-of-hands-holding-a-matcha-cup.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" style="border-radius:32% 68% 64% 36% / 33% 53% 47% 67% ;" class="shadow-lg">
+        <img src="{{ $data->img_url }}" style="border-radius:32% 68% 64% 36% / 33% 53% 47% 67% ;" class="shadow-lg">
       </div>
       <div class="w-1/2 flex flex-col">
         <form action="{{route('user.cart.add')}}" method="post" enctype="multipart/form-data">
@@ -20,11 +20,11 @@
         <h1 class="text-5xl font-bold text-emerald-700 mb-2">{{ $data->name }}</h1>
         <div class="w-fit bg-gradient-to-b from-[#F4A298] to-[#F27D6A] text-white rounded-full px-4 py-1 text-xs shadow-md">{{ $data->subcategory->name }}
         </div>
-        <p class="font-bold text-emerald-700 mt-8 text-lg">Rp {{ $data->price }}</p>
+        <p class="font-bold text-emerald-700 mt-8 text-lg">Rp {{ number_format($data->price, 0, ',', '.') }}</p>
         <div class="flex items-center mt-3 space-x-2">
           <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
           <span class="text-gray-600 font-medium text-sm">{{ $data->rating }}</span>
-          <span class="text-gray-600 text-sm">(76 reviews)</span>
+          <span class="text-gray-600 text-sm">({{ $reviewCount }} reviews)</span>
         </div>
         <p class="text-sm text-gray-700 mt-4 leading-relaxed">
           {{ $data->description }}
