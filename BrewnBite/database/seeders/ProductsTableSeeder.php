@@ -22,8 +22,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => 15000,
                 'stock' => 10,
                 'description' => 'A concentrated form of coffee served in small, strong shots.',
-                'weather' => '-',
-                'img_url' => '-',
+                'weather' => 'Drizzle',
+                'img_url' => 'https://drishop.co.id/wp-content/uploads/2024/02/kopi-espresso.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 // 2
@@ -33,8 +35,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => 20000,
                 'stock' => 10,
                 'description' => 'An espresso-based coffee drink that originated in Italy, and is traditionally prepared with steamed milk foam.',
-                'weather' => '-',
-                'img_url' => '-',
+                'weather' => 'Drizzle',
+                'img_url' => 'https://www.allrecipes.com/thmb/chsZz0jqIHWYz39ViZR-9k_BkkE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/8624835-how-to-make-a-cappuccino-beauty-4x3-0301-13d55eaad60b42058f24369c292d4ccb.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 // 3
@@ -44,8 +48,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => 25000,
                 'stock' => 10,
                 'description' => 'A coffee drink made with espresso and steamed milk.',
-                'weather' => '-',
-                'img_url' => '-',
+                'weather' => 'Drizzle',
+                'img_url' => 'https://richcreme.com/wp-content/uploads/2022/07/latte.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 // 4
@@ -55,8 +61,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => 30000,
                 'stock' => 9,
                 'description' => 'A chocolate-flavored variant of a caffè latte.',
-                'weather' => '-',
-                'img_url' => '-',
+                'weather' => 'Drizzle',
+                'img_url' => 'https://www.thespruceeats.com/thmb/Hz677yfVdPECquUOekjv0b9yXTE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/SES-mocha-4797918-step-04-599987714aec41aba02f1f870e900dd8.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 // 5
@@ -66,8 +74,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => 20000,
                 'stock' => 10,
                 'description' => 'A cold coffee drink.',
-                'weather' => '-',
-                'img_url' => '-',
+                'weather' => 'Clear',
+                'img_url' => 'https://www.allrecipes.com/thmb/Hqro0FNdnDEwDjrEoxhMfKdWfOY=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/21667-easy-iced-coffee-ddmfs-4x3-0093-7becf3932bd64ed7b594d46c02d0889f.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 // 6
@@ -77,8 +87,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => 25000,
                 'stock' => 4,
                 'description' => 'A Japanese-inspired green tea latte.',
-                'weather' => '-',
-                'img_url' => '-',
+                'weather' => 'Clear',
+                'img_url' => 'https://foto.kontan.co.id/Q5qLXqKj_ZCP9yHGrsJLrGAw3QA=/smart/filters:format(webp)/2023/05/18/424070204p.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 // 7
@@ -88,8 +100,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => 25000,
                 'stock' => 8,
                 'description' => 'A spiced tea latte.',
-                'weather' => '-',
-                'img_url' => '-',
+                'weather' => 'Clear',
+                'img_url' => 'https://www.wollenhaupt.com/fileadmin/_processed_/c/b/csm_San_Chai_Latte_fb4ec37ba6.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 // 8
@@ -99,8 +113,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => 25000,
                 'stock' => 10,
                 'description' => 'A heated drink consisting of shaved chocolate, melted chocolate or cocoa powder, heated milk or water, and sugar.',
-                'weather' => '-',
-                'img_url' => '-',
+                'weather' => 'Clouds',
+                'img_url' => 'https://www.allrecipes.com/thmb/lnb_004MI6wGuJXQ-uDxMUNZmQk=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/20211-creamy-hot-cocoa-DDMFS-4x3-ed6183b2bbb74bbba4a06a78e4d72350.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 // 9
@@ -110,8 +126,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => 15000,
                 'stock' => 8,
                 'description' => 'A tea made from unoxidized leaves and is one of the less processed types of tea.',
-                'weather' => '-',
-                'img_url' => '-',
+                'weather' => 'Rain',
+                'img_url' => 'https://assets.epicurious.com/photos/5887d21b5f76684c78cf57db/4:3/w_2384,h_1788,c_limit/green_tea_24012017.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 // 10
@@ -121,8 +139,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => 15000,
                 'stock' => 8,
                 'description' => 'A type of tea that is more oxidized than oolong, green, and white teas.',
-                'weather' => '-',
-                'img_url' => '-',
+                'weather' => 'Rain',
+                'img_url' => 'https://images.ctfassets.net/e8bhhtr91vp3/4v9X0NPdU6zsq1UwHXfYpV/01f6e8e5099ed9a7a9d7bf336d76b1fd/image.png?w=1600&q=60',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 // 11
@@ -132,8 +152,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => 20000,
                 'stock' => 10,
                 'description' => 'A traditional Chinese tea produced through a unique process including withering under the strong sun and oxidation before curling and twisting.',
-                'weather' => '-',
-                'img_url' => '-',
+                'weather' => 'Rain',
+                'img_url' => 'https://cdn.shopify.com/s/files/1/1146/8126/files/drink-oolong-tea_high_1.jpg?v=1591071201',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 // 12
@@ -143,8 +165,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => 18000,
                 'stock' => 10,
                 'description' => 'A beverage made from the infusion or decoction of herbs, spices, or other plant material in hot water.',
-                'weather' => '-',
-                'img_url' => '-',
+                'weather' => 'Rain',
+                'img_url' => 'https://static.toiimg.com/thumb/resizemode-4,width-1280,height-720,msid-69385334/69385334.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 // 13
@@ -154,8 +178,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => 22000,
                 'stock' => 10,
                 'description' => 'A lightly oxidized tea grown and harvested primarily in China.',
-                'weather' => '-',
-                'img_url' => '-',
+                'weather' => 'Clear',
+                'img_url' => 'https://asset-a.grid.id/crop/0x0:0x0/x/photo/2024/11/19/fotojet-2024-11-19t132023478-20241119012030.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 // 14
@@ -165,8 +191,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => 30000,
                 'stock' => 9,
                 'description' => 'A buttery, flaky, and crescent-shaped pastry.',
-                'weather' => '-',
-                'img_url' => '-',
+                'weather' => 'Clear',
+                'img_url' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/2018_01_Croissant_IMG_0685.JPG/1200px-2018_01_Croissant_IMG_0685.JPG',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 // 15
@@ -176,8 +204,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => 35000,
                 'stock' => 10,
                 'description' => 'A multi-layered, laminated sweet pastry.',
-                'weather' => '-',
-                'img_url' => '-',
+                'weather' => 'Thunderstorm',
+                'img_url' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Glazed_apple_Danish.jpg/1200px-Glazed_apple_Danish.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 // 16
@@ -187,8 +217,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => 25000,
                 'stock' => 8,
                 'description' => 'A small, cup-shaped bread, often sweetened.',
-                'weather' => '-',
-                'img_url' => '-',
+                'weather' => 'Thunderstorm',
+                'img_url' => 'https://asset.kompas.com/crops/0Y5unYWNOM3vN-3dSz480He0YdM=/0x0:1278x852/1200x800/data/photo/2021/01/19/600698acc1bea.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 // 17
@@ -198,8 +230,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => 20000,
                 'stock' => 9,
                 'description' => 'A dense, chewy, doughnut-shaped bread.',
-                'weather' => '-',
-                'img_url' => '-',
+                'weather' => 'Thunderstorm',
+                'img_url' => 'https://static01.nyt.com/images/2021/01/13/dining/13Bagels-a/13Bagels-a-superJumbo-v2.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 // 18
@@ -209,8 +243,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => 22000,
                 'stock' => 10,
                 'description' => 'A small, lightly sweetened biscuit-like cake.',
-                'weather' => '-',
-                'img_url' => '-',
+                'weather' => 'Thunderstorm',
+                'img_url' => 'https://j2r7r3m6.rocketcdn.me/wp-content/uploads/2020/07/scones6.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 // 19
@@ -220,8 +256,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => 25000,
                 'stock' => 10,
                 'description' => 'A long, narrow loaf of French bread.',
-                'weather' => '-',
-                'img_url' => '-',
+                'weather' => 'Thunderstorm',
+                'img_url' => 'https://www.kingarthurbaking.com/sites/default/files/recipe_legacy/8-3-large.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 // 20
@@ -231,8 +269,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => 27000,
                 'stock' => 10,
                 'description' => 'An Italian white bread made from wheat flour, water, salt, and yeast.',
-                'weather' => '-',
-                'img_url' => '-',
+                'weather' => 'Thunderstorm',
+                'img_url' => 'https://www.177milkstreet.com/assets/site/Recipes/_large/Ciabatta.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 // 21
@@ -242,8 +282,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => 30000,
                 'stock' => 10,
                 'description' => 'A flat oven-baked Italian bread product similar in style and texture to pizza dough.',
-                'weather' => '-',
-                'img_url' => '-',
+                'weather' => 'Clear',
+                'img_url' => 'https://rhubarbandcod.com/wp-content/uploads/2022/08/Apricot-and-Olive-Focaccia-1.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 // 22
@@ -253,8 +295,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => 35000,
                 'stock' => 10,
                 'description' => 'A sandwich made with Italian bread, usually served warmed by grilling or toasting.',
-                'weather' => '-',
-                'img_url' => '-',
+                'weather' => 'Clear',
+                'img_url' => 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/57/98/7c/laura-panini.jpg?w=900&h=500&s=1',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 // 23
@@ -264,8 +308,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => 40000,
                 'stock' => 10,
                 'description' => 'A sandwich of bread, sliced cooked poultry, ham or fried bacon, lettuce, tomato, and mayonnaise.',
-                'weather' => '-',
-                'img_url' => '-',
+                'weather' => 'Clouds',
+                'img_url' => 'https://asset.kompas.com/crops/Q_jpdj0tXK8E84T11vhAnj-N7u4=/34x6:1000x650/1200x800/data/photo/2024/01/11/659ef16103622.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 // 24
@@ -275,8 +321,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => 45000,
                 'stock' => 10,
                 'description' => 'A sweet dessert consisting of one or more layers.',
-                'weather' => '-',
-                'img_url' => '-',
+                'weather' => 'Rain',
+                'img_url' => 'https://us.santokuknives.co.uk/cdn/shop/articles/Cheesecake_200_300-710217.jpg?v=1716638859',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 // 25
@@ -286,8 +334,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => 40000,
                 'stock' => 9,
                 'description' => 'A cake flavored with melted chocolate, cocoa powder, or both.',
-                'weather' => '-',
-                'img_url' => '-',
+                'weather' => 'Rain',
+                'img_url' => 'https://hips.hearstapps.com/hmg-prod/images/chocolate-cake-index-64b83bce2df26.jpg?crop=0.889xw:1.00xh;0.0545xw,0&resize=1200:*',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 // 26
@@ -297,8 +347,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => 42000,
                 'stock' => 10,
                 'description' => 'A red, red-brown, crimson, or scarlet-colored chocolate layer cake.',
-                'weather' => '-',
-                'img_url' => '-',
+                'weather' => 'Rain',
+                'img_url' => 'https://preppykitchen.com/wp-content/uploads/2022/07/Red-Velvet-Recipe-Card-1a.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 // 27
@@ -308,8 +360,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => 38000,
                 'stock' => 10,
                 'description' => 'A cake that contains carrots mixed into the batter.',
-                'weather' => '-',
-                'img_url' => '-',
+                'weather' => 'Rain',
+                'img_url' => 'https://static01.nyt.com/images/2020/11/01/dining/Carrot-Cake-textless/Carrot-Cake-textless-videoSixteenByNineJumbo1600.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 // 28
@@ -319,8 +373,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => 35000,
                 'stock' => 8,
                 'description' => 'A cake that is flavored with lemon juice, zest, or extract.',
-                'weather' => '-',
-                'img_url' => '-',
+                'weather' => 'Clouds',
+                'img_url' => 'https://recipesblob.oetker.ca/assets/4ffbde4ec9a0438da9840bd29b73dda4/964x526/lemon-cake-11.webp',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 // 29
@@ -330,8 +386,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => 30000,
                 'stock' => 9,
                 'description' => 'A classic ice cream flavor made with vanilla beans.',
-                'weather' => '-',
-                'img_url' => '-',
+                'weather' => 'Clear',
+                'img_url' => 'https://static.toiimg.com/thumb/63971154.cms?width=573&height=430',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 // 30
@@ -341,8 +399,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => 35000,
                 'stock' => 10,
                 'description' => 'A rich and creamy Italian-style chocolate ice cream.',
-                'weather' => '-',
-                'img_url' => '-',
+                'weather' => 'Clear',
+                'img_url' => 'https://cdn.nutritionstudies.org/wp-content/uploads/2021/03/dark-chocolate-gelato.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 // 31
@@ -352,8 +412,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => 32000,
                 'stock' => 10,
                 'description' => 'A sweet and fruity ice cream made with fresh strawberries.',
-                'weather' => '-',
-                'img_url' => '-',
+                'weather' => 'Clear',
+                'img_url' => 'https://aplantifulpath.com/wp-content/uploads/2019/08/Strawberry-Ice-Cream-1.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 // 32
@@ -363,8 +425,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => 37000,
                 'stock' => 10,
                 'description' => 'A creamy gelato made with roasted pistachios.',
-                'weather' => '-',
-                'img_url' => '-',
+                'weather' => 'Clear',
+                'img_url' => 'https://i0.wp.com/verascooking.com/wp-content/uploads/2016/01/Pistachio-Gelato-9-of-13.jpg?resize=1600%2C900',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 // 33
@@ -374,8 +438,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => 33000,
                 'stock' => 10,
                 'description' => 'A refreshing ice cream with mint flavor and chocolate chips.',
-                'weather' => '-',
-                'img_url' => '-',
+                'weather' => 'Clear',
+                'img_url' => 'https://images.getrecipekit.com/20220909193800-mint-min.jpg?width=650&quality=90&',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 // 34
@@ -385,8 +451,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => 25000,
                 'stock' => 2,
                 'description' => 'A creamy and rich chocolate dessert.',
-                'weather' => '-',
-                'img_url' => '-',
+                'weather' => 'Clouds',
+                'img_url' => 'https://img.taste.com.au/q6A1dCMP/taste/2016/11/chocolate-pudding-3643-1.jpeg',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 // 35
@@ -396,8 +464,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => 24000,
                 'stock' => 10,
                 'description' => 'A smooth and creamy vanilla-flavored dessert.',
-                'weather' => '-',
-                'img_url' => '-',
+                'weather' => 'Clouds',
+                'img_url' => 'https://barefeetinthekitchen.com/wp-content/uploads/2022/07/Vanilla-Pudding-8-1-of-1.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 // 36
@@ -407,8 +477,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => 26000,
                 'stock' => 10,
                 'description' => 'A rich and buttery butterscotch-flavored dessert.',
-                'weather' => '-',
-                'img_url' => '-',
+                'weather' => 'Clouds',
+                'img_url' => 'https://www.redpathsugar.com/sites/redpathsugar_com/files/styles/m/public/2024-01/Classic_Butterscotch_Pudding-600x400.jpg.webp?itok=a4D6YwDv',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 // 37
@@ -418,8 +490,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => 23000,
                 'stock' => 10,
                 'description' => 'A creamy dessert made with rice and milk.',
-                'weather' => '-',
-                'img_url' => '-',
+                'weather' => 'Clear',
+                'img_url' => 'https://www.allrecipes.com/thmb/DzRDzQ4wiiV9dWWdCsn5sdXekuw=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/AR-24059-creamy-rice-pudding-DDMFS-4x3-a47c1f5ad9d449c582d62e6e42da28ac.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 // 38
@@ -429,8 +503,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => 22000,
                 'stock' => 10,
                 'description' => 'A sweet pudding made with tapioca pearls.',
-                'weather' => '-',
-                'img_url' => '-',
+                'weather' => 'Drizzle',
+                'img_url' => 'https://i2.wp.com/www.downshiftology.com/wp-content/uploads/2023/10/Tapioca-Pudding-main.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 // 39
@@ -440,8 +516,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => 30000,
                 'stock' => 10,
                 'description' => 'A traditional waffle served with syrup and butter.',
-                'weather' => '-',
-                'img_url' => '-',
+                'weather' => 'Rain',
+                'img_url' => 'https://www.seasonsandsuppers.ca/wp-content/uploads/2018/11/waffles-1B.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 // 40
@@ -451,8 +529,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => 35000,
                 'stock' => 8,
                 'description' => 'A light and crispy waffle with deep pockets, perfect for holding syrup and toppings.',
-                'weather' => '-',
-                'img_url' => '-',
+                'weather' => 'Drizzle',
+                'img_url' => 'https://stordflolretailpd.blob.core.windows.net/df-us/lolretail/media/lolr-media/recipe-collections-new/breakfast-for-kids-collection_760x580.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 // 41
@@ -462,8 +542,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => 28000,
                 'stock' => 10,
                 'description' => 'Fluffy pancakes filled with fresh blueberries.',
-                'weather' => '-',
-                'img_url' => '-',
+                'weather' => 'Drizzle',
+                'img_url' => 'https://www.culinaryhill.com/wp-content/uploads/2023/09/Blueberry-Pancakes-Culinary-Hill-1200x800-1.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 // 42
@@ -473,8 +555,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => 29000,
                 'stock' => 10,
                 'description' => 'Pancakes loaded with chocolate chips and served with whipped cream.',
-                'weather' => '-',
-                'img_url' => '-',
+                'weather' => 'Drizzle',
+                'img_url' => 'https://www.foodnetwork.com/content/dam/images/food/fullset/2003/1/10/0/sd1b03_chocchip_pancakes.jpg',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 // 43
@@ -484,8 +568,10 @@ class ProductsTableSeeder extends Seeder
                 'price' => 27000,
                 'stock' => 10,
                 'description' => 'Pancakes made with ripe bananas for a sweet and fruity flavor.',
-                'weather' => '-',
-                'img_url' => '-',
+                'weather' => 'Drizzle',
+                'img_url' => 'https://cdn.apartmenttherapy.info/image/upload/f_jpg,q_auto:eco,c_fill,g_auto,w_1500,ar_4:3/k%2FPhoto%2FRecipes%2F2023-04-banana-pancakes%2FBanana-Pancakes-Syrup',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
         ]);
     }
