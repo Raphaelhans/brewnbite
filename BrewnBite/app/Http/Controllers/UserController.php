@@ -8,7 +8,11 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Models\User;
+use App\Models\Promo;
 use App\Models\Addon;
+use App\Models\Daddon;
+use App\Models\Htrans;
+use App\Models\Dtrans;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
@@ -325,14 +329,114 @@ class UserController extends Controller
         }
 		return redirect()->back();
 	}
-	public function summary(){
-		return view('user.checkoutSummary');
+	public function summary(Request $request) {
+		$cart = session('cart', []);
+		
+		$totalPrice = collect($cart)->sum(function($item) {
+			return $item['price'] * $item['quantity'];
+		});
+	
+		$promos = Promo::where('min_transaction', '<=', $totalPrice)->get();
+		
+		$promo = null;
+		if ($request->has('promo') && $request->promo != '') {
+			$promo = Promo::find($request->promo);
+		}
+		
+		$user = session('user');
+		$disc_member = 0;
+	
+		if ($user) {
+			switch ($user['membership']) {
+				case 1 :
+					$disc_member = 2;
+					break;
+				case 2:
+					$disc_member = 5;
+					break;
+				case 3:
+					$disc_member = 10;
+					break;
+				default:
+					$disc_member = 0;
+			}
+		}
+	
+		return view('user.checkoutSummary', compact('cart', 'totalPrice', 'promos', 'disc_member', 'promo'));
 	}
 
-	public function checkout(){
-
+	public function checkout(Request $request)
+	{
+		$cart = session('cart', []);
+		$user = session('user');
+		if (!$user || !isset($user['id'])) {
+			return redirect()->route('login')->with('error', 'You need to be logged in to proceed with checkout.');
+		}
+		
+		$totalPrice = collect($cart)->sum(function ($item) {
+			return $item['price'] * $item['quantity'];
+		});
+	
+		$promo = null;
+		if ($request->has('promo') && $request->promo != '') {
+			$promo = Promo::find($request->promo);
+		}
+		
+		$disc_member = 0;
+		if ($user) {
+			switch ($user['membership']) {
+			case 1:
+				$disc_member = 2;
+				break;
+			case 2:
+				$disc_member = 5;
+				break;
+			case 3:
+				$disc_member = 10;
+				break;
+			default:
+				$disc_member = 0;
+			}
+		}
+					
+			$discountedPrice = $totalPrice - ($totalPrice * ($disc_member / 100));
+			if ($promo) {
+				$discountedPrice -= min($discountedPrice * ($promo->discount / 100), $promo->max_discount);
+			}
+					
+			$htrans = Htrans::create([
+			'id_user' => $user['id'],
+			'subtotal' => $totalPrice,
+			'id_promo' => $promo ? $promo->id : null,
+			'grandtotal' => $discountedPrice,
+		]);
+		
+		foreach ($cart as $item) {
+			$dtrans = Dtrans::create([
+				'id_htrans' => $htrans->id,
+				'id_product' => $item['id_product'],
+				'amount' => $item['quantity'],
+				'price_per_item' => $item['price'],
+				'item_subtotal' => $item['price'] * $item['quantity'],
+			]);
+			
+			if (!is_null($item['temperature']) && !is_null($item['size']) && isset($item['addons'])) {
+				foreach ($item['addons'] as $addon) {
+					Daddon::create([
+						'id_dtrans' => $dtrans->id,
+						'id_addon' => $addon['id'],
+						'qty' => $addon['quantity'],
+						'subtotal' => $addon['price'] * $addon['quantity'],
+					]);
+				}
+			}
+		}
+		
+		session()->forget('cart');
+		
+		return redirect()->route('user.index');
 	}
-
+	
 	public function history(){
 		return view('user.history');
 	}

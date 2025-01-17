@@ -42,7 +42,7 @@ Route::prefix('user')->name('user.')->group(function () {
     Route::prefix('/cart')->name('cart.')->group(function () {
         Route::get('/', [UserController::class, 'cart'])->name('index');
         Route::get('/summary', [UserController::class, 'summary'])->name('summary');
-        Route::get('/checkout', [UserController::class, 'checkout'])->name('checkout');
+        Route::post('/checkout', [UserController::class, 'checkout'])->name('checkout');
         Route::post('/add', [UserController::class, 'addCart'])->name('add');
         Route::post('/cart/remove/{index}', [UserController::class, 'removeCart'])->name('remove');
         Route::post('/cart/increase/{index}', [UserController::class, 'addQuantity'])->name('increase');

@@ -32,6 +32,7 @@ class AuthController extends Controller
             'credit' => $user->credit,
             'total_spent' => $user->total_spent,
             'profile_picture' => $user->profile_picture ? asset('storage/' . $user->profile_picture) : null,
+            'role' => $user->role,
         ]]);
 
         session(['cart' => []]);
