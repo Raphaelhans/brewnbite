@@ -5,21 +5,25 @@
   <div class="flex flex-col items-center space-y-4">
     <h1 class="text-5xl font-bold text-emerald-700 animate-bounce">Our Menu</h1>
   </div>
-  <div class="flex items-center border border-gray-300 rounded-full px-4 py-2 shadow-md mt-8">
+  <div class="flex items-center border border-gray-300 rounded-full px-4 py-2 shadow-sm mt-8 transition-shadow duration-200 hover:shadow-lg">
     <form action="{{ route('user.menu.index') }}" method="GET" class="flex items-center w-full">
       <i class="fa-solid fa-magnifying-glass text-emerald-700 pl-2"></i>
       <input 
-          type="text" 
-          name="search" 
-          value="{{ request('search') }}" 
-          placeholder="Search here" 
-          class="outline-none px-4 py-2 text-sm text-gray-600 w-64"
+        type="text" 
+        name="search" 
+        value="{{ request('search') }}" 
+        placeholder="Search here" 
+        class="outline-none px-4 py-2 text-sm text-gray-600 w-full placeholder-gray-400 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
       />
-      <button type="submit" class="bg-gradient-to-b from-emerald-500 to-emerald-700 hover:bg-brown-600 text-white rounded-full px-4 py-2 text-sm">
-          Search
+      <button 
+        type="submit" 
+        class="ml-2 bg-gradient-to-b from-emerald-500 to-emerald-700 hover:from-emerald-600 hover:to-emerald-800 text-white rounded-full px-6 py-2 text-sm transition-colors duration-200"
+      >
+        Search
       </button>
     </form>
   </div>
+  
 
   <div class="flex gap-12 my-10">
     {{-- <button href="{{ route('user.menu.index') }}" class="bg-gradient-to-b from-emerald-500 to-emerald-700 hover:bg-brown-600 text-white rounded-full px-6 text-sm">All</button> --}}
@@ -68,7 +72,7 @@
             <div class="absolute top-3 left-3 bg-gradient-to-b from-[#F4A298] to-[#F27D6A] text-white rounded-full px-4 py-1 text-xs shadow-md">
                 {{ $item->subcategory->name }}
             </div>
-            <img src="https://assets.promediateknologi.id/crop/0x0:0x0/750x500/webp/photo/2023/05/22/Red-Velvet-cake-2453917777.png" alt="Red Velvet Cake" class="w-full h-48 object-cover">
+            <img src="{{ $item->img_url }}" alt="img" class="w-full h-48 object-cover">
             <div class="p-5">
                 <div class="flex justify-between items-center">
                     <h3 class="font-bold text-emerald-600 text-base">{{ $item->name }}</h3>
@@ -77,7 +81,7 @@
                 <div class="flex items-center mt-3 space-x-2">
                     <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
                     <span class="text-gray-600 font-medium text-sm">{{ $item->rating }}</span>
-                    <span class="text-gray-400 text-sm">({{ $item->reviews_count }} reviews)</span>
+                    <span class="text-gray-400 text-sm">({{ $item->reviewCount }} reviews)</span>
                 </div>
                 <button class="mt-6 w-full bg-gradient-to-r from-emerald-500 to-emerald-700 text-white py-3 px-6 text-sm font-semibold rounded-xl hover:from-emerald-600 hover:to-emerald-800 shadow-md transition-all duration-300">
                     Buy Now

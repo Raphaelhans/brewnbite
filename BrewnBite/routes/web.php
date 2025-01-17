@@ -52,11 +52,10 @@ Route::prefix('user')->name('user.')->group(function () {
     Route::prefix('/history')->name('history.')->group(function () {
         Route::get('/', [UserController::class, 'history'])->name('index');
         Route::get('/detail', [UserController::class, 'detailHistory'])->name('detail');
-        Route::get('/rating', [UserController::class, 'rating'])->name('rating');
+        Route::post('/rating', [UserController::class, 'rating'])->name('rating');
     });
     Route::prefix('/promo')->name('promo.')->group(function () {
         Route::get('/', [UserController::class, 'promo'])->name('index');
-        Route::get('/redeem', [UserController::class, 'redeemPromo'])->name('reedem');
     });
 });
 Route::post('/profile', [UserController::class, 'editProfile'])->name('user.update');

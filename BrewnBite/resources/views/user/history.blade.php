@@ -11,6 +11,9 @@
       </div>
       <div class="px-4 py-4 space-y-6">
         @foreach ($htrans->dtrans as $dtrans)
+        @php
+          $isRated = $dtrans->rating()->exists();
+        @endphp
         <!-- Modal -->
         <div id="modal-{{ $dtrans->id }}" class="fixed inset-0 hidden z-50 bg-gray-900 bg-opacity-50 flex justify-center items-center">
           <div class="bg-white rounded-3xl shadow-xl w-96">
@@ -29,18 +32,23 @@
               <p class="text-sm text-gray-600">How would you rate the item you ordered?</p>
               <div class="flex items-center justify-between">
                 <span class="text-md font-semibold text-gray-700">{{ $dtrans->product->name }}</span>
-                <input type="number" name="rating" min="1" max="5" class="w-20 px-2 py-1 border border-gray-300 rounded-md" placeholder="1-5">
+                <form method="POST" action="{{ route('user.history.rating') }}">
+                  @csrf
+                  <input type="hidden" name="id_dtrans" value="{{ $dtrans->id }}">
+                  <input type="hidden" name="id_product" value="{{ $dtrans->product->id }}">
+                  <input type="number" name="rating" min="1" max="5" class="w-20 px-2 py-1 border border-gray-300 rounded-md" placeholder="1-5">
+                </div>
               </div>
-            </div>
-            
-            <!-- Modal Footer -->
-            <div class="flex justify-end space-x-2 px-4 py-3 bg-gray-50 rounded-b-2xl">
-              <button onclick="closeModal('modal-{{ $dtrans->id }}')" class="bg-gray-300 text-gray-700 px-4 py-2 rounded-xl hover:bg-gray-400">
-                Cancel
-              </button>
-              <button onclick="closeModal('modal-{{ $dtrans->id }}')" class="bg-emerald-500 text-white px-4 py-2 rounded-xl hover:bg-emerald-700">
-                Submit
-              </button>
+              
+              <!-- Modal Footer -->
+              <div class="flex justify-end space-x-2 px-4 py-3 bg-gray-50 rounded-b-2xl">
+                <button onclick="closeModal('modal-{{ $dtrans->id }}')" class="bg-gray-300 text-gray-700 px-4 py-2 rounded-xl hover:bg-gray-400">
+                  Cancel
+                </button>
+                <button onclick="closeModal('modal-{{ $dtrans->id }}')" class="bg-emerald-500 text-white px-4 py-2 rounded-xl hover:bg-emerald-700">
+                  Submit
+                </button>
+              </form>
             </div>
           </div>
         </div>
@@ -57,7 +65,12 @@
                 </p>
               </div>
               <div class="flex items-center space-x-4">
-                <button onclick="openModal('modal-{{ $dtrans->id }}')" class="bg-gradient-to-b from-emerald-500 to-emerald-700 hover:bg-emerald-600 text-white rounded-full px-4 py-2 text-sm">Rate</button>
+                {{-- <button onclick="openModal('modal-{{ $dtrans->id }}')" class="bg-gradient-to-b from-emerald-500 to-emerald-700 hover:bg-emerald-600 text-white rounded-full px-4 py-2 text-sm">Rate</button> --}}
+                @if (!$isRated)
+                    <button onclick="openModal('modal-{{ $dtrans->id }}')" class="bg-gradient-to-b from-emerald-500 to-emerald-700 hover:bg-emerald-600 text-white rounded-full px-4 py-2 text-sm">Rate</button>
+                @else
+                    <button class="bg-gray-400 text-white rounded-full px-4 py-2 text-sm" disabled>Rated</button>
+                @endif
               </div>
             </div>
           @endforeach

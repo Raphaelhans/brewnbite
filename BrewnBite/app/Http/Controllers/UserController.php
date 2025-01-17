@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Models\User;
 use App\Models\Addon;
+use App\Models\Promo;
+use App\Models\Rating;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
@@ -23,8 +25,20 @@ class UserController extends Controller
 
 		$response = Http::get($url);
 		$weatherData = $response->json();
+		$currentWeather = ucfirst($weatherData['weather'][0]['main']);
 
 		$date = Carbon::now()->translatedFormat('l, F d, Y');
+
+		$topProducts = Product::where('weather', $currentWeather)
+			->where('stock', '>', 0) 
+			->orderBy('rating', 'desc')
+			->take(3)
+			->get();
+
+		$topProducts->each(function ($product) {
+			$product->reviewCount = Rating::where('id_product', $product->id)->count() ?: 0;
+		});
+
 
 		$user = session('user');
 		$profilePictureUrl = $user['profile_picture'] ?? null;
@@ -34,6 +48,7 @@ class UserController extends Controller
 			'date' => $date,
 			'user' => $user,
 			'profile_picture' => $profilePictureUrl,
+			'topProducts' => $topProducts,
 		]);
 
 	}
@@ -72,12 +87,16 @@ class UserController extends Controller
 
 		$products = $query->select('products.*')->get();
 
+		$products->each(function ($product) {
+			$product->reviewCount = Rating::where('id_product', $product->id)->count() ?: 0;
+		});
+
 		return view('user.menu' ,[
 			'profile_picture' => $profilePictureUrl, 
 			'user' => $user,
 			'product' => $products,
 			'categoryFilter' => $categoryFilter,
-        	'subcategoryFilter' => $subcategoryFilter,
+			'subcategoryFilter' => $subcategoryFilter,
 			'subcategories' => $subcategories,
 		]);
 	}
@@ -87,11 +106,13 @@ class UserController extends Controller
 		$profilePictureUrl = $user['profile_picture'] ?? null;
 
 		$data = Product::find($id);
+		$reviewCount = Rating::where('id_product', $id)->count() ?: 0;
 
 		return view('user.detailMenu' , [
 			'profile_picture' => $profilePictureUrl, 
 			'user' => $user,
 			'data' => $data,
+			'reviewCount' => $reviewCount,
 		]);
 	}
 	public function displayProfile(){
@@ -349,17 +370,38 @@ class UserController extends Controller
 		return view('user.detailHistory');
 	}
 
-	public function rating(){
+	public function rating(Request $req) {
 
+		$rating = new Rating();
+		$rating->id_user = session('user.id'); 
+		$rating->id_product = $req->id_product;
+		$rating->id_dtrans = $req->id_dtrans;
+		$rating->rating = $req->rating;
+		$rating->save();
+
+		$this->updateProductRating($req->id_product);
+
+		return redirect()->back();
+	}
+
+	private function updateProductRating($productId) {
+		$averageRating = Rating::where('id_product', $productId)
+				->avg('rating');
+
+		$product = Product::find($productId);
+		$product->rating = round($averageRating, 1);
+		$product->save();
 	}
 
 	public function promo(){
 		$user = session('user');
 		$profilePictureUrl = $user['profile_picture'] ?? null;
+		$listPromo = Promo::all();
 
 		return view('user.listPromo', [
 			'user' => $user,
 			'profile_picture' => $profilePictureUrl, 
+			'listPromo' => $listPromo,
 		]);
 	}
 
