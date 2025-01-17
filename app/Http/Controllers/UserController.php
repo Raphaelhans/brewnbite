@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Htrans;
+use App\Models\Product;
+use App\Models\Topup;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Models\User;
+use App\Models\Addon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -20,57 +25,80 @@ class UserController extends Controller
 		$weatherData = $response->json();
 
 		$date = Carbon::now()->translatedFormat('l, F d, Y');
-		$user = User::find(session('user')['id']);
-		$profilePictureUrl = $user['profile_picture'] ? asset('storage/' . $user['profile_picture']) : null;
-		$initials = $this->getInitials($user['name']);
-		
-		$totalSpent = $user->total_spent;
-		$membership = 'Bronze'; 
-		if ($totalSpent >= 200000) {
-			$membership = 'Diamond';
-		} elseif ($totalSpent >= 100000) {
-			$membership = 'Gold';
-		} elseif ($totalSpent >= 50000) {
-			$membership = 'Silver';
-		}
+
+		$user = session('user');
+		$profilePictureUrl = $user['profile_picture'] ?? null;
 
 		return view('user.home', [
 			'weatherData' => $weatherData,
 			'date' => $date,
 			'user' => $user,
-			'initials' => $initials,
 			'profile_picture' => $profilePictureUrl,
-			'membership' => $membership,
 		]);
 
 	}
 
-	public function getInitials($name)
-	{
-		$words = explode(' ', trim($name));
-		$initials = '';
+	public function menu(Request $request) {
+		$user = session('user');
+		$profilePictureUrl = $user['profile_picture'] ?? null;
 
-		foreach ($words as $index => $word) {
-			if ($index > 1) break; 
-			$initials .= strtoupper(substr($word, 0, 1));
+		$categoryFilter = $request->query('category', null);
+		$subcategoryFilter = $request->query('subcategory', 'All');
+
+		$searchQuery = $request->query('search', null);
+
+		$subcategories = [];
+		if ($categoryFilter) {
+			$subcategories = \App\Models\Subcategory::whereHas('category', function ($query) use ($categoryFilter) {
+				$query->where('name', $categoryFilter);
+			})->get();
 		}
 
-		return $initials;
+		$query = Product::query();
+
+		if ($categoryFilter) {
+			$query->join('categories', 'products.id_category', '=', 'categories.id')
+				->where('categories.name', $categoryFilter);
+		}
+
+		if ($subcategoryFilter !== 'All') {
+			$query->join('subcategories', 'products.id_subcategory', '=', 'subcategories.id')
+				->where('subcategories.name', $subcategoryFilter);
+		}
+
+		if ($searchQuery) {
+			$query->where('products.name', 'LIKE', '%' . $searchQuery . '%');
+		}
+
+		$products = $query->select('products.*')->get();
+
+		return view('user.menu' ,[
+			'profile_picture' => $profilePictureUrl, 
+			'user' => $user,
+			'product' => $products,
+			'categoryFilter' => $categoryFilter,
+        	'subcategoryFilter' => $subcategoryFilter,
+			'subcategories' => $subcategories,
+		]);
 	}
 
-	public function menu() {
-		return view('user.menu');
-	}
+	public function detailMenu($id) {
+		$user = session('user');
+		$profilePictureUrl = $user['profile_picture'] ?? null;
 
-	public function detailMenu() {
-		return view('user.detailMenu');
+		$data = Product::find($id);
+
+		return view('user.detailMenu' , [
+			'profile_picture' => $profilePictureUrl, 
+			'user' => $user,
+			'data' => $data,
+		]);
 	}
 	public function displayProfile(){
-		$user = User::find(session('user')['id']);
-		$initials = $this->getInitials($user['name']);
-		$profilePictureUrl = $user['profile_picture'] ? asset('storage/' . $user['profile_picture']) : null;
+		$user = session('user');
+		$profilePictureUrl = $user['profile_picture'] ?? null;
 
-		$totalSpent = $user->total_spent;
+		$totalSpent = $user['total_spent'] ?? 0;
 		$membership = 'Bronze'; 
 		if ($totalSpent >= 200000) {
 			$membership = 'Diamond';
@@ -80,8 +108,11 @@ class UserController extends Controller
 			$membership = 'Silver';
 		}
 
-		return view('user.profile', ['user' => $user,
-			'initials' => $initials, 'profile_picture' => $profilePictureUrl,  'membership' => $membership]);
+		return view('user.profile', [
+			'user' => $user,
+			'profile_picture' => $profilePictureUrl,  
+			'membership' => $membership,
+		]);
 	}
 
 	public function editProfile(Request $request)
@@ -93,6 +124,10 @@ class UserController extends Controller
 		]);
 
 		$user = User::find(session('user')['id']);
+		if (!$user) {
+			return redirect()->route('user.index')->withErrors(['error' => 'User not found.']);
+		}
+
 		$user->name = $request->input('name');
 
 		if ($request->filled('password')) {
@@ -109,21 +144,188 @@ class UserController extends Controller
 			$user->profile_picture = $filePath;
 		}
 
-		// Save the updated user
 		$user->save();
+
+		$sessionData = session('user');
+		$sessionData['name'] = $user->name;
+		$sessionData['profile_picture'] = $user->profile_picture ? asset('storage/' . $user->profile_picture) : null;
+
+		session(['user' => $sessionData]);
 
 		return redirect()->route('user.index')->with('success', 'Profile updated successfully.');
 	}
 
+	public function topup(){
+		$user = session('user');
+		$profilePictureUrl = $user['profile_picture'] ?? null;
 
-	public function displayTopUp(){
-		return view('user.topup');
+		return view('user.topup' , [
+			'profile_picture' => $profilePictureUrl, 
+			'user' => $user
+		]);
 	}
+
+	function process(Request $req) {
+		$req->validate([
+			'amount' => 'required|integer|min:1',
+		]);
+		
+		try {
+			$data = $req->all();
+			
+			
+			$topup = Topup::create([
+				'id_user' => session('user.id'),
+				'amount' => $data['amount'],
+			]);
+			
+
+			\Midtrans\Config::$serverKey = config('midtrans.serverKey');
+			\Midtrans\Config::$isProduction = false;
+			\Midtrans\Config::$isSanitized = true;
+			\Midtrans\Config::$is3ds = true;
+	
+			$params = array(
+				'transaction_details' => array(
+					'order_id' => rand(),
+					'gross_amount' => $data['amount'],
+				),
+				'customer_details' => array(
+					'first_name' => session('user.name'),
+					'email' => session('user.email'),
+				),
+			);
+	
+			$snapToken = \Midtrans\Snap::getSnapToken($params);
+
+	
+			$topup->snap_token = $snapToken;
+			$topup->save();
+	
+			return redirect()->route('user.topup.payment', $topup->id);
+		} catch (\Exception $e) {
+			dd($e->getMessage());
+			Log::error('Midtrans Error: ' . $e->getMessage());
+			return redirect()->back()->withErrors(['error' => 'An error occurred while processing your request. Please try again.']);
+		}
+	}
+	
+	function payment(Topup $topup) {
+		$data = Topup::where('id', $topup->id)->first();
+		return view('user.payment', compact('topup', 'data'));
+	}
+	
+	function success(Topup $topup) {
+		$topup->status = 1;
+		$topup->save();
+	
+		$user = User::find($topup->id_user);
+		$user->increment('credit', $topup->amount);
+	
+		session()->put('user.credit', $user->credit);
+	
+		return redirect()->route('user.topup.index');
+	}
+	
 
 	public function cart(){
-		return view('user.cart');
+		$cart = session('cart', []);
+		return view('user.cart', compact('cart'));
 	}
 
+	
+	public function addCart(Request $request) {
+		$request->validate([
+			'id_product' => 'required|integer',
+			'quantity' => 'required|integer|min:1',
+		]);
+	
+		$product = Product::find($request->input('id_product'));
+		if (!$product) {
+			return redirect()->route('user.menu')->withErrors(['error' => 'Product not found.']);
+		}
+	
+		$extraCost = 0;
+	
+		if ($product->category->name == "Beverage") {
+			$request->validate([
+				'temperature' => 'required|in:hot,cold',
+				'size' => 'required|in:small,medium,large',
+			]);
+	
+			$addon = Addon::where('name', $request->input('size'))->where('id_category', $product->category->id)->first();
+	
+			if ($addon) {
+				$extraCost = $addon->price;
+			} else {
+				if ($request->input('size') == 'small') {
+					$extraCost = 5000;
+				} elseif ($request->input('size') == 'medium') {
+					$extraCost = 10000;
+				} elseif ($request->input('size') == 'large') {
+					$extraCost = 12000;
+				}
+			}
+		}
+	
+		$cart = session('cart', []);
+		$found = false;
+	
+		
+		foreach ($cart as &$item) {
+			if ($item['id_product'] == $product->id &&
+				($item['temperature'] == $request->input('temperature', null)) &&
+				($item['size'] == $request->input('size', null))) {
+				$item['quantity'] += $request->input('quantity');
+				$found = true;
+				break;
+			}
+		}
+	
+		if (!$found) {
+			$cart[] = [
+				'id_product' => $product->id,
+				'name' => $product->name,
+				'price' => $product->price + $extraCost,
+				'quantity' => $request->input('quantity'),
+				'temperature' => $request->input('temperature', null),
+				'size' => $request->input('size', null),
+			];
+		}
+	
+		session(['cart' => $cart]);
+	
+		return redirect()->back();
+	}
+
+	public function removeCart($index)
+    {
+        $cart = session('cart', []);
+        if (isset($cart[$index])) {
+            unset($cart[$index]); 
+            session(['cart' => array_values($cart)]); 
+        }
+		return redirect()->back();    
+	}
+	public function addQuantity($index){
+		$cart = session('cart', []);
+        if (isset($cart[$index])) {
+            $cart[$index]['quantity'] += 1; 
+            $cart[$index]['price'] = $cart[$index]['price'] / $cart[$index]['quantity'] * $cart[$index]['quantity']; 
+            session(['cart' => $cart]); 
+        }
+        return redirect()->back();
+	}
+	
+	public function reduceQuantity($index){
+		$cart = session('cart', []);
+        if (isset($cart[$index]) && $cart[$index]['quantity'] > 1) {
+            $cart[$index]['quantity'] -= 1;
+            $cart[$index]['total_price'] = $cart[$index]['price'] * $cart[$index]['quantity'];
+            session(['cart' => $cart]); 
+        }
+		return redirect()->back();
+	}
 	public function summary(){
 		return view('user.checkoutSummary');
 	}
@@ -133,7 +335,14 @@ class UserController extends Controller
 	}
 
 	public function history(){
-		return view('user.history');
+		$listTrans = Htrans::with(['dtrans.product'])
+			->where('id_user', session('user.id'))
+			->orderBy('created_at', 'desc')
+			->get();
+
+		return view('user.history', [
+			'listTrans' => $listTrans,
+		]);
 	}
 
 	public function detailHistory(){
@@ -145,7 +354,13 @@ class UserController extends Controller
 	}
 
 	public function promo(){
-		return view('user.listPromo');
+		$user = session('user');
+		$profilePictureUrl = $user['profile_picture'] ?? null;
+
+		return view('user.listPromo', [
+			'user' => $user,
+			'profile_picture' => $profilePictureUrl, 
+		]);
 	}
 
 	public function redeemPromo(){

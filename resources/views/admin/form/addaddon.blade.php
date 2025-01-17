@@ -1,7 +1,7 @@
 @extends('admin.layout')
 
 @section('title')
-    Add Employee
+    Add Addon
 @endsection
 
 @section('css')
@@ -12,9 +12,9 @@
 <div class="container d-flex justify-content-center align-items-center" style="min-height: 90vh;">
     <div class="card card-primary" style="width: 100%; max-width: 600px;">
         <div class="card-header">
-            <h3 class="card-title">Add Employee</h3>
+            <h3 class="card-title">Add Addon</h3>
         </div>
-        <form action="{{ route('admin.master.users.doadd') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.master.addons.doadd') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="card-body">
                 <div class="form-group">
@@ -22,25 +22,16 @@
                     <input type="text" class="form-control" id="inputname" placeholder="Enter name" name="name" required>
                 </div>
                 <div class="form-group">
-                    <label for="inputemail">Email address</label>
-                    <input type="email" class="form-control" id="inputemail" placeholder="Enter email" name="email" required>
+                    <label for="inputprice">Price</label>
+                    <input type="number" class="form-control" id="inputprice" placeholder="Enter price" name="price" required>
                 </div>
                 <div class="form-group">
-                    <label for="inputpass">Password</label>
-                    <input type="password" class="form-control" id="inputpass" placeholder="Enter Password" name="password" required>
-                </div>
-                <div class="form-group">
-                    <label for="inputconfirm">Confirm Password</label>
-                    <input type="password" class="form-control" id="inputconfirm" placeholder="Confirm Password" name="password_confirmation" required>
-                </div>
-                <div class="form-group">
-                    <label for="inputProfile">Profile</label>
-                    <div class="input-group">
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="inputProfile" name="profile">
-                            <label class="custom-file-label" for="inputProfile">Choose file</label>
-                        </div>
-                    </div>
+                    <label for="category">Category</label>
+                    <select class="form-control" id="category" name="category" required>
+                        @foreach ($categories as $item)
+                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                        @endforeach
+                    </select>
                 </div>
                 @if(session('success'))
                     <div class="alert alert-success">

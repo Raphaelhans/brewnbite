@@ -15,11 +15,12 @@ class EmployeeController extends Controller
 {
     public function dashboard()
     {
+        $user= session('user');
         $category = Category::select('id','name')->get();
         $subcategory = Subcategory::select('id','name','id_category')->get();
         $menu = Product::all();
         $ingredient = Ingredient::all();
-        return view('employee.dashboard',['category' => $category, 'subcategory' => $subcategory, 'menu' => $menu, 'ingredient' => $ingredient]);
+        return view('employee.dashboard',['category' => $category, 'subcategory' => $subcategory, 'menu' => $menu, 'ingredient' => $ingredient, 'user' => $user]);
     }
     
     public function history()

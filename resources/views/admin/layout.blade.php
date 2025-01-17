@@ -43,19 +43,32 @@
                         <a class="nav-link" href="{{ route('admin.bestsellers') }}">Best Sellers</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Top Spenders</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.addemployee.add') }}">Add Employee</a>
+                        <a class="nav-link" href="{{ route('admin.topspenders') }}">Top Spenders</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin.ratings') }}">Ratings</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Add
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <a class="dropdown-item" href="{{ route('admin.master.addons.add') }}">Add Add-ons</a>
+                          <a class="dropdown-item" href="{{ route('admin.master.categories.add') }}">Add Categories</a>
+                          <a class="dropdown-item" href="{{ route('admin.master.ingredients.add') }}">Add Ingredients</a>
+                          <a class="dropdown-item" href="{{ route('admin.master.products.add') }}">Add Products</a>
+                          <a class="dropdown-item" href="{{ route('admin.master.promos.add') }}">Add Promos</a>
+                          <a class="dropdown-item" href="{{ route('admin.master.subcategories.add') }}">Add Sub-categories</a>
+                          <a class="dropdown-item" href="{{ route('admin.master.users.add') }}">Add Employee</a>
+                          {{-- <div class="dropdown-divider"></div> --}}
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           Master
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <a class="dropdown-item" href="{{ route('admin.master.addons.addons') }}">Add-ons</a>
                           <a class="dropdown-item" href="{{ route('admin.master.categories.categories') }}">Categories</a>
                           <a class="dropdown-item" href="{{ route('admin.master.ingredients.ingredients') }}">Ingredients</a>
                           <a class="dropdown-item" href="{{ route('admin.master.products.products') }}">Products</a>

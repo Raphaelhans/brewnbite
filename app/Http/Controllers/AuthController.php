@@ -8,57 +8,72 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-	public function login(Request $request) {
-		$request->validate([
-			'email' => 'required|email',
-			'password' => 'required'
-		]);
-	
-		$user = User::where('email', $request->email)->first();
-		if ($user && Hash::check($request->password, $user->password)) {
-			$request->session()->put('user', [
-				'id' => $user->id,
-				'name' => $user->name,
-				'email' => $user->email,
-				'membership' => $user->membership, 
-				'credit' => $user->credit,  
-				'total_spent' => $user->total_spent,
-				'profile_picture' => $user->profile_picture,
-			]);
-	
-			return redirect('/user');
-		}
-	
-		return back()->withErrors(['password' => 'Email/password invalid']);
-	}
-	
+    public function login(Request $request) {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
+    
+        $user = User::where('email', $request->email)->first();
 
-	public function register(Request $request){
-		$request->validate([
-			'name' => 'required|string|max:255',
-			'email' => 'required|string|email|max:255|unique:users',
-			'password' => 'required|string|min:5',
-			'confirm_password' => 'required|same:password'
-		]);
-		
-		$user = new User();
-		$user->name = $request->name;
-		$user->email = $request->email;
-		$user->password = Hash::make($request->password);
-		$user->role = 1; 
-		$user->membership = 0; 
-		$user->credit = 0;
-		$user->total_spent = 0;
+        if (!$user) {
+            return back()->withErrors(['email' => 'Account does not exist']);
+        }
 
-		$user->save();
+        if (!Hash::check($request->password, $user->password)) {
+            return back()->withErrors(['password' => 'Invalid password details']);
+        }
 
-		return redirect('/login')->with('success', 'Account created successfully');
-	}
+        session(['user' => [
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+            'membership' => $user->membership,
+            'credit' => $user->credit,
+            'total_spent' => $user->total_spent,
+            'profile_picture' => $user->profile_picture ? asset('storage/' . $user->profile_picture) : null,
+        ]]);
 
-  	public function logout(){
-		session()->forget(['user']);
+        session(['cart' => []]);
+        
+        $checkRole = [
+            1 => '/user',               
+            2 => '/employee/dashboard', 
+            3 => '/admin/dashboard',   
+        ];
 
-		return redirect('/');
-	}
+    
+        if (isset($checkRole[$user->role])) {
+            return redirect($checkRole[$user->role]);
+        }
+    
+        return back()->withErrors(['role' => 'Invalid user role']);
+    }
+
+    public function register(Request $request){
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:5',
+            'confirm_password' => 'required|same:password'
+        ]);
+        
+        $user = User::create([
+            'email' => $request['email'],
+            'password' => Hash::make($request['password']),
+            'name' => $request['name'],
+            'role' => 1,
+            'membership' => 0,
+            'credit' => 0,
+            'total_spent' => 0,
+        ]);
+
+        return redirect('/login')->with('success', 'Account created successfully');
+    }
+
+    public function logout(){
+        session()->forget('user');
+        return redirect('/login'); 
+    }
 
 }

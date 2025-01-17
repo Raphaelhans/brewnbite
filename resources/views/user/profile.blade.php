@@ -7,8 +7,20 @@
 
         <div class="flex justify-center mb-4">
             @if ($profile_picture)
-                <img src="{{ $profile_picture }}" alt="Profile Picture" class="h-24 w-24 bg-[#fcdad0] rounded-full">
+                <img 
+                    src="{{ $profile_picture }}" 
+                    alt="Profile Picture"
+                    class="h-24 w-24 bg-[#fcdad0] rounded-full"
+                >
             @else
+                @php
+                    $words = explode(' ', trim($user['name'] ?? ''));
+                    $initials = '';
+                    foreach ($words as $index => $word) {
+                        if ($index > 1) break;
+                        $initials .= strtoupper(substr($word, 0, 1));
+                    }
+                @endphp
                 <div class="h-24 w-24 bg-[#fcdad0] rounded-full flex items-center justify-center text-emerald-600 font-semibold text-center text-4xl">
                     {{ $initials }} 
                 </div>

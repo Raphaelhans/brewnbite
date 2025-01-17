@@ -24,14 +24,15 @@
                 <table id="tableusers" class="table table-bordered table-hover dataTable dtr-inline">
                     <thead>
                         <tr>
+                            <th style="width: 5%">Profile</th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Password</th>
                             <th>Membership</th>
                             <th>Credit</th>
                             <th>Total Spent</th>
-                            <th style="width: 10%">Created at</th>
-                            <th style="width: 10%">Updated at</th>
+                            <th style="width: 5%">Created at</th>
+                            <th style="width: 5%">Updated at</th>
                             <th style="width: 10%">Edit</th>
                             <th style="width: 10%">Status</th>
                         </tr>
@@ -39,6 +40,11 @@
                     <tbody>
                         @foreach ($customers as $item)
                             <tr @if($item->deleted_at) style="background-color: lightgray;" @endif>
+                                <td>
+                                    <img src="{{ $item->profile_picture ? asset('storage/' . $item->profile_picture) : asset('storage/profile_pictures/default.jpg') }}" 
+                                         alt="Profile Picture" 
+                                         style="width: 50px; height: 50px;">
+                                </td>
                                 <td>{{$item->name}}</td>
                                 <td>{{$item->email}}</td>
                                 <td>hidden</td>
@@ -105,11 +111,12 @@
                 <table id="tableemployees" class="table table-bordered table-hover dataTable dtr-inline">
                     <thead>
                         <tr>
+                            <th style="width: 5%">Profile</th>
                             <th style="width: 20%">Name</th>
                             <th style="width: 20%">Email</th>
                             <th style="width: 20%">Password</th>
-                            <th style="width: 10%">Created at</th>
-                            <th style="width: 10%">Updated at</th>
+                            <th style="width: 5%">Created at</th>
+                            <th style="width: 5%">Updated at</th>
                             <th style="width: 10%">Edit</th>
                             <th style="width: 10%">Status</th>
                         </tr>
@@ -117,6 +124,11 @@
                     <tbody>
                         @foreach ($employees as $item)
                             <tr @if($item->deleted_at) style="background-color: lightgray;" @endif>
+                                <td>
+                                    <img src="{{ $item->profile_picture ? asset('storage/' . $item->profile_picture) : asset('storage/profile_pictures/default.jpg') }}" 
+                                         alt="Profile Picture" 
+                                         style="width: 50px; height: 50px;">
+                                </td>
                                 <td>{{$item->name}}</td>
                                 <td>{{$item->email}}</td>
                                 <td>hidden</td>
@@ -155,8 +167,9 @@
                 <table id="tableadmins" class="table table-bordered table-hover dataTable dtr-inline">
                     <thead>
                         <tr>
+                            <th style="width: 5%">Profile</th>
                             <th style="width: 20%">Name</th>
-                            <th style="width: 20%">Email</th>
+                            <th style="width: 15%">Email</th>
                             <th style="width: 20%">Password</th>
                             <th style="width: 20%">Created at</th>
                             <th style="width: 20%">Updated at</th>
@@ -165,6 +178,11 @@
                     <tbody>
                         @foreach ($admins as $item)
                             <tr @if($item->deleted_at) style="background-color: lightgray;" @endif>
+                                <td>
+                                    <img src="{{ $item->profile_picture ? asset('storage/' . $item->profile_picture) : asset('storage/profile_pictures/default.jpg') }}" 
+                                         alt="Profile Picture" 
+                                         style="width: 50px; height: 50px;">
+                                </td>
                                 <td>{{$item->name}}</td>
                                 <td>{{$item->email}}</td>
                                 <td>hidden</td>
